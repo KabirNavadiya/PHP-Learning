@@ -74,9 +74,7 @@ print_r($cars);
 $cars += ["color" => "red", "year" => 1964];
 print_r($cars);
 
-$num1 = [1,2];
-$num2 = [3,4,5];
-print_r(array_merge($num1,$num2));
+
 
 
 
@@ -104,4 +102,109 @@ echo $cars[3][0].": In stock: ".$cars[3][1].", sold: ".$cars[3][2]."\n";
 
 
 // BASIC ARRAY FUNCTION.
+
+// array_chunk
+$cars=array("Volvo","BMW","Toyota","Honda","Mercedes","Opel");
+print_r(array_chunk($cars,4));
+
+
+// frequency count.
+$cars = [1,1,2,2,1,3,4,6];
+print_r(array_count_values($cars));
+
+
+// array_fill
+
+$arr1 = [1,2,3];
+$arr1 += array_fill(3,5,0);
+print_r($arr1);
+
+
+
+//filter
+
+function test_odd($var)
+  {
+  return($var & 1);
+  }
+
+$a1=array(1,3,2,3,4);
+print_r(array_filter($a1,"test_odd"));
+
+
+// array_map
+
+function myfunction($v)
+{
+  return($v*$v);
+}
+
+$a=array(1,2,3,4,5);
+print_r(array_map("myfunction",$a));
+
+
+// merge array
+
+$num1 = [1,2];
+$num2 = [3,4,5];
+print_r(array_merge($num1,$num2));
+
+
+// remove last element from array using pop.
+$numbers = [1,2,3,4];
+array_pop($numbers);
+print_r($numbers);
+
+
+// Send the values in an array to a user-defined function and return a string:
+function myfunction($v1,$v2)
+{
+return $v1 . "-" . $v2;
+}
+$a=array("Dog","Cat","Horse");
+print_r(array_reduce($a,"myfunction"));
+
+// search for a value in array.
+
+$a=array("a"=>"red","b"=>"green","c"=>"blue");
+$b = [1,2,3,6];
+echo array_search(2,$b);
+echo array_search("red",$a);
+
+
+// remove first element from array
+$a=array("a"=>"red","b"=>"green","c"=>"blue");
+echo array_shift($a);
+print_r ($a);
+
+
+// slice
+$a=array("red","green","blue","yellow","brown");
+print_r(array_slice($a,2,1));
+
+// splice - removes or replaces specified elements
+$a1=array("a"=>"red","b"=>"green","c"=>"blue","d"=>"yellow");
+$a2=array("a"=>"purple","b"=>"orange");
+array_splice($a1,0,2,$a2);
+print_r($a1);
+
+
+
+// remove duplicate
+$nums = [1,1,2,2,1,3,4,6];
+print_r(array_unique($nums));
+
+// sum of array.
+$nums = [1,1,2,2,1,3,4,6];
+echo array_sum($nums);
+
+// add element at start of array
+$nums = [1,1,2,2,1,3,4,6];
+array_unshift($nums,0);
+print_r($nums);
+
+// length of array
+$nums = [1,1,2,2,1,3,4,6];
+echo count($nums);
+
 ?>
