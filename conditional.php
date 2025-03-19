@@ -54,4 +54,46 @@ switch ($favcolor) {
     echo "Your favorite color is neither red, blue, nor green!";
 }
 
+$food = 'bar';
+$return_value = match ($food) {
+    'apple' => 'This food is an apple',
+    'bar' => 'This food is a bar',
+    'cake' => 'This food is a cake',
+};
+
+var_dump($return_value);
+
+
+$age = 18;
+$output = match (true) {
+    $age < 2 => "Baby",
+    $age < 13 => "Child",
+    $age <= 19 => "Teenager",
+    $age <= 40 => "Old adult",
+    $age > 19 => "Young adult",
+};
+var_dump($output); // here age<=19 is matched and value is returned so age<=40 will not be checked.
+
+
+
+
+$value = "10";
+$result = match ($value) {
+    10 => "Integer 10",
+    "10" => "String 10",
+    default => "No match"
+};
+echo $result;
+
+
+$text = 'Bienvenue chez nous';
+
+$result = match (true) {
+    str_contains($text, 'Welcome') || str_contains($text, 'Hello') => 'en',
+    str_contains($text, 'Bienvenue') || str_contains($text, 'Bonjour') => 'fr',
+    // ...
+};
+
+var_dump($result);
+
 ?>

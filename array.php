@@ -134,13 +134,13 @@ print_r(array_filter($a1,"test_odd"));
 
 // array_map
 
-function myfunction($v)
+function square($v)
 {
   return($v*$v);
 }
 
 $a=array(1,2,3,4,5);
-print_r(array_map("myfunction",$a));
+print_r(array_map("square",$a));
 
 
 // merge array
@@ -157,12 +157,12 @@ print_r($numbers);
 
 
 // Send the values in an array to a user-defined function and return a string:
-function myfunction($v1,$v2)
+function arraytostring($v1,$v2)
 {
 return $v1 . "-" . $v2;
 }
 $a=array("Dog","Cat","Horse");
-print_r(array_reduce($a,"myfunction"));
+print_r(array_reduce($a,"arraytostring"));
 
 // search for a value in array.
 
