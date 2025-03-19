@@ -24,7 +24,7 @@ foreach ($transactions as $transaction) {
 
 
 foreach($users as $user) {
-    echo $user->get_name(),"\n";
+    echo "User : ",$user->get_name(),"\n";
     echo "-------------------------------\n";
     echo "Largest Transaction : ",$user->largest_transaction(),"\n";
     echo "Total Deposit : ",$user->get_deposits(),"\n";

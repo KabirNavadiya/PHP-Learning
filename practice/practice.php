@@ -57,3 +57,13 @@ function totaldepositsandwithdrawls($groupby_user){
     return $totalamount;
 }
 $totalamount = totaldepositsandwithdrawls($groupby_user);
+
+
+
+// create dynamic variables
+$prefix = "Total";
+$array= ["id","name","case"];
+foreach ($array as $key) {
+    ${$prefix.$key} = $prefix.$key;
+}
+echo $Totalid,"\n";
