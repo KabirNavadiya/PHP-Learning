@@ -1,25 +1,25 @@
 <?php
 
-class SavingsAccount extends BankAccount{
+class SavingsAccount extends BankAccount
+{
 
-    public function Deposit(float $amount){
+    public function Deposit(float $amount)
+    {
         $this->balance += $amount;
-        parent::Log($this->name,"deposited",$amount,__CLASS__);
-        parent::$TotalTransactions++;
-     }
-    public function Withdraw(float $amount){
+        parent::Log($this->name, "deposited", $amount, __CLASS__);
         
-        if($this->balance >= $this->minbalance + $amount){
+        
+    }
+    public function Withdraw(float $amount)
+    {
+
+        if ($this->balance >= $this->minbalance + $amount) {
             $this->balance -= $amount;
-            echo "You withdraw {$amount} from your ".__CLASS__."\n";
-            parent::Log($this->name,"Withdrawed",$amount,__CLASS__);
-            parent::$TotalTransactions++;
-        }
-        else{
+            echo "You withdraw {$amount} from your " . __CLASS__ . "\n";
+            parent::Log($this->name, "Withdrawed", $amount, __CLASS__);
+        } else {
             echo "You cannot withdraw {$amount}, Your minimum balance must be {$this->minbalance} \n";
+            parent::LogError($amount,__FUNCTION__."ing",__CLASS__);
         }
     }
-
 }
-
-?>

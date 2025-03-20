@@ -16,13 +16,9 @@ $accountA->Deposit(100);
 $accountB->Deposit(100);
 $accountA->Withdraw(500);
 $accountB->Withdraw(600);
-echo "Current balance : ",$accountA->getBalance(),"\n";
-echo "Current balance : ",$accountB->getBalance(),"\n";
+echo "Current balance of {$accountA->getname()} : ",$accountA->getBalance(),"\n";
+echo "Current balance {$accountB->getname()} :",$accountB->getBalance(),"\n";
 echo "TotalAccounts : ",BankAccount::getTotalAccount(),"\n";
 echo "TotalTransactions : ",BankAccount::getTotalTransactions(),"\n";
-
-
-
-
 
 ?>
