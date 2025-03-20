@@ -18,3 +18,22 @@ class DestructorDemo{
 
 $constructor = new DestructorDemo("kabir",21);
 print_r($constructor->get_details());
+
+
+// destructor.
+
+class MyDestructableClass 
+{
+    function __construct() {
+        print "In constructor\n";
+    }
+
+    // automatically called upon end for script.
+    function __destruct() {
+        print "Destroying " . __CLASS__ . "\n";
+    }
+}
+
+$obj = new MyDestructableClass();
+
+?>
