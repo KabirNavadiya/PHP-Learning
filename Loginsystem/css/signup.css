@@ -1,0 +1,147 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', sans-serif;
+}
+
+/* Center the form in the viewport */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url("gradient.avif");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Smooth fade-in effect */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Form container */
+.signup-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.5);
+    width: 420px;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Title */
+h1 {
+    color: #ac1dee;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+/* Form styling */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+/* Input fields container */
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+/* Input fields */
+.inputs {
+    position: relative;
+    width: 100%;
+}
+
+.inputs input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Input focus effect */
+.inputs input:focus {
+    transform: scale(1.02);
+    border-color: #ac1dee;
+    outline: none;
+}
+
+/* Icons inside input fields */
+.icons {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+}
+
+/* Error messages */
+.error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Checkbox container */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ac1dee;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #6a1492;
+    transform: scale(1.05);
+}
+
+/* Footer section */
+.footer {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Footer link */
+.footer a {
+    color: #ac1dee;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
