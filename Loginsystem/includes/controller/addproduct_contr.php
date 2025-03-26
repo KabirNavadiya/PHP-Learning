@@ -9,13 +9,11 @@ function isInputEmpty(
     string $productDescription,
     array $productImage 
 ) {
-    
     if (empty($productName) || empty($productCategory) || empty($productPrice) || empty($productDescription)) {
         return true;
     }
 
-    // Check if file input is empty
-    if ($productImage['error'] === UPLOAD_ERR_NO_FILE) {
+    if (!isset($productImage['error']) || $productImage['error'] === UPLOAD_ERR_NO_FILE) {
         return true;
     }
 
@@ -23,4 +21,13 @@ function isInputEmpty(
 }
 
 
+
+function doesExist(object $conn,string $productName){
+    if(getProduct($conn,$productName)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 

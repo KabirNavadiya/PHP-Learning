@@ -1,108 +1,40 @@
 body {
-    text-align: center;
+    background-color: #f8f9fa;
     font-family: Arial, sans-serif;
 }
 
-.containerc{
-    border: 1px solid rgba(0, 0, 0, 0.288);
-    width: 40%;
-    margin: auto;
+.container {
+    max-width: 900px;
+}
+
+h1, h2 {
+    color: #343a40;
+}
+
+/* Edit Form Styling */
+#editContainer {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.459);
-
-
-}
-.editForm,.productForm{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-
-.input-field, button, select {
-    padding: 8px;
-    width: 80%;
     border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.418);
-    padding: 10px;
-}
-.filter{
-    width: 200px;
 }
 
-table {
-    width: 80%;
-    margin: auto;
-    border-collapse: collapse;
+/* Buttons */
+.btn {
+    margin: 5px;
+}
+
+/* Table */
+.table {
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
 }
 
-th, td {
-    border: 1px solid black;
-    padding: 8px;
-    max-width: 200px;
-}
-td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* Image Preview */
+.img-thumbnail {
+    border-radius: 5px;
 }
 
-th{
-    background-color: #007bff;
-    color: white;
-}
-img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-button{
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-}
-.Add-product{
-    width: 80%;
-    color: white;
-    background-color: #0059ff91;
-}
-.Add-product:hover{
-    background-color: #0059ffd2;
-}
-.edit-product{
-    width: 80%;
-    color: white;
-    background-color: #2eaa53cb;
-}
-.edit-product:hover{
-    background-color: #1c6933cb;
-}
-.edit{
-    margin-right: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    color: white;
-    background-color: rgb(74, 206, 74);
-}
-.delete{
-    margin-right: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    color: white;
-    background-color: rgb(224, 43, 43);
-}
-.edit:hover{
-    background-color: rgb(46, 129, 46);
-    transform: scale(1.1,1.1);
-}
-.delete:hover{
-    background-color: rgb(179, 31, 31);
-    transform: scale(1.1,1.1);
-}
+
+

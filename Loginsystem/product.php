@@ -1,10 +1,10 @@
 <?php
 require_once 'includes/dbh.inc.php';
+require_once 'includes/config_session.inc.php';
+require_once 'includes/view/addproduct_view.php';
+require_once 'includes/model/addproduct_model.php';
 
-$query = "SELECT * FROM categories";
-$stmt = $conn->prepare($query);
-$stmt->execute();
-$categories = $stmt->fetchAll();
+$categories = getCategories($conn);
 
 ?>
 
@@ -24,9 +24,12 @@ $categories = $stmt->fetchAll();
 
 <body>
   <h1 style="display: flex; align-items: center; justify-content: center; margin: auto;">Add Product</h1>
+  <a href="javascript:history.back()" class="btn btn-primary">
+    ← Back to Dashboard
+  </a>
 
   <div class="containerc">
-    <form id="productForm" class="productForm" action="includes/addproduct.php" method="POST">
+    <form id="productForm" class="productForm" action="includes/addproduct.php" method="POST" enctype="multipart/form-data">
       <input type="text" class="input-field" id="productName" name="productName" placeholder="Product Name">
       <select id="productCategory" name="productCategory">
 
@@ -40,22 +43,32 @@ $categories = $stmt->fetchAll();
       <input type="file" id="productImage" name="productImage" accept="image/*">
       <button class="Add-product" id="submitButton" type="submit" value="submit-btn">Add Product</button>
     </form>
+
+    <?php
+    checkAddProductErrors();
+    ?>
   </div>
 
+
+
+  <!-- toast -->
   <div class="toast-container position-fixed top-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="liveToast" class="toast <?php echo isset($_SESSION['product_success']) ? 'show' : ''; ?>" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
-        <strong class="me-auto">Bootstrap</strong>
-        <small>1 sec ago</small>
+        <strong class="me-auto">Success</strong>
+        <small>Just now</small>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
       <div class="toast-body">
-        ✅ Item Added
+        <?php
+        if (isset($_SESSION['product_success'])) {
+          echo $_SESSION['product_success'];
+          unset($_SESSION['product_success']);
+        }
+        ?>
       </div>
     </div>
   </div>
-
-  <!-- <script src="Flipkart-CRUD/admin/script/addproduct.js"></script> -->
 </body>
 
 </html>
