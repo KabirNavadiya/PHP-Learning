@@ -1,155 +1,156 @@
-body{
+body {
     background-color: rgba(230, 220, 220, 0.37);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
 }
-header{
+
+/* Header */
+header {
     background-color: white;
     width: 100%;
 }
 
-
-/* navigation */
-#search-bar{
-    border: 0;
-    outline: 0 none;
+/* Navigation */
+#search-bar {
+    border: none;
+    outline: none;
     font-size: 17px;
     height: 40px;
     width: 100%;
     background-color: rgba(117, 117, 131, 0.13);
     border-radius: 0 10px 10px 0;
     text-overflow: ellipsis;
+    padding-left: 10px;
 }
-.search-container{
+
+.search-container {
     display: flex;
     align-items: center;
     width: 100%;
 }
-.search-icon{
-    border: 0;
+
+.search-icon {
+    border: none;
     height: 40px;
     border-radius: 10px 0 0 10px;
 }
-.logo{
+
+.logo {
     margin: 0 20px 20px 0;
 }
-.logo-search{
+
+.logo-search {
     width: 70%;
     display: flex;
     justify-content: start;
 }
-.login-btn{
+
+.login-btn,
+.cart-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    padding: 8px 15px;
+    transition: 0.3s ease-in-out;
 }
-.person-logo{
+
+.person-logo,
+.cart-logo,
+.seller-logo {
     margin-right: 10px;
 }
-.login-cart{
+
+.login-cart {
     width: 60%;
     display: flex;
     justify-content: space-evenly;
     margin-left: 5rem;
-
 }
-.login-btn:hover{
+
+.login-btn:hover {
     background-color: blue;
     color: white;
 }
-.dropdown:hover>.dropdown-menu{
+
+.dropdown:hover > .dropdown-menu {
     display: block;
 }
 
-.dropdown>.dropdown-toggle:active{
+.dropdown > .dropdown-toggle:active {
     pointer-events: none;
 }
 
 .dropstart .dropdown-menu {
-    left: -200px; 
-    pointer-events: none;   
-
+    left: -200px;
+    pointer-events: none;
 }
 
 .dropstart:hover .dropdown-menu {
-display: block;
+    display: block;
 }
-  
 
-.login-drop{
+.login-drop {
     width: 250px;
 }
-.login-header{
+
+.login-header {
     display: flex;
     font-size: 17px;
     justify-content: space-evenly;
     width: 100%;
     padding: 5px;
 }
-.sign-up{
+
+.sign-up {
     font-size: 17px;
     text-decoration: none;
     margin-left: 30px;
 }
 
-.cart-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-}
-.cart-logo{
-    margin-right: 10px;
-}
-.seller-logo{
-    margin-right: 5px;
-}
-
-
-.flipkart-logo{
+/* Flipkart Logo */
+.flipkart-logo {
     width: 160px;
-    aspect-ratio: auto 160/40;
     height: 40px;
 }
-.dropdown-menu{
+
+/* Dropdown */
+.dropdown-menu {
     padding: 20px;
 }
-a{
-    padding: 10px;
-}
-.nav-i{
-margin-right: 10px;
 
+/* Navigation Icons */
+.nav-i {
+    margin-right: 10px;
 }
 
-/* category-cards  */
-.category-text{
+/* Category Cards */
+.category-text {
     font-weight: 800;
 }
 
-.category-container{
+.category-container {
     background-color: white;
     display: flex;
     width: 85%;
-
 }
-.category-images{
+
+.category-images {
     display: flex;
     flex-direction: row;
     text-align: center;
     justify-content: space-evenly;
     width: 100%;
 }
-.category-images:hover{
+
+.category-images:hover {
     cursor: pointer;
 }
-.card-img:hover{
-    transform: scale(1.1,1.1);
-}
-.card-c{
+
+.card-c {
     height: 100px;
     display: flex;
     align-items: center;
@@ -157,135 +158,147 @@ margin-right: 10px;
     justify-content: space-evenly;
     margin: 1rem;
 }
-.card-texts{
+
+.card-texts {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
-.cat-img{
+
+.cat-img {
     width: 5rem;
     height: 5rem;
     min-height: 5rem;
-    width: 5rem;
 }
 
-
-
-
-/* slide carousel */
-.carousel-container{
+/* Slide Carousel */
+.carousel-container {
     background-color: white;
     display: flex;
     flex-direction: row;
     width: 85vw;
-   
 }
-.advertisement{
+
+.advertisement {
     width: 100vw;
 }
 
+/* Cards Carousel */
+.card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
 
-/* cards-carousel */
-.card-img-top{
-    height: 290px;
-    width: 290px;
-    margin: auto;
-    object-fit:contain;
+.card:hover .card-img-top {
+    transform: none !important;
+    transition: none !important;
 }
-.cards{
+
+
+.cards {
     width: 18rem;
-    margin-top: 5px;
+    height: 300px; /* Set a fixed height for uniformity */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
-.offer{
+
+.offer {
     max-width: 100%;
     margin-top: -20px;
 }
-.carousel-btns{
-    border-radius: 100%; 
+
+.carousel-btns {
+    border-radius: 50%;
     height: 50px;
     width: 50px;
-    margin: auto
+    margin: auto;
 }
-.initial-items-list{
+
+.initial-items-list {
     gap: 10px;
 }
 
-.card-text{
-    text-align:center
+.card-text {
+    text-align: center;
 }
-.cards-wrapper{
+
+.cards-wrapper {
     display: flex;
 }
- 
-.cards{
-    border: 1px solid rgba(109, 106, 106, 0.116);
-    margin: 0.5rem;
-}
-.boe{
+
+.boe {
     width: 85vw;
 }
-.boe-heading{
+
+.boe-heading {
     width: 85vw;
     display: flex;
     justify-content: start;
     text-align: center;
 }
-.carousle-overflow{
+
+.carousle-overflow {
     overflow-x: hidden;
 }
 
-
-/* footer-css */
-.footer{
+/* Footer */
+.footer {
     width: 100%;
     display: flex;
     flex-direction: row;
 }
-.footer-social{
+
+.footer-social {
     width: 300px;
-    display: flex; 
+    display: flex;
     justify-content: space-between;
 }
-.footer-i{
-    color: white; 
+
+.footer-i {
+    color: white;
     margin: 5px;
 }
-.copy-right{
+
+.copy-right {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.dn{
+.dn {
     display: block;
 }
-@media  screen and (max-width:837px) {
-    #search{
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    #ad {
         display: none;
     }
-}
-@media  screen and (max-width:1200px) {
-    #ad{
+    .dn {
         display: none;
     }
-    .dn{
-        display: none;
-    }
-    #boe{
+    #boe {
         width: 100%;
-        grid-column: 12;
     }
 }
 
-@media screen and (max-width :621px) {
-    .login-cart{
+@media screen and (max-width: 837px) {
+    #search {
         display: none;
     }
 }
-@media screen and (max-width :1428px) {
-    .category-top{
-        overflow-x: scroll;
-        /* height: max-content; */
-        overflow-y: hidden;
+
+@media screen and (max-width: 621px) {
+    .login-cart {
+        display: none;
     }
 }
 
+@media screen and (max-width: 1428px) {
+    .category-top {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+}

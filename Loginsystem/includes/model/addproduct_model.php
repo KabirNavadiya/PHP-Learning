@@ -3,20 +3,6 @@
 declare(strict_types=1);
 
 
-function getRows($conn){
-    $query = "SELECT count(*) FROM products";
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-    return $stmt->fetchColumn();
-}
-
-function resetCounter(object $conn,int $rows){
-    $query = "ALTER TABLE products AUTO_INCREMENT = :new_auto;";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(":new_auto", $rows, PDO::PARAM_INT);
-    $stmt->execute();
-
-}
 function getProduct(object $conn, string $productName)
 {
     $query = "SELECT product_name FROM products where product_name = :productname;";
@@ -29,12 +15,12 @@ function getProduct(object $conn, string $productName)
 function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage)
 {
 
-    $uploadDir ="includes/uploads/";
+    $uploadDir = "includes/uploads/";
     $fileName = basename($productImage['name']);
     $imagePath = $uploadDir . $fileName;
 
-    
-    if (!move_uploaded_file($productImage['tmp_name'], __DIR__ ."/../../" . $imagePath)) {
+
+    if (!move_uploaded_file($productImage['tmp_name'], __DIR__ . "/../../" . $imagePath)) {
         die("Error uploading image.");
     }
 
@@ -58,10 +44,11 @@ function getCategories(object $conn)
     return $categories;
 }
 
-function getProducts($conn){
+function getProducts($conn)
+{
     $query = "SELECT p.id AS id,p.product_name AS product_name,c.name AS category_name,p.price AS price,p.description AS description,p.image AS image FROM products p JOIN categories c ON p.category_id = c.id;";
-    $stmt = $conn -> prepare($query);
-    $stmt -> execute();
-    $products = $stmt -> fetchAll();
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $products = $stmt->fetchAll();
     return $products;
 }

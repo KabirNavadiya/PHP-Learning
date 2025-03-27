@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once 'dbh.inc.php';
         require_once 'model/addproduct_model.php';
         require_once 'controller/addproduct_contr.php';
-        
+
         $errors = [];
         if (isInputEmpty($productName, $productCategory, $productPrice, $productDescription, $productImage)) {
             $errors["empty_input"] = "fill in all fields";
@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             header("Location: ../product.php");
             die();
         }
-        $rows = getRows($conn);
-        resetCounter($conn,$rows);
+        // $rows = getRows($conn);
+        // resetCounter($conn, $rows);
         setProduct($conn, $productName, $productCategory, $productPrice, $productDescription, $productImage);
 
         $_SESSION['product_success'] = "✅ Item Added Successfully!";
@@ -47,4 +47,3 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     header('Location: ../admin.php');
     die();
 }
-

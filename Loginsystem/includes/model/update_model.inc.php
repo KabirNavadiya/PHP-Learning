@@ -11,7 +11,8 @@ function getUser(object $conn, string $username)
     return $result;
 }
 
-function setPass(object $conn,string $username,string $h_pwd){
+function setPass(object $conn, string $username, string $h_pwd)
+{
     $query = "UPDATE users SET pwd = :newpass where username = :username ;";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":username", $username);

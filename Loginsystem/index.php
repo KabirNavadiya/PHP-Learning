@@ -1,6 +1,10 @@
 <?php
+require_once 'includes/dbh.inc.php';
 require_once 'includes/config_session.inc.php';
-require_once 'includes/view/login_view.inc.php';
+require_once 'includes/model/addproduct_model.php';
+$products = getProducts($conn);
+$categories = getCategories($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -15,9 +19,15 @@ require_once 'includes/view/login_view.inc.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="css/home.css">
 
   <title>Flipkart</title>
+
+  <style>
+    .card-img:hover {
+      transform: none !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -90,14 +100,6 @@ require_once 'includes/view/login_view.inc.php';
         ?>
 
 
-
-
-
-
-
-
-
-
         <div class="cart">
           <button class="btn btn-light cart-btn" type="button">
             <svg class="cart-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -147,40 +149,40 @@ require_once 'includes/view/login_view.inc.php';
     <div class="container-fluid category-top">
       <div class="d-flex  category-images">
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/flap/64/64/image/29327f40e9c4d26b.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/grocery.webp" class="cat-img"
+            alt="grocery">
           <div class="">
             <p class="card-texts"><small class="text-body-dark category-text">Grocery</small></p>
           </div>
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/flap/64/64/image/22fddf3c7da4c4f4.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/mobiles.webp" class="cat-img"
+            alt="mobiles">
           <div class="">
             <p class="card-texts"><small class="text-body-dark category-text">Mobiles</small></p>
           </div>
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/0d75b34f7d8fbcb3.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/fashion.png" class="cat-img"
+            alt="fashion">
           <div class="">
             <p class="card-texts"><small class="text-body-dark dropdown-toggle category-text">Fashion </small></p>
           </div>
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/flap/64/64/image/69c6589653afdb9a.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/electronics.png" class="cat-img"
+            alt="electronics">
           <div class="">
             <p class="card-texts"><small class="text-body-dark dropdown-toggle category-text">Electronics</small></p>
           </div>
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/flap/64/64/image/ab7e2b022a4587dd.jpg?q=100" class="cat-img"
-            alt="...">
+          <img src="images/furniture.jpg" class="cat-img"
+            alt="furniture">
           <div class="">
             <p class="card-texts"><small class="text-body-dark dropdown-toggle category-text">Home & Furniture</small>
             </p>
@@ -188,8 +190,8 @@ require_once 'includes/view/login_view.inc.php';
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/0139228b2f7eb413.jpg?q=100" class="cat-img"
-            alt="...">
+          <img src="images/apliances.webp" class="cat-img"
+            alt="appliances">
           <div class="">
             <p class="card-texts"><small class="text-body-dark category-text">Appliances</small></p>
           </div>
@@ -197,16 +199,16 @@ require_once 'includes/view/login_view.inc.php';
 
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/flap/64/64/image/71050627a56b4693.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/flightbooking.webp" class="cat-img"
+            alt="flightbooking">
           <div class="">
             <p class="card-texts"><small class="text-body-dark category-text">Flight Bookings</small></p>
           </div>
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/flap/64/64/image/dff3f7adcf3a90c6.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/beautytoys.png" class="cat-img"
+            alt="beautytoys">
           <div class="">
             <p class="card-texts"><small class="text-body-dark dropdown-toggle category-text">Beauty, Toys &
                 More</small></p>
@@ -214,8 +216,8 @@ require_once 'includes/view/login_view.inc.php';
         </div>
 
         <div class="card-c">
-          <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/05d708653beff580.png?q=100" class="cat-img"
-            alt="...">
+          <img src="images/twowheeler.png" class="cat-img"
+            alt="twowheeler">
           <div class="">
             <p class="card-texts"><small class="text-body-dark dropdown-toggle category-text">Two Wheeler</small></p>
           </div>
@@ -241,16 +243,16 @@ require_once 'includes/view/login_view.inc.php';
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="1000">
-            <img src="https://rukminim2.flixcart.com/fk-p-flap/1010/170/image/ae33e00a9d467576.jpg?q=20"
-              class="d-block w-100" alt="...">
+            <img src="images/carousel1.webp"
+              class="d-block w-100" alt="carousel1">
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <img src="https://rukminim2.flixcart.com/fk-p-flap/1010/170/image/9600dc6f546d1164.jpeg?q=20"
-              class="d-block w-100" alt="...">
+            <img src="images/carousel2.webp"
+              class="d-block w-100" alt="carousel2">
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <img src="https://rukminim2.flixcart.com/fk-p-flap/1010/170/image/d9290fb51138d286.png?q=20"
-              class="d-block w-100" alt="...">
+            <img src="images/carousel3.webp"
+              class="d-block w-100" alt="carousel3">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
@@ -269,7 +271,7 @@ require_once 'includes/view/login_view.inc.php';
 
 
   <!-- best of electronics -->
-  <div class="boe-heading bg-light mt-3 p-2">
+  <!-- <div class="boe-heading bg-light mt-3 p-2">
     <div class="row mt-2 ms-2">
       <h4>Best of Electronics</h4>
     </div>
@@ -279,7 +281,7 @@ require_once 'includes/view/login_view.inc.php';
     <div class=" initial-items-list" id="boe">
       <div class="row w-100">
         <div class="col-10" id="boe">
-          <div id="carouselExample" class="carousel slide">
+          <div id="carouselElectronics" class="carousel slide">
             <div class="carousel-inner carousle-overflow">
               <div class="carousel-item active">
                 <div class="cards-wrapper">
@@ -393,12 +395,12 @@ require_once 'includes/view/login_view.inc.php';
 
 
             </div>
-            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselExample"
+            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselElectronics"
               data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselExample"
+            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselElectronics"
               data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
@@ -414,9 +416,12 @@ require_once 'includes/view/login_view.inc.php';
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
+  <?php
 
+  if ($isLoggedIn) {
+    echo '
   <!--Recently visited-->
   <div class="boe-heading bg-light mt-3 p-2">
     <div class="row mt-2 ms-2">
@@ -427,7 +432,7 @@ require_once 'includes/view/login_view.inc.php';
     <div class=" initial-items-list">
       <div class="row w-100">
         <div class="col-12">
-          <div id="carouselExample1" class="carousel slide">
+          <div id="carouselRecentlyVisited" class="carousel slide">
             <div class="carousel-inner carousle-overflow">
               <div class="carousel-item active">
                 <div class="cards-wrapper">
@@ -437,25 +442,28 @@ require_once 'includes/view/login_view.inc.php';
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
                       <p class="card-title text-center">PS5</p>
-                      <h5 class="card-text text-center">$699</h5>
+                      <h5 class="card-text text-center">&#8377;699</h5>
                     </div>
                   </div>
+
+
+
                   <div class="cards">
                     <img
                       src="images/tshirt.webp"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
                       <p class="card-title text-center">Tshirt</p>
-                      <h5 class="card-text text-center">$20</h5>
+                      <h5 class="card-text text-center">&#8377;20</h5>
                     </div>
                   </div>
                   <div class="cards">
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
+                      src="images/vivo-mobile-phone.jpg"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
+                      <p class="card-title text-center">Vivo Y100</p>
+                      <h5 class="card-text text-center">&#8377;234<h5>
                     </div>
                   </div>
 
@@ -465,26 +473,26 @@ require_once 'includes/view/login_view.inc.php';
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
                       <p class="card-title text-center">Sony TV</p>
-                      <h5 class="card-text text-center">$499</h5>
+                      <h5 class="card-text text-center">&#8377;499</h5>
                     </div>
                   </div>
                   <div class="cards">
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
+                      src="images/sofa.jpg"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
+                      <p class="card-title text-center">Sofa</p>
+                      <h5 class="card-text text-center">&#8377;234<h5>
                     </div>
                   </div>
 
                   <div class="cards">
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
+                      src="images/speaker.jpg"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
+                      <p class="card-title text-center">Speaker</p>
+                      <h5 class="card-text text-center">&#8377;234<h5>
                     </div>
                   </div>
 
@@ -495,76 +503,43 @@ require_once 'includes/view/login_view.inc.php';
 
                   <div class="cards">
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
+                      src="images/shoes.jpg"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
+                      <p class="card-title text-center">Sport Shoes</p>
+                      <h5 class="card-text text-center">&#8377;234<h5>
                     </div>
                   </div>
 
                   <div class="cards">
                     <img
-                      src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSb-ILaW9XaBYD_pH3a0JhH6jRmAkWKQQ-lNxEpeNHyCpg7yCTBSo8JaM2xnVINuQlSBxZrLObNaM39fYEjoIJ6O7YM2zcMeqv7HvwE7osvtOwn2m65N-_QGQ&usqp=CAE"
+                      src="images/laptop.jpg"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
-                      <p class="card-title text-center">Monitor</p>
-                      <h5 class="card-text text-center">$5436</h5>
+                      <p class="card-title text-center">Laptop</p>
+                      <h5 class="card-text text-center">&#8377;5436</h5>
                     </div>
                   </div>
                   <div class="cards">
                     <img
-                      src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTt-oorsWvG_ABWCWtvhWBet7nIo6e7ANlJ44HlFzB25rqxNSZYCZYtiuGMWpBcxJwW9suYxHfsi59z-Prg40rg3MwijdD9Dw&usqp=CAE"
+                      src="images/sweater.webp"
                       class="card-img-top card-img" alt="...">
                     <div class="card-body">
-                      <p class="card-title text-center">Camera</p>
-                      <h5 class="card-text text-center">$387</h5>
+                      <p class="card-title text-center">Sweater</p>
+                      <h5 class="card-text text-center">&#8377;387</h5>
                     </div>
                   </div>
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTucIBakKbROvB0EY8q1ilYOOhF9zBJLlYHxxK-gjqAY52jcl_ByztL8riZPmEZZsWLr_meukCxUF0WNZpVhphX5mMCIxYu4WULl1ieOVwDYvKYKEIWjXd7&usqp=CAEE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Projector</p>
-                      <h5 class="card-text text-center">$980</h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTYY-RJLZS4op2B806yVKjC_-CypRhDC0NNps80B0a1UaQQTVHJ0bw00biYFv7zA_b93wFqPg6x39Eg6vPKODBoqnOG8y6XGQP17QqIMZBRGsQiFR3mtf00sg&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Printers
-                      <h5 class="card-text text-center">From $2066</h5>
-                    </div>
-                  </div>
-
-
-
 
                 </div>
               </div>
 
             </div>
-            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselExample1"
+            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
               data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselExample1"
+            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
               data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
@@ -572,140 +547,135 @@ require_once 'includes/view/login_view.inc.php';
           </div>
         </div>
 
+        
       </div>
     </div>
   </div>
 
-  <!-- new products -->
-  <!-- <div class="boe-heading bg-light mt-3 p-2">
-    <div class="row mt-2 ms-2">
-      <h4>New Products</h4>
-    </div>
-  </div> -->
+  ';
+  }
 
-  <div class="boe bg-light" id="new-product-container">
+  ?>
 
-  </div>
-  <div class="boe bg-light" id="fashion-container">
+  <?php
 
-  </div>
-  <div class="boe bg-light" id="furniture-container">
+  foreach ($categories as $category) {
+    // Filter products for the current category
+    $filteredProducts = array_filter($products, function ($product) use ($category) {
+      return $product['category_name'] == $category['name'];
+    });
 
-  </div>
+    echo '<div class="boe-heading bg-light mt-3 p-2">
+          <div class="row mt-2 ms-2">
+              <h4>' . $category['name'] . '</h4>
+          </div>
+        </div>
+        <div class="boe bg-light">
+          <div class="initial-items-list">
+            <div class="row w-100">
+              <div class="col-12">
+                <div id="carouselExample' . $category['id'] . '" class="carousel slide" ">
+                  <div class="carousel-inner carousle-overflow">';
+
+    if (!empty($filteredProducts)) {
+      $first = true;
+      foreach (array_chunk($filteredProducts, 6) as $productSet) {
+        echo '<div class="carousel-item ' . ($first ? 'active' : '') . '">
+                  <div class="cards-wrapper">';
+        foreach ($productSet as $product) {
+          echo '<div class="cards">
+                      <img src="' . $product['image'] . '" class="card-img-top card-img" alt="...">
+                      <div class="card-body">
+                          <p class="card-title text-center">' . $product['product_name'] . '</p>
+                          <h5 class="card-text text-center">&#8377;' . $product['price'] . '</h5>
+                      </div>
+                    </div>';
+        }
+        echo '  </div>
+                </div>';
+        $first = false;
+      }
+    } else {
+      echo '<p>No products available in this category.</p>';
+    }
+
+    echo '    </div>
+                <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselExample' . $category['id'] . '" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselExample' . $category['id'] . '" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>';
+  }
+
+  ?>
+
+
 
 
 
   <footer class="container-fluid text-center text-lg-start bg-dark text-white mt-4">
-    <!-- Section: Social media -->
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-      <!-- Left -->
       <div class="me-5 d-none d-lg-block">
-        <span>Get connected with us on social networks:</span>
+        <span>Follow us on</span>
       </div>
-      <!-- Left -->
-
-      <!-- Right -->
       <div class="footer-social">
         <i class="bi bi-facebook footer-i"></i>
         <i class="bi bi-twitter-x footer-i"></i>
-        <i class="bi bi-google footer-i"></i>
         <i class="bi bi-instagram footer-i"></i>
         <i class="bi bi-linkedin footer-i"></i>
-        <i class="bi bi-github footer-i"></i>
       </div>
-      <!-- Right -->
     </section>
-    <!-- Section: Social media -->
 
-    <!-- Section: Links  -->
-    <section class="">
+    <section>
       <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
         <div class="row mt-3">
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              <i class="bi bi-gem footer-i"></i>Company name
-            </h6>
-            <p>
-              Here you can use rows and columns to organize your footer content. Lorem ipsum
-              dolor sit amet, consectetur adipisicing elit.
-            </p>
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">About</h6>
+            <p><a href="#" class="text-reset">Contact Us</a></p>
+            <p><a href="#" class="text-reset">About Us</a></p>
+            <p><a href="#" class="text-reset">Careers</a></p>
+            <p><a href="#" class="text-reset">Flipkart Stories</a></p>
           </div>
-          <!-- Grid column -->
 
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Products
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Angular</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">React</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Vue</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Laravel</a>
-            </p>
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Help</h6>
+            <p><a href="#" class="text-reset">Payments</a></p>
+            <p><a href="#" class="text-reset">Shipping</a></p>
+            <p><a href="#" class="text-reset">Cancellation & Returns</a></p>
+            <p><a href="#" class="text-reset">FAQ</a></p>
           </div>
-          <!-- Grid column -->
 
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Useful links
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Pricing</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Settings</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Orders</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Help</a>
-            </p>
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Consumer Policy</h6>
+            <p><a href="#" class="text-reset">Return Policy</a></p>
+            <p><a href="#" class="text-reset">Terms of Use</a></p>
+            <p><a href="#" class="text-reset">Security</a></p>
+            <p><a href="#" class="text-reset">Privacy</a></p>
           </div>
-          <!-- Grid column -->
 
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-            <p><i class="bi bi-house-door-fill footer-i"></i> New York, NY 10012, US</p>
-            <p>
-              <i class="bi bi-envelope-at-fill footer-i"></i>
-              info@example.com
-            </p>
-            <p><i class="bi bi-telephone-fill footer-i"></i> + 01 234 567 88</p>
-            <p><i class="bi bi-telephone-fill footer-i"></i>+ 01 234 567 89</p>
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Registered Office Address</h6>
+            <p>Flipkart Internet Private Limited</p>
+            <p>Buildings Alyssa, Begonia & Clove Embassy Tech Village</p>
+            <p>Outer Ring Road, Devarabeesanahalli Village, Bengaluru, 560103, Karnataka, India</p>
           </div>
-          <!-- Grid column -->
         </div>
-        <!-- Grid row -->
       </div>
     </section>
-    <!-- Section: Links  -->
+
     <hr class="bg-light">
-    <!-- Copyright -->
     <div class="text-center p-3 copy-right">
-      © 2021 Copyright:
-      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      &copy; 2025 Flipkart. All Rights Reserved.
     </div>
-    <!-- Copyright -->
   </footer>
 
-
-  <script src="script//product.js"></script>
 </body>
 
 </html>

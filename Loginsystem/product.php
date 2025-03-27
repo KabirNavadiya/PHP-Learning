@@ -24,8 +24,8 @@ $categories = getCategories($conn);
 
 <body>
   <h1 style="display: flex; align-items: center; justify-content: center; margin: auto;">Add Product</h1>
-  <a href="javascript:history.back()" class="btn btn-primary">
-    ← Back to Dashboard
+  <a href="admin.php" class="btn btn-primary">
+    ← Back
   </a>
 
   <div class="containerc">

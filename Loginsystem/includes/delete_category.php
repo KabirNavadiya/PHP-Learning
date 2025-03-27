@@ -5,13 +5,13 @@ require_once 'config_session.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    $productId = $_POST['productId'];
+    $categoryId = $_POST['categoryId'];
 
     try {
         require_once 'dbh.inc.php';
-        require_once 'model/deleteproduct_model.php';
-        deleteProduct($conn, $productId);
-        header('Location: ../admin.php');
+        require_once 'model/deletecategory_model.php';
+        deleteCategory($conn, $categoryId);
+        header('Location: ../category.php');
         $conn = null;
         $stmt = null;
         die();

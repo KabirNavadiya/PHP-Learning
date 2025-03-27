@@ -5,13 +5,19 @@ require_once 'config_session.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    $productId = $_POST['productId'];
+    $categoryId = $_POST['categoryId'];
+    $categoryName = $_POST['categoryName'];
 
     try {
         require_once 'dbh.inc.php';
-        require_once 'model/deleteproduct_model.php';
-        deleteProduct($conn, $productId);
-        header('Location: ../admin.php');
+        require_once 'model/editcategory_model.php';
+
+        updateCategory($conn, $categoryId,  $categoryName);
+
+
+        $_SESSION['edit_success'] = "✅ Item Updated Successfully!";
+        header('Location: ../category.php');
+
         $conn = null;
         $stmt = null;
         die();
@@ -22,4 +28,3 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     header('Location: ../admin.php');
     die();
 }
-
