@@ -70,14 +70,11 @@ echo substr_count("Hello world. The world is nice","world");
 
 
 // Replace "Hello" with "world":
+echo substr_replace("Hello","world",0,2);
 
 
 
-
-
-
-
-
+echo 2<1 ?  1*2 :  "false" ;
 
 
 ?>

@@ -1,0 +1,155 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+    margin: 0 0; 
+    background-image: url("gradient.avif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.login-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.432);
+    height: 500px; 
+    width: 500px; 
+    margin: auto;
+    border-radius: 10px;
+    padding: 100px;
+    box-shadow: 20px 20px 15px rgba(0, 0, 0, 0.1);
+}
+
+.inputs input{
+    display: inline-block;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border-style: none;
+    margin: 10px 0;
+    background-color: rgb(255, 255, 255);
+    font-weight: 200;
+    opacity: 0.5;
+} 
+
+.inputs{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.login-form{
+    display: flex;
+    gap: 26px;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 40px;
+}
+.fp{
+    display: flex;
+    text-align: left;
+    justify-content: left;
+    margin: 0;
+}
+
+.checkbox{
+    display: flex;
+    text-align: left;
+    justify-content: left;
+    margin: 50px 0 0 0;
+}
+.checkbox label{
+    padding-left: 5px;
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+button{
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%; 
+    border-radius: 10px;
+    background-color: #ac1dee; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover{
+    background-color: #6a1492;
+}
+h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Lucida Sans';
+    color: #ac1dee;
+    
+}
+
+.switch-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Lucida Sans';
+    color: #ac1dee;
+}
+.switch-page input{
+    padding: 10px;
+    display: inline-block;
+    border: 5px solid black;
+}
+.btn{
+    margin: 0 10px;
+    color: white;
+    background-color: #ac1dee;
+    padding:15px;
+    width:max-content;
+    text-decoration: none;
+    border-radius: 10px;
+    text-align: center;
+   
+}
+#signin:hover{
+    background-color: #6a1492;
+}
+#signup:hover{
+    background-color: #6a1492;
+    transition: width 4s ease-in-out;
+    width: 250px;
+}
+
+body {
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+#username:focus{
+    transform: scale(1.05,1.2);
+    opacity: 1;
+}   
+#password:focus{
+    transform: scale(1.05,1.2);
+    opacity: 1;
+}

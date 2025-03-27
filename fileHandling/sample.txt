@@ -1,0 +1,2 @@
+hello my name is kabir and i am learnig file handling.
+this is the second line appending to the file by opening it in append mode.
