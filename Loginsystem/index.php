@@ -2,6 +2,17 @@
 require_once 'includes/dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
+require_once 'includes/model/addtocart_model.php';
+
+if (isset($_SESSION['user_id'])) {
+  // require_once 'dbh.inc.php';
+  require_once 'includes/model/addtocart_model.php'; 
+  $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
+  $cartCount = count($userCartProducts);
+} else {
+  $cartCount = 0; 
+}
+
 $products = getProducts($conn);
 $categories = getCategories($conn);
 
@@ -26,6 +37,62 @@ $categories = getCategories($conn);
   <style>
     .card-img:hover {
       transform: none !important;
+    }
+
+    .addto-cart-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      border: 1px solid rgb(33, 89, 245);
+      background-color: white;
+      color: rgb(33, 89, 245);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .addto-cart-button:hover {
+      background-color: rgb(79, 122, 240);
+      color: white;
+    }
+
+    .addto-cart {
+      display: flex;
+      justify-content: end;
+    }
+
+    .cart {
+      position: relative;
+      /* Ensures absolute positioning inside */
+      display: inline-block;
+    }
+
+    .cart-btn {
+      position: relative;
+      /* Makes sure the badge is positioned inside the button */
+      padding: 10px 15px;
+    }
+
+    .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      /* Moves it slightly outwards */
+      background: #E91E63;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 8px;
+      border-radius: 50%;
+      min-width: 20px;
+      min-height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
@@ -101,15 +168,19 @@ $categories = getCategories($conn);
 
 
         <div class="cart">
-          <button class="btn btn-light cart-btn" type="button">
+          <button class="btn btn-light cart-btn highlight" type="button" onclick="window.location.href='cart.php';">
             <svg class="cart-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
               class="bi bi-cart" viewBox="0 0 16 16">
               <path
                 d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
             </svg>
             <span class="dn">Cart</span>
+            <span class="badge badge-primary" id="dot" style="display: <?= ($cartCount > 0) ? 'block' : 'none'; ?>;">
+              <?= ($cartCount > 0) ? $cartCount : ''; ?>
+            </span>
           </button>
         </div>
+
 
         <div class="seller">
           <button class="btn btn-light seller-btn" type="button">
@@ -420,145 +491,146 @@ $categories = getCategories($conn);
 
   <?php
 
-  if ($isLoggedIn) {
-    echo '
-  <!--Recently visited-->
-  <div class="boe-heading bg-light mt-3 p-2">
-    <div class="row mt-2 ms-2">
-      <h4>Recently Visited items</h4>
-    </div>
-  </div>
-  <div class="boe bg-light">
-    <div class=" initial-items-list">
-      <div class="row w-100">
-        <div class="col-12">
-          <div id="carouselRecentlyVisited" class="carousel slide">
-            <div class="carousel-inner carousle-overflow">
-              <div class="carousel-item active">
-                <div class="cards-wrapper">
-                  <div class="cards">
-                    <img
-                      src="images/ps5 .jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">PS5</p>
-                      <h5 class="card-text text-center">&#8377;699</h5>
-                    </div>
-                  </div>
+  // if ($isLoggedIn) {
+  //   echo '
+
+  //   <!--Recently visited-->
+
+  //   <div class="boe-heading bg-light mt-3 p-2">
+  //     <div class="row mt-2 ms-2">
+  //       <h4>Recently Visited items</h4>
+  //     </div>
+  //   </div>
+  //   <div class="boe bg-light">
+  //     <div class=" initial-items-list">
+  //       <div class="row w-100">
+  //         <div class="col-12">
+  //           <div id="carouselRecentlyVisited" class="carousel slide">
+  //             <div class="carousel-inner carousle-overflow">
+  //               <div class="carousel-item active">
+  //                 <div class="cards-wrapper">
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/ps5 .jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">PS5</p>
+  //                       <h5 class="card-text text-center">&#8377;699</h5>
+  //                     </div>
+  //                   </div>
 
 
 
-                  <div class="cards">
-                    <img
-                      src="images/tshirt.webp"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Tshirt</p>
-                      <h5 class="card-text text-center">&#8377;20</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="images/vivo-mobile-phone.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Vivo Y100</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/tshirt.webp"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Tshirt</p>
+  //                       <h5 class="card-text text-center">&#8377;20</h5>
+  //                     </div>
+  //                   </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/vivo-mobile-phone.jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Vivo Y100</p>
+  //                       <h5 class="card-text text-center">&#8377;234<h5>
+  //                     </div>
+  //                   </div>
 
-                  <div class="cards">
-                    <img
-                      src="images/Sony tv.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sony TV</p>
-                      <h5 class="card-text text-center">&#8377;499</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="images/sofa.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sofa</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/Sony tv.jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Sony TV</p>
+  //                       <h5 class="card-text text-center">&#8377;499</h5>
+  //                     </div>
+  //                   </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/sofa.jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Sofa</p>
+  //                       <h5 class="card-text text-center">&#8377;234<h5>
+  //                     </div>
+  //                   </div>
 
-                  <div class="cards">
-                    <img
-                      src="images/speaker.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Speaker</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/speaker.jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Speaker</p>
+  //                       <h5 class="card-text text-center">&#8377;234<h5>
+  //                     </div>
+  //                   </div>
 
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="cards-wrapper">
+  //                 </div>
+  //               </div>
+  //               <div class="carousel-item">
+  //                 <div class="cards-wrapper">
 
-                  <div class="cards">
-                    <img
-                      src="images/shoes.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sport Shoes</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/shoes.jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Sport Shoes</p>
+  //                       <h5 class="card-text text-center">&#8377;234<h5>
+  //                     </div>
+  //                   </div>
 
-                  <div class="cards">
-                    <img
-                      src="images/laptop.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Laptop</p>
-                      <h5 class="card-text text-center">&#8377;5436</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="images/sweater.webp"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sweater</p>
-                      <h5 class="card-text text-center">&#8377;387</h5>
-                    </div>
-                  </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/laptop.jpg"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Laptop</p>
+  //                       <h5 class="card-text text-center">&#8377;5436</h5>
+  //                     </div>
+  //                   </div>
+  //                   <div class="cards">
+  //                     <img
+  //                       src="images/sweater.webp"
+  //                       class="card-img-top card-img" alt="...">
+  //                     <div class="card-body">
+  //                       <p class="card-title text-center">Sweater</p>
+  //                       <h5 class="card-text text-center">&#8377;387</h5>
+  //                     </div>
+  //                   </div>
 
-                </div>
-              </div>
+  //                 </div>
+  //               </div>
 
-            </div>
-            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
+  //             </div>
+  //             <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
+  //               data-bs-slide="prev">
+  //               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  //               <span class="visually-hidden">Previous</span>
+  //             </button>
+  //             <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
+  //               data-bs-slide="next">
+  //               <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  //               <span class="visually-hidden">Next</span>
+  //             </button>
+  //           </div>
+  //         </div>
 
-        
-      </div>
-    </div>
-  </div>
 
-  ';
-  }
+  //       </div>
+  //     </div>
+  //   </div>
+
+  // ';
+  // }
 
   ?>
 
   <?php
-
   foreach ($categories as $category) {
     // Filter products for the current category
     $filteredProducts = array_filter($products, function ($product) use ($category) {
@@ -589,8 +661,13 @@ $categories = getCategories($conn);
                           <p class="card-title text-center">' . $product['product_name'] . '</p>
                           <h5 class="card-text text-center">&#8377;' . $product['price'] . '</h5>
                       </div>
-                    </div>';
+                      <div class = addto-cart>
+                       <button class="addto-cart-button" onclick = "addToCart(' . $product['id'] . ')">+</button>
+                      </div>
+                      </div>
+                    ';
         }
+
         echo '  </div>
                 </div>';
         $first = false;
@@ -598,7 +675,6 @@ $categories = getCategories($conn);
     } else {
       echo '<p>No products available in this category.</p>';
     }
-
     echo '    </div>
                 <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselExample' . $category['id'] . '" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -613,12 +689,7 @@ $categories = getCategories($conn);
           </div>
         </div>';
   }
-
   ?>
-
-
-
-
 
   <footer class="container-fluid text-center text-lg-start bg-dark text-white mt-4">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
@@ -675,6 +746,38 @@ $categories = getCategories($conn);
       &copy; 2025 Flipkart. All Rights Reserved.
     </div>
   </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var cartCount = <?= json_encode($cartCount); ?>;
+      var dotElement = document.getElementById("dot");
+
+      if (cartCount > 0) {
+        dotElement.style.display = "block";
+      } else {
+        dotElement.style.display = "none";
+      }
+    });
+
+    function addToCart(productId) {
+      $.ajax({
+        url: "includes/addtocart.php",
+        type: "POST",
+        data: {
+          productId: productId
+        },
+        success: function(response) {
+          alert("✅ Product added to cart!");
+        },
+        error: function(xhr, status, error) {
+          alert("❌ Error: " + response.message);
+        }
+      });
+
+    }
+  </script>
 
 </body>
 
