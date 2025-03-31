@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Prevents width issues */
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url("gradient.avif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.login-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.432);
+    height: 500px;
+    width: 500px;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.inputs {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.inputs input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    margin: 10px 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.7;
+}
+
+.inputs input:focus {
+    transform: scale(1.05);
+    opacity: 1;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(172, 29, 238, 0.5);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.fp,
+.checkbox {
+    display: flex;
+    justify-content: left;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.checkbox label {
+    padding-left: 5px;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ac1dee;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #6a1492;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    font-family: 'Lucida Sans', sans-serif;
+    color: #ac1dee;
+}
+
+.switch-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Lucida Sans', sans-serif;
+    color: #ac1dee;
+}
+
+.btn {
+    margin: 0 10px;
+    color: white;
+    background-color: #ac1dee;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.4s ease-in-out;
+}
+
+#signin:hover,
+#signup:hover {
+    background-color: #6a1492;
+}
+
+#signup:hover {
+    width: 250px;
+}
