@@ -1,0 +1,311 @@
+body {
+    background-color: rgba(230, 220, 220, 0.37);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+/* Header */
+header {
+    background-color: white;
+    width: 100%;
+}
+
+/* Navigation */
+#search-bar {
+    border: none;
+    outline: none;
+    font-size: 17px;
+    height: 40px;
+    width: 100%;
+    background-color: rgba(117, 117, 131, 0.13);
+    border-radius: 0 10px 10px 0;
+    text-overflow: ellipsis;
+    padding-left: 10px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-icon {
+    border: none;
+    height: 40px;
+    border-radius: 10px 0 0 10px;
+}
+
+.logo {
+    margin: 0 20px 20px 0;
+}
+
+.logo-search {
+    width: 70%;
+    display: flex;
+    justify-content: start;
+}
+
+.login-btn,
+.cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 8px 15px;
+    transition: 0.3s ease-in-out;
+}
+
+.person-logo,
+.cart-logo,
+.seller-logo {
+    margin-right: 10px;
+}
+
+.login-cart {
+    width: 60%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 5rem;
+}
+
+.login-btn:hover {
+    background-color: blue;
+    color: white;
+}
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+    pointer-events: none;
+}
+
+.dropstart .dropdown-menu {
+    left: -200px;
+    pointer-events: none;
+}
+
+.dropstart:hover .dropdown-menu {
+    display: block;
+}
+
+.login-drop {
+    width: 250px;
+}
+
+.login-header {
+    display: flex;
+    font-size: 17px;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 5px;
+}
+
+.sign-up {
+    font-size: 17px;
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+/* Flipkart Logo */
+.flipkart-logo {
+    width: 160px;
+    height: 40px;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    padding: 20px;
+}
+
+/* Navigation Icons */
+.nav-i {
+    margin-right: 10px;
+}
+
+/* Category Cards */
+.category-text {
+    font-weight: 800;
+}
+
+.category-container {
+    background-color: white;
+    display: flex;
+    width: 85%;
+}
+
+.category-images {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.category-images:hover {
+    cursor: pointer;
+}
+
+.card-c {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 1rem;
+}
+
+.card-texts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cat-img {
+    width: 5rem;
+    height: 5rem;
+    min-height: 5rem;
+}
+
+/* Slide Carousel */
+.carousel-container {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    width: 85vw;
+}
+
+.advertisement {
+    width: 100vw;
+}
+
+/* Cards Carousel */
+.card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.card:hover .card-img-top {
+    transform: none !important;
+    transition: none !important;
+}
+
+
+.cards {
+    width: 18rem;
+    height: 300px;
+    /* Set a fixed height for uniformity */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.offer {
+    max-width: 100%;
+    margin-top: -20px;
+}
+
+.carousel-btns {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin: auto;
+}
+
+.initial-items-list {
+    gap: 10px;
+}
+
+.card-text {
+    text-align: center;
+}
+
+.cards-wrapper {
+    display: flex;
+}
+
+.boe {
+    width: 85vw;
+}
+
+.boe-heading {
+    width: 85vw;
+    display: flex;
+    justify-content: start;
+    text-align: center;
+}
+
+.carousle-overflow {
+    overflow-x: hidden;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.footer-social {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-i {
+    color: white;
+    margin: 5px;
+}
+
+.copy-right {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dn {
+    display: block;
+}
+
+
+
+
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    #ad {
+        display: none;
+    }
+
+    .dn {
+        display: none;
+    }
+
+    #boe {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 837px) {
+    #search {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 621px) {
+    .login-cart {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1428px) {
+    .category-top {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+}
