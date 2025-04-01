@@ -3,10 +3,11 @@
 require_once 'includes/dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
+require_once 'includes/stripe/config.php';
 
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
     $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
-  }
+}
 
 ?>
 
@@ -61,6 +62,7 @@ if(isset($_SESSION['user_id'])){
     <a href="index.php" class="btn btn-primary">
         ← Back
     </a>
+
     <div class="cart-container">
         <h1>Shopping Cart</h1>
         <table class="cart-table">
@@ -68,7 +70,8 @@ if(isset($_SESSION['user_id'])){
                 <tr>
                     <th>Product</th>
                     <th>Name</th>
-                    <th>Price</th>
+                    <th>Original Price</th>
+                    <th>Discounted Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Action</th>
@@ -81,17 +84,15 @@ if(isset($_SESSION['user_id'])){
 
         <div class="cart-footer">
             <h2></h2>
-            <button class="checkout-btn">Proceed to Checkout</button>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
         </div>
     </div>
 
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
-
-   
         function updateQuantity(cartProductId, action) {
 
             $.ajax({
@@ -118,17 +119,13 @@ if(isset($_SESSION['user_id'])){
 
         function fetchCart() {
             $.ajax({
-                url: "includes/fetchcart.php", // Fetch cart data
+                url: "includes/fetchcart.php",
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
-                    if (response.error) {
-                        // $("#cart-table-body").html("<tr><td colspan='6'>" + response.error + "</td></tr>");
-                        // $(".cart-footer h2").html("Total: ₹0");
-                        
-                    } else {
+                    if (!response.error) {
                         $("#cart-table-body").html(response.cart_html);
-                        $(".cart-footer h2").html("Total: ₹" + response.total_price);
+                        $(".cart-footer h2").html("Total: ₹" + response.discounted_total_price);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -139,6 +136,26 @@ if(isset($_SESSION['user_id'])){
         $(document).ready(function() {
             fetchCart();
 
+            $("#checkout-btn").click(function() {
+                $.ajax({
+                    url: "includes/stripe/stripe_checkout.php",
+                    type: "POST",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.sessionId) {
+                            var stripe = Stripe("<?php echo STRIPE_PUBLISHABLE_KEY; ?>");
+                            stripe.redirectToCheckout({
+                                sessionId: response.sessionId
+                            });
+                        } else {
+                            alert("Error: " + response.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
+                });
+            });
         });
     </script>
 

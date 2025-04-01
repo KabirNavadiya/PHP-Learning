@@ -6,11 +6,11 @@ require_once 'includes/model/addtocart_model.php';
 
 if (isset($_SESSION['user_id'])) {
   // require_once 'dbh.inc.php';
-  require_once 'includes/model/addtocart_model.php'; 
+  require_once 'includes/model/addtocart_model.php';
   $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
   $cartCount = count($userCartProducts);
 } else {
-  $cartCount = 0; 
+  $cartCount = 0;
 }
 
 $products = getProducts($conn);
@@ -35,12 +35,18 @@ $categories = getCategories($conn);
   <title>Flipkart</title>
 
   <style>
+    .card-img-top {
+      width: 100%;
+      height: 200px !important;
+      object-fit: contain;
+    }
+
     .card-img:hover {
       transform: none !important;
     }
 
     .addto-cart-button {
-      width: 30px;
+      width: 60px;
       height: 30px;
       border-radius: 5px;
       border: 1px solid rgb(33, 89, 245);
@@ -61,7 +67,8 @@ $categories = getCategories($conn);
 
     .addto-cart {
       display: flex;
-      justify-content: end;
+      justify-content: center;
+      margin-bottom: 10px;
     }
 
     .cart {
@@ -81,7 +88,6 @@ $categories = getCategories($conn);
       top: 0;
       right: 0;
       transform: translate(50%, -50%);
-      /* Moves it slightly outwards */
       background: #E91E63;
       color: white;
       font-size: 12px;
@@ -93,6 +99,127 @@ $categories = getCategories($conn);
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .cards {
+      position: relative;
+      /* Ensures the label is positioned correctly */
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .exclusive-offer-label {
+      position: absolute;
+      top: 30px;
+      left: -20px;
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+      text-transform: uppercase;
+      transform: rotate(-45deg);
+      z-index: 10;
+    }
+    .discount{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(39, 94, 245, 0.86);
+      color: white;
+      padding: 5px 5px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      width: 350px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      animation: slideIn 0.3s ease-in-out;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-buttons button,
+    .modal-content button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    .close-btn {
+      background-color: rgb(255, 85, 85);
+      color: white;
+    }
+
+    .close-btn:hover {
+      background-color: rgb(220, 50, 50);
+    }
+
+    .checkout-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .checkout-btn:hover {
+      background-color: #0056b3;
+    }
+
+    p {
+      padding-left: 3px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+      }
+
+      to {
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -156,7 +283,7 @@ $categories = getCategories($conn);
           <li><hr class="dropdown-divider"></li>';
         } else {
           echo '<li><a class="dropdown-item" href="#"><i class="bi bi-person-circle nav-i"></i> My Profile</a></li>
-          <li><a class="dropdown-item" href="#"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
+          <li><a class="dropdown-item" href="orders.php"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-heart nav-i"></i> Wishlist</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-wallet2 nav-i"></i> Gift Card</a></li>
           <li><hr class="dropdown-divider"></li>
@@ -208,7 +335,6 @@ $categories = getCategories($conn);
             <li><a class="dropdown-item" href="#"><i class="bi bi-download nav-i"></i>Downlaod App</a></li>
           </ul>
         </div>
-        <!-- <span><a href="admin.php" target="_blank">Admin</a></span> -->
       </div>
     </nav>
 
@@ -519,8 +645,6 @@ $categories = getCategories($conn);
   //                     </div>
   //                   </div>
 
-
-
   //                   <div class="cards">
   //                     <img
   //                       src="images/tshirt.webp"
@@ -646,7 +770,7 @@ $categories = getCategories($conn);
           <div class="initial-items-list">
             <div class="row w-100">
               <div class="col-12">
-                <div id="carouselExample' . $category['id'] . '" class="carousel slide" ">
+                <div id="carouselExample' . $category['id'] . '" class="carousel slide">
                   <div class="carousel-inner carousle-overflow">';
 
     if (!empty($filteredProducts)) {
@@ -655,17 +779,38 @@ $categories = getCategories($conn);
         echo '<div class="carousel-item ' . ($first ? 'active' : '') . '">
                   <div class="cards-wrapper">';
         foreach ($productSet as $product) {
-          echo '<div class="cards">
-                      <img src="' . $product['image'] . '" class="card-img-top card-img" alt="...">
+          $discountPrice = $product['price'] - ($product['price'] * $product['discount']) / 100;
+          echo '<div class="cards">';
+
+          if($product['discount'] >= 25){
+            echo '   <!-- Exclusive Offer Label -->
+            <span class="exclusive-offer-label">Exclusive Offer</span>';
+          }
+
+          if($product['discount']){
+            echo ' 
+            <span class="discount">-'.$product['discount'].'%</span>';
+          }
+          echo '<img src="' . $product['image'] . '" class="card-img-top card-img" alt="...">
                       <div class="card-body">
                           <p class="card-title text-center">' . $product['product_name'] . '</p>
-                          <h5 class="card-text text-center">&#8377;' . $product['price'] . '</h5>
+
+
+                          ';
+          if ($product['discount']) {
+            echo '<p class="card-text text-center">
+                    <span style="color: gray; font-size: 14px;">&#8377;<del>' . $product['price'] . '</del></span> 
+                    <strong>&#8377;' . $discountPrice . '</strong>
+                  </p>';
+          } else {
+            echo '<p class="card-text text-center">&#8377;' . $product['price'] . '</p>';
+          }
+
+          echo '</div>
+                      <div class="addto-cart">
+                       <button class="addto-cart-button" onclick="addToCart(' . $product['id'] . ')">Add</button>
                       </div>
-                      <div class = addto-cart>
-                       <button class="addto-cart-button" onclick = "addToCart(' . $product['id'] . ')">+</button>
-                      </div>
-                      </div>
-                    ';
+                  </div>';
         }
 
         echo '  </div>
@@ -690,6 +835,26 @@ $categories = getCategories($conn);
         </div>';
   }
   ?>
+
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h4>Want to buy something?</h4>
+      <p>You need to Sign In first!</p>
+      <button onclick="RedirectToLogin()">Login</button>
+      <button class="close-btn" onclick="closeModal('loginModal')">Close</button>
+    </div>
+  </div>
+
+  <div id="AddedToCartModal" class="modal">
+    <div class="modal-content">
+      <h4>Your item has been added to cart 😊</h4>
+      <div class="modal-buttons">
+        <button class="close-btn" onclick="closeModal('AddedToCartModal')">OK</button>
+        <button class="checkout-btn" onclick="RedirectTocart()">Proceed to Checkout →</button>
+      </div>
+    </div>
+  </div>
+
 
   <footer class="container-fluid text-center text-lg-start bg-dark text-white mt-4">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
@@ -750,6 +915,24 @@ $categories = getCategories($conn);
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
+    function showModal(modalId) {
+      document.getElementById(modalId).style.display = "flex";
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+      window.location.reload();
+    }
+
+    function RedirectToLogin() {
+      window.location.href = "login.php";
+    }
+
+    function RedirectTocart() {
+      window.location.href = "cart.php";
+    }
+    let isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+
     document.addEventListener("DOMContentLoaded", function() {
       var cartCount = <?= json_encode($cartCount); ?>;
       var dotElement = document.getElementById("dot");
@@ -762,20 +945,23 @@ $categories = getCategories($conn);
     });
 
     function addToCart(productId) {
-      $.ajax({
-        url: "includes/addtocart.php",
-        type: "POST",
-        data: {
-          productId: productId
-        },
-        success: function(response) {
-          alert("✅ Product added to cart!");
-        },
-        error: function(xhr, status, error) {
-          alert("❌ Error: " + response.message);
-        }
-      });
-
+      if (!isLoggedIn) {
+        showModal("loginModal");
+      } else {
+        $.ajax({
+          url: "includes/addtocart.php",
+          type: "POST",
+          data: {
+            productId: productId
+          },
+          success: function(response) {
+            showModal("AddedToCartModal");
+          },
+          error: function(xhr, status, error) {
+            alert("❌ Error: " + xhr.responseText);
+          }
+        });
+      }
     }
   </script>
 

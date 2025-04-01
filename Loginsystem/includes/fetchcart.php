@@ -8,23 +8,26 @@ $total_price =  0;
 $cart_html = "";
 if (!$user_id) {
     // echo "<tr><td colspan='6'>Please log in to view your cart.</td></tr>";
-    echo json_encode(["success" => false, "message" => "<tr><td colspan='6'>Please log in to view your cart.</td></tr>","total_price" => $total_price]
-);
+    echo json_encode([
+        "cart_html" => $cart_html,
+        "discounted_total_price" => $discounted_total_price ?? 0,
+    ]);
     exit;
 }
 
 $userCartProducts = getAllUserCartProducts($conn, $user_id);
 
-
+// print_r($userCartProducts);
 foreach ($userCartProducts as $item) {
-    $item_total = $item['price'] * $item['quantity'];
-    $total_price += $item_total;
-
+    $discountPrice = $item['price'] - ($item['price'] * $item['discount']) / 100;
+    $item_total = $discountPrice * $item['quantity'];
+    $discounted_total_price += $item_total;
     $cart_html .= '
     <tr>
         <td><img src="' . $item['image'] . '" class="cart-img" alt="' . $item['name'] . '"></td>
         <td>' . $item['name'] . '</td>
-        <td>&#8377;' . $item['price'] . '</td>
+        <td>&#8377;' . $item['price']. '</td>
+        <td>&#8377;' . $discountPrice. '</td>
         <td>
             <button class="qty-btn decrease" onclick="updateQuantity(' . $item['id'] . ', \'decrease\')">-</button>
             <span class="quantity" id="qty-' . $item['id'] . '">' . $item['quantity'] . '</span>
@@ -39,7 +42,7 @@ foreach ($userCartProducts as $item) {
 
 echo json_encode([
     "cart_html" => $cart_html,
-    "total_price" => $total_price
+    "discounted_total_price" => $discounted_total_price ?? 0,
 ]);
 
 

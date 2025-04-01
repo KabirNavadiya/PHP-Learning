@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once 'dbh.inc.php';
         require_once 'model/login_model.inc.php';
         require_once 'controller/login_contr.inc.php';
-
+        echo "hello";
 
         $errors = [];
         if (isEmpty($username, $pwd,)) {

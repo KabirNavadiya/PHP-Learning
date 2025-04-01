@@ -46,7 +46,7 @@ function getCategories(object $conn)
 
 function getProducts($conn)
 {
-    $query = "SELECT p.id AS id,p.product_name AS product_name,c.name AS category_name,p.price AS price,p.description AS description,p.image AS image FROM products p JOIN categories c ON p.category_id = c.id;";
+    $query = "SELECT p.id AS id,p.product_name AS product_name,c.name AS category_name,p.price AS price,p.description AS description,p.image AS image,discount as discount FROM products p JOIN categories c ON p.category_id = c.id;";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $products = $stmt->fetchAll();
