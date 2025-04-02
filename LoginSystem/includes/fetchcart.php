@@ -16,7 +16,6 @@ if (!$user_id) {
 
 $userCartProducts = getAllUserCartProducts($conn, $user_id);
 
-// print_r($userCartProducts);
 foreach ($userCartProducts as $item) {
     $discountPrice = $item['price'] - ($item['price'] * $item['discount']) / 100;
     $item_total = $discountPrice * $item['quantity'];

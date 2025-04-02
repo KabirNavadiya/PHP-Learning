@@ -13,15 +13,6 @@ function getUserCartProducts(object $conn, int $user_id,int $product_id)
     $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $cart_items;
 }
-// function getUserCart(object $conn, int $user_id)
-// {
-//     $query = "SELECT * FROM cart WHERE user_id = :userid;";
-//     $stmt = $conn->prepare($query);
-//     $stmt->bindParam(":userid", $user_id);
-//     $stmt->execute();
-//     $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//     return $cart_items;
-// }
 
 function setProductToCart(object $conn,int $user_id, int $product_id){
     $query = "INSERT INTO cart (user_id, product_id) VALUES (:user_id, :product_id);";

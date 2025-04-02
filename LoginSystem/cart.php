@@ -62,7 +62,6 @@ if (isset($_SESSION['user_id'])) {
     <a href="index.php" class="btn btn-primary">
         ← Back
     </a>
-
     <div class="cart-container">
         <h1>Shopping Cart</h1>
         <table class="cart-table">

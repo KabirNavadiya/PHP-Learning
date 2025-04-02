@@ -17,18 +17,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     try {
         require_once 'dbh.inc.php';
         require_once 'model/addtocart_model.php';
-        
         require_once 'controller/addtocart_contr.php';
 
         if (isProductExist($conn, $user_id,$product_id)) {
             // $errors["product_exists"] = "Product already exist in cart!";
             updateProductQuantity($conn,$user_id,$product_id);
-            
-            echo "productSEt1"; 
         }else{
             setProductToCart($conn,$user_id,$product_id);
-            echo "productSEt"; 
-            
         }
 
 
