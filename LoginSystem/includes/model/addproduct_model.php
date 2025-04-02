@@ -12,7 +12,7 @@ function getProduct(object $conn, string $productName)
     $result =  $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ?: null;
 }
-function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage)
+function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage,int $discount = 0)
 {
 
     $uploadDir = "includes/uploads/";
@@ -24,13 +24,14 @@ function setProduct(object $conn, string $productName, string $productCategory, 
         die("Error uploading image.");
     }
 
-    $query = "INSERT INTO products (product_name,category_id,price,description,image) values (:productname,:categoryid,:price,:description,:image);";
+    $query = "INSERT INTO products (product_name,category_id,price,description,image,discount) values (:productname,:categoryid,:price,:description,:image,:discount);";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":productname", strtolower($productName));
     $stmt->bindParam(":categoryid", $productCategory);
     $stmt->bindParam(":price", $productPrice);
     $stmt->bindParam(":description", $productDescription);
     $stmt->bindParam(":image", $imagePath);
+    $stmt->bindParam(":discount", $discount);
     $stmt->execute();
 }
 

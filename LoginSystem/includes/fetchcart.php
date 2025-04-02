@@ -7,7 +7,6 @@ $user_id = $_SESSION['user_id'] ?? null;
 $total_price =  0;
 $cart_html = "";
 if (!$user_id) {
-    // echo "<tr><td colspan='6'>Please log in to view your cart.</td></tr>";
     echo json_encode([
         "cart_html" => $cart_html,
         "discounted_total_price" => $discounted_total_price ?? 0,

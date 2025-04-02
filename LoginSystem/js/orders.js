@@ -29,7 +29,7 @@ function displayOrderDetails(orderDetails, orderId) {
     $(containerId).append(header);
     orderDetails.forEach(product => {
         var productHtml = `
-        
+
         <div class="order-item">
         <div class="order-info">
             <p class="product-name"><strong>Product Name:</strong> ${product.product_name}</p>

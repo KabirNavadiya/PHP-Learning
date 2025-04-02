@@ -1,6 +1,5 @@
 <?php
 
-// require_once 'includes/view/signup_view.inc.php';
 require_once 'includes/config_session.inc.php';
 ?>
 
@@ -74,10 +73,6 @@ require_once 'includes/config_session.inc.php';
             </div>
         </form>
 
-
-        <?php
-        // checkSignupErrors();
-        ?>
 
     </div>
 

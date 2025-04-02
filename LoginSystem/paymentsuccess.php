@@ -36,23 +36,42 @@ try {
       
         echo '<script>
         document.addEventListener("DOMContentLoaded", function() {
-            showToast("Payment successful! Redirecting...");
+            showLoader("Payment successful! Redirecting...");
             setTimeout(function() {
                     window.location.href = "index.php";
             }, 2000);
+
         });
 
-        function showToast(message) {
-            let toastContainer = document.createElement("div");
-            toastContainer.innerHTML = `
-                <div style="position: fixed; top: 20px; right: 20px; z-index: 9999;" class="toast show bg-success text-white">
-                    <div class="toast-body">${message}</div>
+        function showLoader(message) {
+            let LoaderContainer = document.createElement("div");
+            LoaderContainer.innerHTML = `
+                <div style="position: fixed; top: 50%; right: 50%; z-index: 9999">
+                    <div class="loader" style="
+                        border: 16px solid #f3f3f3;
+                        border-radius: 50%;
+                        border-top: 16px solid #3498db;
+                        width: 60px;
+                        height: 60px;
+                        -webkit-animation: spin 2s linear infinite;
+                        animation: spin 2s linear infinite;
+                    "></div>
                 </div>
+                <style>
+                @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+                }
+
+                @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+                }
+            </style>
             `;
-            document.body.appendChild(toastContainer);
+            document.body.appendChild(LoaderContainer);
         }
     </script>';
-    exit;
 
 
     } else {
@@ -61,5 +80,5 @@ try {
 } catch (Exception $e) {
     header("Location: cart.php?error=" . urlencode($e->getMessage()));
 }
-exit;
+// exit;
 ?>

@@ -18,8 +18,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             echo json_encode(["success" => false, "message" => "Invalid data received."]);
             exit;
         }
-    
-
         if($action === "increase"){
             increaseUserProductQuantity($conn,$cartProductId,$user_id);
         }
@@ -36,7 +34,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $conn = null;
         $stmt = null;
         $response = ["success" => true, "message" => "Cart updated successfully!"];
-        // header('Location: ../cart.php');
         
     }  catch (PDOException $e) {
         die(" Query failed : " . $e->getMessage());

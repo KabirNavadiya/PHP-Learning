@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $productPrice = $_POST['productPrice'];
     $productDescription = $_POST['productDescription'];
     $productImage = $_FILES['productImage'];
+    $discount = $_POST['discount'];
 
     try {
         require_once 'dbh.inc.php';
@@ -21,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         }
 
         if (doesExist($conn, $productName)) {
-
             $errors["product_exists"] = "Product already exist !";
         }
 
@@ -30,9 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             header("Location: ../product.php");
             die();
         }
-        // $rows = getRows($conn);
-        // resetCounter($conn, $rows);
-        setProduct($conn, $productName, $productCategory, $productPrice, $productDescription, $productImage);
+        setProduct($conn, $productName, $productCategory, $productPrice, $productDescription, $productImage,$discount);
 
         $_SESSION['product_success'] = "✅ Item Added Successfully!";
         header('Location: ../product.php');

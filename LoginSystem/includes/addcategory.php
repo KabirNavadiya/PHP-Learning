@@ -26,8 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             header("Location: ../category.php");
             die();
         }
-        // $rows = getRows($conn);
-        // resetCounter($conn, $rows);
         setCategory($conn, $categoryName);
 
         $_SESSION['category_success'] = "✅ Category Added Successfully!";

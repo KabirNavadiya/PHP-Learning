@@ -1,17 +1,10 @@
 <?php
-
-session_start();
+require_once 'config.php';
 require_once '../../vendor/stripe/stripe-php/init.php';
 
-require_once 'config.php';
-require_once 'stripe_model.php';
-
-
 \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
-function createStripeSession($user_id)
+function createStripeSession($cartItems)
 {
-    $cartItems = getUserCartItems($user_id);
-
     if (!$cartItems || empty($cartItems)) {
         return ["error" => "Cart is empty"];
     }
@@ -40,8 +33,8 @@ function createStripeSession($user_id)
             'payment_method_types' => ['card'],
             'line_items' => $line_items,
             'mode' => 'payment',
-            'success_url' => 'http://myapp.com/paymentsuccess.php?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => 'http://myapp.com/cart.php',
+            'success_url' => 'http://myflipkart.com/paymentsuccess.php?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => 'http://myflipkart.com/cart.php',
         ]);
 
         return ['sessionId' => $session->id, 'totalAmount' => $totalAmount];

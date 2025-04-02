@@ -6,7 +6,6 @@ require_once 'model/order_model.php';
 
 if (isset($_POST['orderId'])) {
     $order_id = $_POST['orderId'];
-    // $user_id = $_SESSION['user_id'];
     $orderdetails = getOrderDetails($conn, $order_id);
     if ($orderdetails) {
         echo json_encode([
