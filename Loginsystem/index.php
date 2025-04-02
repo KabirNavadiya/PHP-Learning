@@ -99,7 +99,6 @@ $categories = getCategories($conn);
       align-items: center;
       justify-content: center;
     }
-
     .cards {
       position: relative;
       /* Ensures the label is positioned correctly */
@@ -465,6 +464,7 @@ $categories = getCategories($conn);
     </div>
   </div>
 
+
   <?php
   foreach ($categories as $category) {
     $filteredProducts = array_filter($products, function ($product) use ($category) {
@@ -546,6 +546,7 @@ $categories = getCategories($conn);
   }
   ?>
 
+
   <div id="loginModal" class="modal">
     <div class="modal-content">
       <h4>Want to buy something?</h4>
@@ -564,7 +565,6 @@ $categories = getCategories($conn);
       </div>
     </div>
   </div>
-
 
   <footer class="container-fluid text-center text-lg-start bg-dark text-white mt-4">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">

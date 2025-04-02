@@ -7,7 +7,6 @@ $user_id = $_SESSION['user_id'] ?? null;
 $total_price =  0;
 $cart_html = "";
 if (!$user_id) {
-    // echo "<tr><td colspan='6'>Please log in to view your cart.</td></tr>";
     echo json_encode([
         "cart_html" => $cart_html,
         "discounted_total_price" => $discounted_total_price ?? 0,
@@ -17,7 +16,6 @@ if (!$user_id) {
 
 $userCartProducts = getAllUserCartProducts($conn, $user_id);
 
-// print_r($userCartProducts);
 foreach ($userCartProducts as $item) {
     $discountPrice = $item['price'] - ($item['price'] * $item['discount']) / 100;
     $item_total = $discountPrice * $item['quantity'];
