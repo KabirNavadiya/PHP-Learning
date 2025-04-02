@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
+    <link rel="stylesheet" href="css/adminpage.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
@@ -36,17 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 
 
-    <style>
-        .add-buttons{
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-        .addbutton{
-            margin: 10px;
-        }
-    </style>
+  
 
 </head>
 
@@ -171,71 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('#productTable').DataTable({
-                    responsive: true,
-                    "processing": true,
-                    dom: '<"top"lf>rt<"bottom"ipB>',
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                    lengthMenu: [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
-                    ],
-                    info: false,
-                    columnDefs: [{
-                        orderable: false,
-                        targets: [5, 6]
-                    }]
-                });
 
-            });
+        <script src="js/product.js"></script>
 
-            function hideEditForm() {
-                document.getElementById('editContainer').style.display = "none";
-            }
-
-            function editProduct(productId) {
-                fetch('admin.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'productId=' + encodeURIComponent(productId)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                            return;
-                        }
-
-                        document.getElementById('eproductId').value = data.id;
-                        document.getElementById('eproductName').value = data.product_name;
-                        document.getElementById('eproductCategory').value = data.category_id;
-                        document.getElementById('eprice').value = data.price;
-                        document.getElementById('edescription').value = data.description;
-                        document.getElementById('eproductImagePreview').src = data.image;
-
-                        document.getElementById('editContainer').style.display = "block";
-                    })
-                    .catch(error => console.error('Error fetching product:', error));
-            }
-
-            function deleteProduct(productId) {
-                if (confirm("Are you sure you want to delete this product?")) {
-                    fetch('includes/delete_product.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'productId=' + encodeURIComponent(productId)
-                        })
-                        .then(response => window.location.reload())
-                        .catch(error => console.error('Error:', error));
-                }
-            }
-        </script>
 
 </body>
 

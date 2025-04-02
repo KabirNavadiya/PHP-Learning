@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once 'model/login_model.inc.php';
         require_once 'controller/login_contr.inc.php';
 
-
         $errors = [];
         if (isEmpty($username, $pwd,)) {
             $errors["empty_input"] = "fill in all fields";

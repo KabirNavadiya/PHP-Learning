@@ -76,11 +76,11 @@ header {
     color: white;
 }
 
-.dropdown:hover > .dropdown-menu {
+.dropdown:hover>.dropdown-menu {
     display: block;
 }
 
-.dropdown > .dropdown-toggle:active {
+.dropdown>.dropdown-toggle:active {
     pointer-events: none;
 }
 
@@ -185,11 +185,6 @@ header {
 }
 
 /* Cards Carousel */
-.card-img-top {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
 
 .card:hover .card-img-top {
     transform: none !important;
@@ -199,7 +194,8 @@ header {
 
 .cards {
     width: 18rem;
-    height: 300px; /* Set a fixed height for uniformity */
+    height: 300px;
+    /* Set a fixed height for uniformity */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -270,14 +266,19 @@ header {
     display: block;
 }
 
+
+
+
 /* Responsive Design */
 @media screen and (max-width: 1200px) {
     #ad {
         display: none;
     }
+
     .dn {
         display: none;
     }
+
     #boe {
         width: 100%;
     }

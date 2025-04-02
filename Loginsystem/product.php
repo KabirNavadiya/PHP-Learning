@@ -23,10 +23,11 @@ $categories = getCategories($conn);
 </head>
 
 <body>
-  <h1 style="display: flex; align-items: center; justify-content: center; margin: auto;">Add Product</h1>
   <a href="admin.php" class="btn btn-primary">
     ← Back
   </a>
+  <h1 style="display: flex; align-items: center; justify-content: center; margin: auto;">Add Product</h1>
+
 
   <div class="containerc">
     <form id="productForm" class="productForm" action="includes/addproduct.php" method="POST" enctype="multipart/form-data">

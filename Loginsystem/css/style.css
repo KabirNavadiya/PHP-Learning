@@ -3,38 +3,65 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.container {
-    max-width: 900px;
-}
-
-h1, h2 {
-    color: #343a40;
-}
-
-/* Edit Form Styling */
-#editContainer {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+.containerc {
+    max-width: 600px;
+    margin: 50px auto;
     background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
 }
 
-/* Buttons */
+h1 {
+    color: #343a40;
+    text-align: center;
+}
+
 .btn {
     margin: 5px;
 }
 
-/* Table */
-.table {
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Form Styling */
+.productForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* Image Preview */
-.img-thumbnail {
+.input-field,
+#productCategory {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
 
+.Add-product {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
 
+.Add-product:hover {
+    background: #0056b3;
+}
 
+/* Toast Notification */
+.toast-container {
+    z-index: 1050;
+}
+
+.toast {
+    background: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.toast-header {
+    background: #c3e6cb;
+    color: #155724;
+}

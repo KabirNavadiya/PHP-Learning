@@ -26,7 +26,7 @@ body {
 }
 
 /* Form container */
-.signup-box {
+.login-box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +46,7 @@ h1 {
 }
 
 /* Form styling */
-.signup-form {
+.login-form {
     display: flex;
     flex-direction: column;
     width: 100%;

@@ -2,6 +2,16 @@
 require_once 'includes/dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
+require_once 'includes/model/addtocart_model.php';
+
+if (isset($_SESSION['user_id'])) {
+  require_once 'includes/model/addtocart_model.php';
+  $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
+  $cartCount = count($userCartProducts);
+} else {
+  $cartCount = 0;
+}
+
 $products = getProducts($conn);
 $categories = getCategories($conn);
 
@@ -24,8 +34,192 @@ $categories = getCategories($conn);
   <title>Flipkart</title>
 
   <style>
+    .card-img-top {
+      width: 100%;
+      height: 200px !important;
+      object-fit: contain;
+    }
+
     .card-img:hover {
       transform: none !important;
+    }
+
+    .addto-cart-button {
+      width: 60px;
+      height: 30px;
+      border-radius: 5px;
+      border: 1px solid rgb(33, 89, 245);
+      background-color: white;
+      color: rgb(33, 89, 245);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .addto-cart-button:hover {
+      background-color: rgb(79, 122, 240);
+      color: white;
+    }
+
+    .addto-cart {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .cart {
+      position: relative;
+      /* Ensures absolute positioning inside */
+      display: inline-block;
+    }
+
+    .cart-btn {
+      position: relative;
+      /* Makes sure the badge is positioned inside the button */
+      padding: 10px 15px;
+    }
+
+    .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      background: #E91E63;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 8px;
+      border-radius: 50%;
+      min-width: 20px;
+      min-height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cards {
+      position: relative;
+      /* Ensures the label is positioned correctly */
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .exclusive-offer-label {
+      position: absolute;
+      top: 30px;
+      left: -20px;
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+      text-transform: uppercase;
+      transform: rotate(-45deg);
+      z-index: 10;
+    }
+
+    .discount {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(39, 94, 245, 0.86);
+      color: white;
+      padding: 5px 5px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      width: 350px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      animation: slideIn 0.3s ease-in-out;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-buttons button,
+    .modal-content button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    .close-btn {
+      background-color: rgb(255, 85, 85);
+      color: white;
+    }
+
+    .close-btn:hover {
+      background-color: rgb(220, 50, 50);
+    }
+
+    .checkout-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .checkout-btn:hover {
+      background-color: #0056b3;
+    }
+
+    p {
+      padding-left: 3px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+      }
+
+      to {
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -89,7 +283,7 @@ $categories = getCategories($conn);
           <li><hr class="dropdown-divider"></li>';
         } else {
           echo '<li><a class="dropdown-item" href="#"><i class="bi bi-person-circle nav-i"></i> My Profile</a></li>
-          <li><a class="dropdown-item" href="#"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
+          <li><a class="dropdown-item" href="orders.php"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-heart nav-i"></i> Wishlist</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-wallet2 nav-i"></i> Gift Card</a></li>
           <li><hr class="dropdown-divider"></li>
@@ -101,15 +295,19 @@ $categories = getCategories($conn);
 
 
         <div class="cart">
-          <button class="btn btn-light cart-btn" type="button">
+          <button class="btn btn-light cart-btn highlight" type="button" onclick="window.location.href='cart.php';">
             <svg class="cart-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
               class="bi bi-cart" viewBox="0 0 16 16">
               <path
                 d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
             </svg>
             <span class="dn">Cart</span>
+            <span class="badge badge-primary" id="dot" style="display: <?= ($cartCount > 0) ? 'block' : 'none'; ?>;">
+              <?= ($cartCount > 0) ? $cartCount : ''; ?>
+            </span>
           </button>
         </div>
+
 
         <div class="seller">
           <button class="btn btn-light seller-btn" type="button">
@@ -137,10 +335,8 @@ $categories = getCategories($conn);
             <li><a class="dropdown-item" href="#"><i class="bi bi-download nav-i"></i>Downlaod App</a></li>
           </ul>
         </div>
-        <!-- <span><a href="admin.php" target="_blank">Admin</a></span> -->
       </div>
     </nav>
-
   </header>
 
 
@@ -269,298 +465,8 @@ $categories = getCategories($conn);
     </div>
   </div>
 
-
-  <!-- best of electronics -->
-  <!-- <div class="boe-heading bg-light mt-3 p-2">
-    <div class="row mt-2 ms-2">
-      <h4>Best of Electronics</h4>
-    </div>
-  </div>
-
-  <div class="boe bg-light">
-    <div class=" initial-items-list" id="boe">
-      <div class="row w-100">
-        <div class="col-10" id="boe">
-          <div id="carouselElectronics" class="carousel slide">
-            <div class="carousel-inner carousle-overflow">
-              <div class="carousel-item active">
-                <div class="cards-wrapper">
-                  <div class="cards">
-                    <img
-                      src="images/GT True wireless.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Best Wireless Headphone</p>
-                      <h5 class="card-text text-center">Grab Now*</h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="images/vivo-mobile-phone.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Vivo Y100</p>
-                      <h5 class="card-text text-center">$199</h5>
-                    </div>
-                  </div>
-
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTYY-RJLZS4op2B806yVKjC_-CypRhDC0NNps80B0a1UaQQTVHJ0bw00biYFv7zA_b93wFqPg6x39Eg6vPKODBoqnOG8y6XGQP17QqIMZBRGsQiFR3mtf00sg&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body ">
-                      <p class="card-title text-center">Printers</p>
-                      <h5 class="card-text text-center">$2066</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSb-ILaW9XaBYD_pH3a0JhH6jRmAkWKQQ-lNxEpeNHyCpg7yCTBSo8JaM2xnVINuQlSBxZrLObNaM39fYEjoIJ6O7YM2zcMeqv7HvwE7osvtOwn2m65N-_QGQ&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Monitor</p>
-                      <h5 class="card-text text-center">$5436</h5>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="cards-wrapper">
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQPmJhne-b2fGt-g6t9qCGNDe78_WmLw_5NgcqkSXTHZ6QM7dl06F9p7KuDuHBcURYmI6S6WBXOwptTfjslSSkwtdKFm08S-0Y0OIBbs8k-yNg_EIofyGtH&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Watches</p>
-                      <h5 class="card-text text-center">$234<h5>
-                    </div>
-                  </div>
-
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSb-ILaW9XaBYD_pH3a0JhH6jRmAkWKQQ-lNxEpeNHyCpg7yCTBSo8JaM2xnVINuQlSBxZrLObNaM39fYEjoIJ6O7YM2zcMeqv7HvwE7osvtOwn2m65N-_QGQ&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Monitor</p>
-                      <h5 class="card-text text-center">$5436</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTt-oorsWvG_ABWCWtvhWBet7nIo6e7ANlJ44HlFzB25rqxNSZYCZYtiuGMWpBcxJwW9suYxHfsi59z-Prg40rg3MwijdD9Dw&usqp=CAE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Camera</p>
-                      <h5 class="card-text text-center">$387</h5>
-                    </div>
-                  </div>
-
-
-                  <div class="cards">
-                    <img
-                      src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTucIBakKbROvB0EY8q1ilYOOhF9zBJLlYHxxK-gjqAY52jcl_ByztL8riZPmEZZsWLr_meukCxUF0WNZpVhphX5mMCIxYu4WULl1ieOVwDYvKYKEIWjXd7&usqp=CAEE"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Projector</p>
-                      <h5 class="card-text text-center">$980</h5>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-
-            </div>
-            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselElectronics"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselElectronics"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="col-2" id="ad">
-          <div>
-            <img class="offer" src="https://rukminim1.flixcart.com/fk-p-flap/260/810/image/d5d599c240c9b2ea.jpeg?q=20"
-              alt="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <?php
-
-  if ($isLoggedIn) {
-    echo '
-  <!--Recently visited-->
-  <div class="boe-heading bg-light mt-3 p-2">
-    <div class="row mt-2 ms-2">
-      <h4>Recently Visited items</h4>
-    </div>
-  </div>
-  <div class="boe bg-light">
-    <div class=" initial-items-list">
-      <div class="row w-100">
-        <div class="col-12">
-          <div id="carouselRecentlyVisited" class="carousel slide">
-            <div class="carousel-inner carousle-overflow">
-              <div class="carousel-item active">
-                <div class="cards-wrapper">
-                  <div class="cards">
-                    <img
-                      src="images/ps5 .jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">PS5</p>
-                      <h5 class="card-text text-center">&#8377;699</h5>
-                    </div>
-                  </div>
-
-
-
-                  <div class="cards">
-                    <img
-                      src="images/tshirt.webp"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Tshirt</p>
-                      <h5 class="card-text text-center">&#8377;20</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="images/vivo-mobile-phone.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Vivo Y100</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="images/Sony tv.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sony TV</p>
-                      <h5 class="card-text text-center">&#8377;499</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="images/sofa.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sofa</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="images/speaker.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Speaker</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="cards-wrapper">
-
-                  <div class="cards">
-                    <img
-                      src="images/shoes.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sport Shoes</p>
-                      <h5 class="card-text text-center">&#8377;234<h5>
-                    </div>
-                  </div>
-
-                  <div class="cards">
-                    <img
-                      src="images/laptop.jpg"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Laptop</p>
-                      <h5 class="card-text text-center">&#8377;5436</h5>
-                    </div>
-                  </div>
-                  <div class="cards">
-                    <img
-                      src="images/sweater.webp"
-                      class="card-img-top card-img" alt="...">
-                    <div class="card-body">
-                      <p class="card-title text-center">Sweater</p>
-                      <h5 class="card-text text-center">&#8377;387</h5>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-            <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next bg-dark carousel-btns" type="button" data-bs-target="#carouselRecentlyVisited"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
-  </div>
-
-  ';
-  }
-
-  ?>
-
-  <?php
-
   foreach ($categories as $category) {
-    // Filter products for the current category
     $filteredProducts = array_filter($products, function ($product) use ($category) {
       return $product['category_name'] == $category['name'];
     });
@@ -574,7 +480,7 @@ $categories = getCategories($conn);
           <div class="initial-items-list">
             <div class="row w-100">
               <div class="col-12">
-                <div id="carouselExample' . $category['id'] . '" class="carousel slide" ">
+                <div id="carouselExample' . $category['id'] . '" class="carousel slide">
                   <div class="carousel-inner carousle-overflow">';
 
     if (!empty($filteredProducts)) {
@@ -583,14 +489,40 @@ $categories = getCategories($conn);
         echo '<div class="carousel-item ' . ($first ? 'active' : '') . '">
                   <div class="cards-wrapper">';
         foreach ($productSet as $product) {
-          echo '<div class="cards">
-                      <img src="' . $product['image'] . '" class="card-img-top card-img" alt="...">
+          $discountPrice = $product['price'] - ($product['price'] * $product['discount']) / 100;
+          echo '<div class="cards">';
+
+          if ($product['discount'] >= 25) {
+            echo '   <!-- Exclusive Offer Label -->
+            <span class="exclusive-offer-label">Exclusive Offer</span>';
+          }
+
+          if ($product['discount']) {
+            echo ' 
+            <span class="discount">-' . $product['discount'] . '%</span>';
+          }
+          echo '<img src="' . $product['image'] . '" class="card-img-top card-img" alt="...">
                       <div class="card-body">
                           <p class="card-title text-center">' . $product['product_name'] . '</p>
-                          <h5 class="card-text text-center">&#8377;' . $product['price'] . '</h5>
+
+
+                          ';
+          if ($product['discount']) {
+            echo '<p class="card-text text-center">
+                    <span style="color: gray; font-size: 14px;">&#8377;<del>' . $product['price'] . '</del></span> 
+                    <strong>&#8377;' . $discountPrice . '</strong>
+                  </p>';
+          } else {
+            echo '<p class="card-text text-center">&#8377;' . $product['price'] . '</p>';
+          }
+
+          echo '</div>
+                      <div class="addto-cart">
+                       <button class="addto-cart-button" onclick="addToCart(' . $product['id'] . ')">Add</button>
                       </div>
-                    </div>';
+                  </div>';
         }
+
         echo '  </div>
                 </div>';
         $first = false;
@@ -598,7 +530,6 @@ $categories = getCategories($conn);
     } else {
       echo '<p>No products available in this category.</p>';
     }
-
     echo '    </div>
                 <button class="carousel-control-prev bg-dark carousel-btns" type="button" data-bs-target="#carouselExample' . $category['id'] . '" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -613,11 +544,26 @@ $categories = getCategories($conn);
           </div>
         </div>';
   }
-
   ?>
 
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h4>Want to buy something?</h4>
+      <p>You need to Sign In first!</p>
+      <button onclick="RedirectToLogin()">Login</button>
+      <button class="close-btn" onclick="closeModal('loginModal')">Close</button>
+    </div>
+  </div>
 
-
+  <div id="AddedToCartModal" class="modal">
+    <div class="modal-content">
+      <h4>Your item has been added to cart 😊</h4>
+      <div class="modal-buttons">
+        <button class="close-btn" onclick="closeModal('AddedToCartModal')">OK</button>
+        <button class="checkout-btn" onclick="RedirectTocart()">Proceed to Checkout →</button>
+      </div>
+    </div>
+  </div>
 
 
   <footer class="container-fluid text-center text-lg-start bg-dark text-white mt-4">
@@ -676,6 +622,14 @@ $categories = getCategories($conn);
     </div>
   </footer>
 
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    let isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+    let cartCount = <?= json_encode($cartCount); ?>;
+  </script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>

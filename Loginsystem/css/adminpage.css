@@ -7,3 +7,14 @@
     border-radius: 5px;
     width: 200px;
 }
+
+
+.add-buttons{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.addbutton{
+    margin: 10px;
+}

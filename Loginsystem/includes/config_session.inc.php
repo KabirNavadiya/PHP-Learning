@@ -18,7 +18,7 @@ if (isset($_SESSION["user_id"])) {
     if (!isset($_SESSION["last_regeneration"])) {
         regenerateSessionIdLoggedIn();
     } else {
-        $interval = 60 * 15;
+        $interval = 60 * 60;
         if (time() - $_SESSION["last_regeneration"] >= $interval) {
             regenerateSessionIdLoggedIn();
         }
