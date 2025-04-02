@@ -1,11 +1,17 @@
 <?php
 
-require_once 'vendor/stripe/stripe-php/init.php';
-require_once 'includes/stripe/config.php';
+// require_once 'vendor/stripe/stripe-php/init.php';
+// require_once 'includes/stripe/config.php';
 require_once 'includes/dbh.inc.php';
 require_once 'includes/model/order_model.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
+require_once 'vendor/autoload.php';
+
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+$secret_key = $_ENV['STRIPE_SECRET_KEY'];
 
 
 if (!isset($_GET['session_id'])) {
@@ -16,7 +22,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php"); 
     exit;
 }
-\Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+\Stripe\Stripe::setApiKey($secret_key);
 try {
     $session = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
     

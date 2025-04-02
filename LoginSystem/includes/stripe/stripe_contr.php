@@ -1,8 +1,15 @@
 <?php
-require_once 'config.php';
-require_once '../../vendor/stripe/stripe-php/init.php';
 
-\Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+require_once '../../vendor/autoload.php';
+
+
+$dotenv = Dotenv\Dotenv::createImmutable("../../");
+$dotenv->load();
+$secret_key = $_ENV['STRIPE_SECRET_KEY'];
+
+
+
+\Stripe\Stripe::setApiKey($secret_key);
 function createStripeSession($cartItems)
 {
     if (!$cartItems || empty($cartItems)) {

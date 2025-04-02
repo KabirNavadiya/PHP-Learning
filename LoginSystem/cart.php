@@ -3,7 +3,6 @@
 require_once 'includes/dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
-require_once 'includes/stripe/config.php';
 
 if (isset($_SESSION['user_id'])) {
     $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
@@ -62,7 +61,6 @@ if (isset($_SESSION['user_id'])) {
     <a href="index.php" class="btn btn-primary">
         ← Back
     </a>
-
     <div class="cart-container">
         <h1>Shopping Cart</h1>
         <table class="cart-table">
