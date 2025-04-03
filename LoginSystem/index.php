@@ -501,7 +501,7 @@ $categories = getCategories($conn);
             echo ' 
             <span class="discount">-' . $product['discount'] . '%</span>';
           }
-          echo '<img src="' . $product['image'] . '" class="card-img-top card-img" alt="...">
+          echo '<img src="' ."includes/uploads/". $product['image'] . '" class="card-img-top card-img" alt="...">
                       <div class="card-body">
                           <p class="card-title text-center">' . $product['product_name'] . '</p>
 

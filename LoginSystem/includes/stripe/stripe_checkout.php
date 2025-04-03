@@ -1,4 +1,6 @@
 <?php
+
+
 require_once '../config_session.inc.php';
 require_once 'stripe_contr.php';
 require_once '../dbh.inc.php';
@@ -18,6 +20,6 @@ $response = createStripeSession($cartItems);
 if (!$response) {
     echo json_encode(["error" => "Failed to create Stripe session"]);
 } else {
-    echo json_encode($response);
+    header("Location: " . $response['sessionUrl']);
 }
 

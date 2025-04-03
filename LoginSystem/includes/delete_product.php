@@ -2,16 +2,27 @@
 
 session_start();
 require_once 'config_session.inc.php';
-
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     $productId = $_POST['productId'];
 
+
+
     try {
         require_once 'dbh.inc.php';
         require_once 'model/deleteproduct_model.php';
+
+        $query = "SELECT image FROM products where id = :id;";
+        $stmt = $conn->prepare($query);
+        $stmt -> bindParam(":id",$productId);
+        $stmt->execute();
+        $oldimage = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        echo $oldimage;
         deleteProduct($conn, $productId);
-        header('Location: ../admin.php');
+        unlink("uploads/".$oldimage['image']);
+
+        // header('Location: ../admin.php');
         $conn = null;
         $stmt = null;
         die();

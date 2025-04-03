@@ -82,15 +82,13 @@ if (isset($_SESSION['user_id'])) {
 
         <div class="cart-footer">
             <h2></h2>
-            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+            <form action="includes/stripe/stripe_checkout.php" method="POST">
+                <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+            </form>
         </div>
     </div>
 
-
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-
     <script src="js/cart.js"></script>
    
 

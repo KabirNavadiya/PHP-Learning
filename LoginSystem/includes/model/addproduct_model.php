@@ -16,21 +16,19 @@ function setProduct(object $conn, string $productName, string $productCategory, 
 {
 
     $uploadDir = "includes/uploads/";
-    $fileName = basename($productImage['name']);
+    $fileName = date("Y-m-d_H-i-s").'_'.basename($productImage['name']);
     $imagePath = $uploadDir . $fileName;
-
-
+    
     if (!move_uploaded_file($productImage['tmp_name'], __DIR__ . "/../../" . $imagePath)) {
         die("Error uploading image.");
     }
-
     $query = "INSERT INTO products (product_name,category_id,price,description,image,discount) values (:productname,:categoryid,:price,:description,:image,:discount);";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":productname", strtolower($productName));
     $stmt->bindParam(":categoryid", $productCategory);
     $stmt->bindParam(":price", $productPrice);
     $stmt->bindParam(":description", $productDescription);
-    $stmt->bindParam(":image", $imagePath);
+    $stmt->bindParam(":image", $fileName);
     $stmt->bindParam(":discount", $discount);
     $stmt->execute();
 }

@@ -1,7 +1,5 @@
 <?php
 
-// require_once 'vendor/stripe/stripe-php/init.php';
-// require_once 'includes/stripe/config.php';
 require_once 'includes/dbh.inc.php';
 require_once 'includes/model/order_model.php';
 require_once 'includes/config_session.inc.php';
@@ -62,7 +60,7 @@ try {
                         -webkit-animation: spin 2s linear infinite;
                         animation: spin 2s linear infinite;
                     "></div>
-                </div>
+                    </div>
                 <style>
                 @-webkit-keyframes spin {
                 0% { -webkit-transform: rotate(0deg); }
@@ -78,8 +76,6 @@ try {
             document.body.appendChild(LoaderContainer);
         }
     </script>';
-
-
     } else {
         header("Location: cart.php");
     }

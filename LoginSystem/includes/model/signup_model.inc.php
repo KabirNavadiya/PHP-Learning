@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 
 function getUsername(object $conn,string $username){
-    $query = "SELECT username FROM users where username = :username;";
+    $query = "SELECT username FROM users where username = :username or email = :username;";
     $stmt = $conn->prepare($query);
     $stmt -> bindParam(":username",$username);
     $stmt -> execute();
@@ -33,4 +33,7 @@ function setUser(object $conn,string $email,string $username,string $password,st
     $stmt -> bindParam(":contact",$contact);
     $stmt -> bindParam(":dob",$dob);
     $stmt -> execute();
+}
+function isUserExistWithSameUsername(object $conn,$username){
+
 }

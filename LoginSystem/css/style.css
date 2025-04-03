@@ -21,7 +21,6 @@ h1 {
     margin: 5px;
 }
 
-/* Form Styling */
 .productForm {
     display: flex;
     flex-direction: column;
@@ -36,7 +35,7 @@ h1 {
     border-radius: 5px;
 }
 
-.Add-product {
+.add-product {
     background: #007bff;
     color: white;
     border: none;
@@ -46,11 +45,10 @@ h1 {
     transition: 0.3s ease;
 }
 
-.Add-product:hover {
+.add-product:hover {
     background: #0056b3;
 }
 
-/* Toast Notification */
 .toast-container {
     z-index: 1050;
 }

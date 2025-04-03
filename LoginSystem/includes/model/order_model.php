@@ -1,9 +1,7 @@
 <?php
 
-
 function createOrder($conn, $user_id, $transaction_id, $totalAmount)
 {
-    global $conn;
     $query = "INSERT INTO orders (user_id, transaction_id, total_amount, status) VALUES (:user_id, :transaction_id, :total_amount, 1);";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":user_id", $user_id);
@@ -14,13 +12,11 @@ function createOrder($conn, $user_id, $transaction_id, $totalAmount)
 
 function clearUserCart($conn, $user_id)
 {
-    global $conn;
     $query = "DELETE FROM cart WHERE user_id = :user_id;";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":user_id", $user_id);
     $stmt->execute();
 }
-
 
 function getOrderId($conn, $transaction_id)
 {
@@ -32,7 +28,7 @@ function getOrderId($conn, $transaction_id)
     return $result;
 }
 
-function setOrderDetails($conn, $orderid, $product_id,$product_image,$product_name,$product_price,$quantity)
+function setOrderDetails($conn, $orderid, $product_id, $product_image, $product_name, $product_price, $quantity)
 {
     $query = "INSERT INTO orderdetails (order_id,product_id,product_image,product_name,product_price,quantity) VALUES (:order_id,:product_id,:product_image,:product_name,:product_price,:quantity);";
     $stmt = $conn->prepare($query);
@@ -55,20 +51,22 @@ function getUserOrders($conn, $user_id)
     return $orders;
 }
 
-function getDetailsAboutOrder($conn,$user_id){
+function getDetailsAboutOrder($conn, $user_id)
+{
     $query = "SELECT p.id as product_id,c.id as cart_id,p.image as product_image, p.product_name as product_name, p.price as product_price, c.quantity as quantity,p.discount as discount from products p join cart c on p.id = c.product_id where user_id = :user_id;";
-    $stmt = $conn -> prepare($query);
-    $stmt -> bindParam(":user_id",$user_id);
-    $stmt -> execute();
-    $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(":user_id", $user_id);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
 
-function getOrderDetails($conn,$order_id){
+function getOrderDetails($conn, $order_id)
+{
     $query = "SELECT od.product_image,od.product_name,od.product_price,od.quantity,o.total_amount from orderdetails od join orders o on o.id = od.order_id where od.order_id = :order_id;";
-    $stmt = $conn ->prepare($query);
-    $stmt ->bindParam(":order_id",$order_id);
-    $stmt -> execute();
-    $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(":order_id", $order_id);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }

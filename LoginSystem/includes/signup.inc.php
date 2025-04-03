@@ -24,13 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors["invalid_email"] = "invalid email used!";
         }
         if (isUserNameTaken($conn, $username)) {
-            $errors["username_taken"] = "Username already taken!";
+            $errors["username_taken"] = "try different username !";
         }
         if (isEmailRegistered($conn, $email)) {
-            $errors["email_used"] = "email already registered!";
+            $errors["email_used"] = "try different email!";
         }
-
-        
 
         require_once 'config_session.inc.php';
 

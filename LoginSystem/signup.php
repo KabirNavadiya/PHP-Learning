@@ -1,6 +1,7 @@
 <?php
 
 require_once 'includes/config_session.inc.php';
+require_once 'includes/view/signup_view.inc.php';
 ?>
 
 
@@ -17,51 +18,32 @@ require_once 'includes/config_session.inc.php';
 </head>
 
 <body>
-    <div class="signup-box">
-        <form class="signup-form" action="includes/signup.inc.php" method="post">
+    <div class="login-box">
+        <form class="login-form" action="includes/signup.inc.php" method="post">
             <h1>Sign Up</h1>
-            <div class="input-container">
-                <i class="fa-solid fa-envelope icons"></i>
-                <div class="inputs">
-                    <input type="email" id="email" name="email" placeholder="Email">
-                </div>
+            <div class="inputs">
+                <input type="email" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="inputs">
+                <input type="text" id="username" name="username" placeholder="Username">
+
+            </div>
+            <div class="inputs">
+                <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="inputs">
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm-password">
+            </div>
+            <div class="inputs">
+                <input type="tel" id="contact" name="contact" placeholder="9662*****4" pattern="[0-9]{10}">
             </div>
 
-            <div class="input-container">
-                <i class="fa-solid fa-user icons"></i>
-                <div class="inputs">
-                    <input type="text" id="username" name="username" placeholder="Username">
-
-                </div>
-            </div>
-
-            <div class="input-container">
-                <i class="fa-solid fa-lock icons"></i>
-                <div class="inputs">
-                    <input type="password" id="password" name="password" placeholder="Password">
-                </div>
-            </div>
-
-            <div class="input-container">
-                <i class="fa-solid fa-lock icons"></i>
-                <div class="inputs">
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm-password">
-                </div>
-            </div>
-
-            <div class="input-container">
-                <i class="fa-solid fa-phone icons"></i>
-                <div class="inputs">
-                    <input type="tel" id="contact" name="contact" placeholder="9662*****4" pattern="[0-9]{10}">
-                </div>
-            </div>
             <label for="dob"> Date of Birth :</label>
-            <div class="input-container">
-                <i class="fa-solid fa-calendar icons"></i>
-                <div class="inputs">
-                    <input type="date" id="dob" name="dob" placeholder="" min="2000-01-01" max="2024-12-31">
-                </div>
+
+            <div class="inputs">
+                <input type="date" id="dob" name="dob" placeholder="" min="2000-01-01" max="2024-12-31">
             </div>
+
 
             <div class="checkbox">
                 <input type="checkbox" name="remember" id="remember" required>
@@ -73,6 +55,9 @@ require_once 'includes/config_session.inc.php';
             </div>
         </form>
 
+        <?php
+        checkSignupErrors();
+        ?>
 
     </div>
 

@@ -43,7 +43,7 @@ $categories = getCategories($conn);
       <input type="text" class="input-field" id="description" name="productDescription" placeholder="Description">
       <input type="file" id="productImage" name="productImage" accept="image/*">
       <input type="number" class="input-field" id="discount" name="discount" placeholder="Discount (%)" >
-      <button class="Add-product" id="submitButton" type="submit" value="submit-btn">Add Product</button>
+      <button class="add-product" id="submitButton" type="submit" value="submit-btn">Add Product</button>
     </form>
 
     <?php

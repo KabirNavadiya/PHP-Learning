@@ -1,13 +1,10 @@
 <?php
 
+// access variable from .env file
 require_once '../../vendor/autoload.php';
-
-
 $dotenv = Dotenv\Dotenv::createImmutable("../../");
 $dotenv->load();
 $secret_key = $_ENV['STRIPE_SECRET_KEY'];
-
-
 
 \Stripe\Stripe::setApiKey($secret_key);
 function createStripeSession($cartItems)
@@ -44,7 +41,7 @@ function createStripeSession($cartItems)
             'cancel_url' => 'http://myflipkart.com/cart.php',
         ]);
 
-        return ['sessionId' => $session->id, 'totalAmount' => $totalAmount];
+        return ['sessionUrl' => $session->url, 'totalAmount' => $totalAmount];
     } catch (Exception $e) {
         return ['error' => $e->getMessage()];
     }

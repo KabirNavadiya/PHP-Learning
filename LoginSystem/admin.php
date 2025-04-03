@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
                             <td><?= htmlspecialchars($product['category_name']); ?></td>
                             <td><?= htmlspecialchars($product['price']); ?></td>
                             <td><?= htmlspecialchars($product['description']); ?></td>
-                            <td><img src="<?= htmlspecialchars($product['image']); ?>" width="50" height="50" class="img-thumbnail"></td>
+                            <td><img src="<?= '/includes/uploads/'.$product['image']; ?>" width="50" height="50" class="img-thumbnail"></td>
                             <td>
                                 <button class="btn btn-warning" onclick="editProduct(<?= htmlspecialchars($product['id']); ?>)"><i class="bi bi-pencil-fill"></i></button>
                                 <button class="btn btn-danger " onclick="deleteProduct(<?= htmlspecialchars($product['id']); ?>)"><i class="bi bi-trash-fill"></i></button>

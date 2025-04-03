@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
         <div class="containerc " id="addcontainer">
             <form id="productForm" class="productForm" action="includes/addcategory.php" method="POST">
                 <input type="text" class="input-field" id="categoryName" name="categoryName" placeholder="Category Name">
-                <button class="Add-product" id="submitButton" type="submit" value="submit-btn">Add Category</button>
+                <button class="add-product" id="submitButton" type="submit" value="submit-btn">Add Category</button>
             </form>
         </div>
 
