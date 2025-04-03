@@ -12,21 +12,19 @@ require_once 'includes/view/signup_view.inc.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign-Up</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="css/signup.css">
-
 </head>
 
 <body>
-    <div class="login-box">
-        <form class="login-form" action="includes/signup.inc.php" method="post">
+    <div class="signup-box">
+        <form class="signup-form" action="includes/signup.inc.php" method="post">
             <h1>Sign Up</h1>
             <div class="inputs">
                 <input type="email" id="email" name="email" placeholder="Email">
             </div>
+            <p id="email-msg"></p>
             <div class="inputs">
                 <input type="text" id="username" name="username" placeholder="Username">
-
             </div>
             <div class="inputs">
                 <input type="password" id="password" name="password" placeholder="Password">
@@ -39,7 +37,6 @@ require_once 'includes/view/signup_view.inc.php';
             </div>
 
             <label for="dob"> Date of Birth :</label>
-
             <div class="inputs">
                 <input type="date" id="dob" name="dob" placeholder="" min="2000-01-01" max="2024-12-31">
             </div>
@@ -57,13 +54,10 @@ require_once 'includes/view/signup_view.inc.php';
 
         <?php
         checkSignupErrors();
+        unset($_SESSION['signup']);
         ?>
 
     </div>
-
-
-
-
 </body>
 
 </html>

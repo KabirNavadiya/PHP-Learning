@@ -3,10 +3,11 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $pwd = $_POST['password'];
-    $contact = $_POST['contact'];
+    $username = htmlspecialchars($_POST['username']);
+    $email = htmlspecialchars($_POST['email']);
+    $pwd = htmlspecialchars($_POST['password']);
+    $confirm_pwd = htmlspecialchars($_POST['confirm-password']);
+    $contact = htmlspecialchars($_POST['contact']);
     $dob = $_POST['dob'];
 
     try {
@@ -29,6 +30,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isEmailRegistered($conn, $email)) {
             $errors["email_used"] = "try different email!";
         }
+        if($pwd !== $confirm_pwd){
+            $errors["unmatched_pwd"]="Password does'nt match !";
+        }
+        if(!validateEmail($email)){
+            $errors["invalid_email"]="Invalid Email !";
+        }
+        $passworderrormsg = validatePassword($pwd);
+        if($passworderrormsg){
+            $errors["invalid password"] = $passworderrormsg;
+        }
+        $contacherrormsg = validateContact($contact);
+
+        if($contacherrormsg){
+            $errors["invalid_contact"]= $contacherrormsg;
+        }
+
+        $isdate = is_numeric( strtotime( $dob ) ) ? "yes" : "no";
+        if($isdate==="no"){
+            $errors["invalid_date"]="invalid date";
+        }
+
 
         require_once 'config_session.inc.php';
 
@@ -39,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         createUser( $conn, $email, $username, $pwd, $contact, $dob);
+        $_SESSION['signup']="success";
         header('Location: ../signup.php');
 
         $conn = null;

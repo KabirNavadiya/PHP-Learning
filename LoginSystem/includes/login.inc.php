@@ -3,8 +3,8 @@
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    $username = $_POST['username'];
-    $pwd = $_POST['password'];
+    $username = htmlspecialchars($_POST['username']);
+    $pwd = htmlspecialchars($_POST['password']);
 
     try {
         require_once 'dbh.inc.php';

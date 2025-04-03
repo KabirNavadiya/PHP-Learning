@@ -4,7 +4,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $n_pwd = $_POST['new-password'];
     $c_pwd = $_POST['confirm-password'];
 
@@ -15,17 +15,31 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
         $errors = [];
-        if (isEmpty($username, $n_pwd, $c_pwd)) {
+        if (isEmpty($email, $n_pwd, $c_pwd)) {
             $errors["empty_input"] = "fill in all fields";
         }
         if (isDifferent($n_pwd, $c_pwd)) {
             $errors["different_password"] = "Passwords do not match!";
         }
-        $result = getUser($conn, $username);
+        $result = getUser($conn, $email);
 
+        if(!$result){
+            $errors["no_user"] = "No User Found with this email";
+        }
         if (isUsernameWrong($result)) {
             $errors["username_incorrect"] = "User not found ! ";
         }
+
+
+        if($n_pwd !== $c_pwd){
+            $errors["pwd_mismatch"]="Password does not match";
+        }
+        $passworderrormsg = validatePassword($n_pwd);
+        if($passworderrormsg){
+            $errors["invalid password"] = $passworderrormsg;
+        }
+
+
         if (password_verify($n_pwd, $result['pwd'])) {
             $errors["same_password"] = "Same as Old!";
         }
@@ -40,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $options = ['cost' => 12];
         $h_pwd = password_hash($n_pwd, PASSWORD_BCRYPT, $options);
 
-        setPass($conn, $username, $h_pwd);
+        setPass($conn, $email, $h_pwd);
         header('Location: ../login.php');
         $conn = null;
         $stmt = null;

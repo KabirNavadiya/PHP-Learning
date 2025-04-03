@@ -19,7 +19,7 @@ require_once 'includes/view/update_view.inc.php';
         <form action="includes/update.inc.php" method="POST" class="login-form">
             <h1>update password</h1>
             <div class="inputs">
-                <input type="text" id="username" name="username" placeholder="username" required>
+                <input type="text" id="email" name="email" placeholder="email" required>
             </div>
             <div class="inputs">
                 <input type="password" id="new-password" name="new-password" placeholder="New password" required>

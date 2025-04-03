@@ -18,13 +18,29 @@ function isDifferent(string $n_pwd, string $c_pwd)
         return false;
     }
 }
-function isEmpty(string $username, string $n_pwd,string $c_pwd)
+function isEmpty(string $email  , string $n_pwd,string $c_pwd)
 {
-    if (empty($username) || empty($n_pwd) || empty($c_pwd)) {
+    if (empty($email) || empty($n_pwd) || empty($c_pwd)) {
         return true;
     } else {
         return false;
     }
 }
 
+function validatePassword($pwd){
 
+    $regex = '/(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[@#\$%^&*()+=\[\]{};:\'\"\\|,.<>\/?])+/';
+    if(strlen($pwd)<8){
+        return "Password must be of atleast of 8 chars";
+    }else if(!preg_match($regex,$pwd)){
+        return '
+                <ul style= "color:red">
+                <p>Password Must : </p>
+                <li>must contain atleast 1 lowercase</li>
+                <li>must contain atleast 1 uppercase</li>
+                <li>must contain atleast 1 digit</li>
+                <li>must contain atleast 1 special character</li>
+                </ul>';
+    }
+
+}
