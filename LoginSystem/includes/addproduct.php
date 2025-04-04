@@ -9,7 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $productPrice = $_POST['productPrice'];
     $productDescription = $_POST['productDescription'];
     $productImage = $_FILES['productImage'];
-    $discount = $_POST['discount'];
+    $discount = (int)$_POST['discount'];
+    
+    if(!isset($discount)){
+        $discount = (int)0;
+    }
 
     try {
         require_once 'dbh.inc.php';

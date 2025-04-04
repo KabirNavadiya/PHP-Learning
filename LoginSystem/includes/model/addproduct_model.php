@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+// declare(strict_types=1);
 
 
 function getProduct(object $conn, string $productName)
@@ -12,7 +12,7 @@ function getProduct(object $conn, string $productName)
     $result =  $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ?: null;
 }
-function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage,int $discount = 0)
+function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage, int $discount )
 {
 
     $uploadDir = "includes/uploads/";

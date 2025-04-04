@@ -471,15 +471,15 @@ $categories = getCategories($conn);
       return $product['category_name'] == $category['name'];
     });
 
-    echo '<div class="boe-heading bg-light mt-3 p-2">
-          <div class="row mt-2 ms-2">
+    echo '<div class="boe-heading bg-light mt-4 px-3 py-2">
+          <div class="row mt-3">
               <h4>' . $category['name'] . '</h4>
           </div>
         </div>
-        <div class="boe bg-light">
-          <div class="initial-items-list">
+        <div class="boe bg-light ">
+          <div class="initial-items-list ">
             <div class="row w-100">
-              <div class="col-12">
+              <div class="col-12 ">
                 <div id="carouselExample' . $category['id'] . '" class="carousel slide">
                   <div class="carousel-inner carousle-overflow">';
 
@@ -545,7 +545,6 @@ $categories = getCategories($conn);
         </div>';
   }
   ?>
-
 
   <div id="loginModal" class="modal">
     <div class="modal-content">

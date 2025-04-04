@@ -7,4 +7,4 @@ LoginSystem/src
 LoginSystem/.vscode/*
 LoginSystem/includes/uploads/*
 !.gitkeep
-LoginSystem/images/*
+LoginSystem/productimages/*

@@ -22,7 +22,7 @@ foreach ($userCartProducts as $item) {
     $discounted_total_price += $item_total;
     $cart_html .= '
     <tr>
-        <td><img src="' . $item['image'] . '" class="cart-img" alt="' . $item['name'] . '"></td>
+        <td><img src="'.'includes/uploads/' . $item['image'] . '" class="cart-img" alt="' . $item['name'] . '"></td>
         <td>' . $item['name'] . '</td>
         <td>&#8377;' . $item['price']. '</td>
         <td>&#8377;' . $discountPrice. '</td>

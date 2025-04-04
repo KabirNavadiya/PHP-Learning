@@ -58,7 +58,14 @@ h1 {
     font-size: 14px;
     transition: 0.3s ease-in-out;
 }
-
+#show{
+    position: absolute;
+    top: 35%;
+    left: 90%;
+}
+#show:hover{
+    transform: scale(1.1,1.1);
+}
 
 .inputs input:focus {
     transform: scale(1.02);
@@ -83,7 +90,7 @@ h1 {
     font-size: 14px;
 }
 
-button {
+#submit {
     width: 100%;
     padding: 12px;
     border: none;
@@ -95,7 +102,7 @@ button {
     transition: background 0.3s ease-in-out, transform 0.2s ease;
 }
 
-button:hover {
+#submit:hover {
     background-color: #6a1492;
     transform: scale(1.05);
 }

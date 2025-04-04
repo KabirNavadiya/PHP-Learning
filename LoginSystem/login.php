@@ -11,6 +11,7 @@ require_once 'includes/view/login_view.inc.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -22,6 +23,7 @@ require_once 'includes/view/login_view.inc.php';
             </div>
             <div class="inputs">
                 <input type="password" id="password" name="password" placeholder="password" required>
+                <i id="show" class="bi bi-eye"></i>
             </div>
 
             <a href="updatepass.php">Forgot Password ?</a>
@@ -42,6 +44,18 @@ require_once 'includes/view/login_view.inc.php';
         ?>
 
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $("#show").click(function(){
+            var ptype = document.getElementById("password");
+            if(ptype.type==="password"){
+                ptype.type = "text";
+            }
+            else{
+                ptype.type = "password";
+            }
+        });
+    </script>
 </body>
 
 </html>

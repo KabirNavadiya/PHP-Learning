@@ -6,10 +6,13 @@ require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
 require_once 'vendor/autoload.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $secret_key = $_ENV['STRIPE_SECRET_KEY'];
+$mail_pwd = $_ENV['MAIL_PWD'];
 
 
 if (!isset($_GET['session_id'])) {
@@ -17,34 +20,195 @@ if (!isset($_GET['session_id'])) {
     exit;
 }
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php"); 
+    header("Location: login.php");
     exit;
 }
+
+function getUserEmail($conn, $userid)
+{
+    $query = "SELECT email from users where id=:id;";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(":id", $userid);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
+
 \Stripe\Stripe::setApiKey($secret_key);
 try {
     $session = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
-    
 
-    print_r($details);
+    $userid = $_SESSION['user_id'];
+    $useremail = getUserEmail($conn, $userid);
     if ($session->payment_status === "paid") {
-        
-        $transaction_id = $session->id;
+
+        $transaction_id = $session->payment_intent;
+        $total_amount = $session->amount_total / 100;
         $user_id = $_SESSION['user_id'];
-        createOrder($conn,$user_id, $transaction_id, $session->amount_total / 100);
-        $orderid = getOrderId($conn,$transaction_id);
-        $details = getDetailsAboutOrder($conn,$user_id);        
-        foreach($details as $detail){
-            setOrderDetails($conn, $orderid['order_id'], $detail['product_id'], $detail['product_image'], $detail['product_name'], $detail['product_price'],$detail['quantity']);
+        createOrder($conn, $user_id, $transaction_id, $total_amount);
+        $orderid = getOrderId($conn, $transaction_id);
+        $details = getDetailsAboutOrder($conn, $user_id);
+        foreach ($details as $detail) {
+            setOrderDetails($conn, $orderid['order_id'], $detail['product_id'], $detail['product_image'], $detail['product_name'], $detail['product_price'], $detail['quantity']);
         }
-        clearUserCart($conn,$user_id);
-      
+
+        $product_details = [];
+        foreach ($details as $detail) {
+            array_push($product_details, [
+                "product_name" => $detail['product_name'],
+                "original_price" => $detail['product_price'],
+                "product_discount" => $detail['discount'],
+                "discount_price" => $detail['product_price'] - ($detail['product_price'] * $detail['discount']) / 100,
+                "product_quantity" => $detail['quantity']
+            ]);
+        }
+
+        $totalAmount = 0;
+        $date = date("d M Y");
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'kabirnavadia27@gmail.com'; // Your Gmail address
+            $mail->Password = $mail_pwd; // Generate an App Password for Gmail
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('kabirnavadia27@gmail.com', 'Kabir');
+            $mail->addAddress('kabirnavadia580@gmail.com');
+
+            $mail->isHTML(true); // Ensure email is sent as HTML
+            $mail->Subject = "#Order Summary";
+
+            // Initialize message string properly
+            $message = "<html lang='en'>
+            <head>
+                <meta charset='UTF-8'>
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                <title>Payment Receipt</title>
+                <style>
+                    body {
+                        font-family: 'Arial', sans-serif;
+                        margin: 0;
+                        padding: 20px;
+                        background-color: #f4f4f4;
+                    }
+                    .receipt-container {
+                        max-width: 600px;
+                        background: white;
+                        padding: 25px;
+                        border-radius: 10px;
+                        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                        margin: auto;
+                    }
+                    .receipt-header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                        color: #333;
+                    }
+                    .receipt-header h2 {
+                        margin: 0;
+                        font-size: 22px;
+                        color: #007bff;
+                    }
+                    .receipt-header p {
+                        margin: 5px 0;
+                        font-size: 14px;
+                        color: #555;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                        background: #fff;
+                        border-radius: 5px;
+                        overflow: hidden;
+                    }
+                    th, td {
+                        padding: 12px;
+                        border-bottom: 1px solid #ddd;
+                        text-align: left;
+                        font-size: 14px;
+                    }
+                    th {
+                        background: #007bff;
+                        color: white;
+                        text-transform: uppercase;
+                        font-size: 13px;
+                    }
+                    tbody tr:nth-child(even) {
+                        background: #f8f8f8;
+                    }
+                    .total {
+                        font-size: 16px;
+                        font-weight: bold;
+                        text-align: right;
+                        color: #333;
+                    }
+                    .total strong {
+                        color: #28a745;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class='receipt-container'>
+                    <div class='receipt-header'>
+                        <h2>Payment Receipt</h2>
+                        <p>Date: " . date("d M Y") . "</p>
+                        <p>Transaction ID : ".$transaction_id."</p>
+                    </div>
+        
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Original Price</th>
+                                <th>Discount</th>
+                                <th>Discounted Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+
+            foreach ($product_details as $product) {
+                $message .= "<tr>
+                        <td>" . htmlspecialchars($product["product_name"]) . "</td>
+                        <td>&#8377;" . number_format($product["original_price"], 2) . "</td>
+                        <td>" . $product["product_discount"] . "%</td>
+                        <td>&#8377;" . number_format($product["discount_price"], 2) . "</td>
+                        <td>" . $product["product_quantity"] . "</td>
+                    </tr>";
+            }
+
+            $message .= "</tbody>
+                    </table>
+        
+                    <p class='total'>Total Amount: <strong>&#8377;" . number_format($total_amount, 2) . "</strong></p>
+                </div>
+            </body>
+            </html>";
+
+            $mail->Body = $message;
+
+            $mail->send();
+            
+        } catch (Exception $e) {
+            echo "Mail could not be sent. Error: {$mail->ErrorInfo}";
+        }
+
+
+
+        clearUserCart($conn, $user_id);
+
+
         echo '<script>
         document.addEventListener("DOMContentLoaded", function() {
             showLoader("Payment successful! Redirecting...");
-            setTimeout(function() {
+                setTimeout(function() {
                     window.location.href = "index.php";
             }, 2000);
-
         });
 
         function showLoader(message) {
@@ -83,4 +247,3 @@ try {
     header("Location: cart.php?error=" . urlencode($e->getMessage()));
 }
 // exit;
-?>

@@ -45,7 +45,6 @@ $orders = getUserOrders($conn, $user_id);
                 echo "<p>No orders found.</p>";
             }
             ?>
-
         </div>
     </div>
 
