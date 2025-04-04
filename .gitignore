@@ -1,2 +1,10 @@
 basics/*
-Loginsystem/Flipkart-CRUD/*
+LoginSystem/vendor/*
+LoginSystem/.env
+LoginSystem/composer.lock
+LoginSystem/composer-setup.php
+LoginSystem/src
+LoginSystem/.vscode/*
+LoginSystem/includes/uploads/*
+!.gitkeep
+LoginSystem/productimages/*

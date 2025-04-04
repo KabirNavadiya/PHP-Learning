@@ -17,7 +17,7 @@ abstract class BankAccount
         $this->accountNumber = $accountNumber;
         $this->balance = $balance;
         $this->name = $name;
-        $this->Loguseradd($this->name,$this->balance,get_class($this));
+        $this->LogUseradd($this->name,$this->balance,get_class($this));
     }
 
     public function getBalance()

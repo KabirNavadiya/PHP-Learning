@@ -2,9 +2,6 @@
 
 
 include("autoload.php");
-// require("classes/BankAccount.php");
-// require("classes/SavingsAccount.php");
-// require("classes/CheckingAccount.php");
 
 $accountA = new SavingsAccount("kabir",1,1500);
 $accountB = new CheckingAccount("utsav",2,1500);
