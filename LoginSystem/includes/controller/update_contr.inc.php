@@ -8,11 +8,7 @@ function isUsernameWrong(bool|array $results)
 
 function isDifferent(string $n_pwd, string $c_pwd)
 {
-    if ($n_pwd !== $c_pwd) {
-        return true;
-    } else {
-        return false;
-    }
+    return $n_pwd !== $c_pwd ? true : false;
 }
 function isEmpty(string $email, string $n_pwd, string $c_pwd)
 {

@@ -17,9 +17,5 @@ function isEmpty(string $username, string $pwd)
 
 function isAdmin(string $role)
 {
-    if ($role === "admin") {
-        return true;
-    } else {
-        return false;
-    }
+    return $role === "admin" ? true : false;
 }

@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/dbh.inc.php';
+require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/view/addproduct_view.php';
 require_once 'includes/model/addproduct_model.php';
@@ -42,7 +42,7 @@ $categories = getCategories($conn);
       <input type="number" class="input-field" id="price" name="productPrice" placeholder="Price">
       <input type="text" class="input-field" id="description" name="productDescription" placeholder="Description">
       <input type="file" id="productImage" name="productImage" accept="image/*">
-      <input type="number" class="input-field" id="discount" name="discount" placeholder="Discount (%)" >
+      <input type="number" class="input-field" id="discount" name="discount" placeholder="Discount (%)">
       <button class="add-product" id="submitButton" type="submit" value="submit-btn">Add Product</button>
     </form>
 
@@ -50,8 +50,6 @@ $categories = getCategories($conn);
     checkAddProductErrors();
     ?>
   </div>
-
-
 
   <!-- toast -->
   <div class="toast-container position-fixed top-0 end-0 p-3">

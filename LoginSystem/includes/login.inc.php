@@ -1,17 +1,14 @@
 <?php
 
 session_start();
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    header('Location: ../index.php');
-    die();
-}
+require_once 'user_redirect.php';
 
 $username = htmlspecialchars($_POST['username']);
 $pwd = htmlspecialchars($_POST['password']);
 
 try {
     require_once 'config_session.inc.php';
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/login_model.inc.php';
     require_once 'controller/login_contr.inc.php';
 

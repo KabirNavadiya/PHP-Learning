@@ -3,23 +3,16 @@
 session_start();
 require_once 'config_session.inc.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    header('Location: ../admin.php');
-    die();
-}
+require_once 'admin_redirect.php';
 $productName = $_POST['productName'];
 $productCategory = $_POST['productCategory'];
 $productPrice = $_POST['productPrice'];
 $productDescription = $_POST['productDescription'];
 $productImage = $_FILES['productImage'];
-$discount = (int)$_POST['discount'];
-
-if (!isset($discount)) {
-    $discount = (int)0;
-}
+$discount = isset($_POST['discount']) ? (int)$_POST['discount'] : 0;
 
 try {
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/addproduct_model.php';
     require_once 'controller/addproduct_contr.php';
 

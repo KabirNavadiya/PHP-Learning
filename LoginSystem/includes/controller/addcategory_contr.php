@@ -9,9 +9,5 @@ function isInputEmpty(string $categoryName): bool
 
 function doesExist(object $conn, string $categoryName)
 {
-    if (getCategory($conn, $categoryName)) {
-        return true;
-    } else {
-        return false;
-    }
+    return getCategory($conn, $categoryName) ? true : false;
 }

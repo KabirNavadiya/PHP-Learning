@@ -3,7 +3,7 @@
 
 require_once '../config_session.inc.php';
 require_once 'stripe_contr.php';
-require_once '../dbh.inc.php';
+require_once '../../dbh.inc.php';
 require_once 'stripe_model.php';
 
 header('Content-Type: application/json');

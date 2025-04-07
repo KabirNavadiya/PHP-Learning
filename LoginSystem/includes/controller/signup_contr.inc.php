@@ -13,19 +13,11 @@ function isEmailInvalid($email)
 }
 function isUserNameTaken(object $conn, string $username)
 {
-    if (getUsername($conn, $username)) {
-        return true;
-    } else {
-        return false;
-    }
+    return getUsername($conn, $username) ? true : false;
 }
 function isEmailRegistered(object $conn, string $email)
 {
-    if (getUserEmail($conn, $email)) {
-        return true;
-    } else {
-        return false;
-    }
+    return getUserEmail($conn, $email) ? true : false;
 }
 function createUser(object $conn, string $email, string $username, string $password, string $contact, string $dob)
 {

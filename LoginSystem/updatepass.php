@@ -30,9 +30,9 @@ require_once 'includes/view/update_view.inc.php';
             <button> Update</button>
         </form>
 
-    <?php
-    checkUpdateErrors();
-    ?>
+        <?php
+        checkUpdateErrors();
+        ?>
     </div>
 
 </body>

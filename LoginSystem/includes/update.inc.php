@@ -1,10 +1,7 @@
 <?php
 
 session_start();
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    header('Location: ../index.php');
-    die();
-}
+require_once 'user_redirect.php';
 
 $email = $_POST['email'];
 $n_pwd = $_POST['new-password'];
@@ -12,7 +9,7 @@ $c_pwd = $_POST['confirm-password'];
 
 try {
     require_once 'config_session.inc.php';
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/update_model.inc.php';
     require_once 'controller/update_contr.inc.php';
 

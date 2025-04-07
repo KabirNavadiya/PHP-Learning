@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/dbh.inc.php';
+require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
 require_once 'includes/model/addtocart_model.php';
@@ -99,6 +99,7 @@ $categories = getCategories($conn);
       align-items: center;
       justify-content: center;
     }
+
     .cards {
       position: relative;
       /* Ensures the label is positioned correctly */
@@ -501,7 +502,7 @@ $categories = getCategories($conn);
             echo ' 
             <span class="discount">-' . $product['discount'] . '%</span>';
           }
-          echo '<img src="' ."includes/uploads/". $product['image'] . '" class="card-img-top card-img" alt="...">
+          echo '<img src="' . "includes/uploads/" . $product['image'] . '" class="card-img-top card-img" alt="...">
                       <div class="card-body">
                           <p class="card-title text-center">' . $product['product_name'] . '</p>
 

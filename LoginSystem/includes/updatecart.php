@@ -1,18 +1,15 @@
 <?php
 session_start();
 require_once 'config_session.inc.php';
+require_once 'user_redirect.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../index.php');
-    die();
-}
 $product_id = $_POST['productId'];
 $cartProductId = $_POST['cartProductId'];
 $action = $_POST['action'];
 $user_id = $_SESSION['user_id'];
 
 try {
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/updatecart_model.php';
 
     if (!$cartProductId || !$action || !$user_id) {

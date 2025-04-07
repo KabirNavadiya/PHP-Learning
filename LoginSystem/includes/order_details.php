@@ -1,5 +1,5 @@
 <?php
-require_once 'dbh.inc.php';
+require_once '../dbh.inc.php';
 require_once 'config_session.inc.php';
 require_once 'model/order_model.php';
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'dbh.inc.php';
+require_once '../dbh.inc.php';
 require_once 'model/addtocart_model.php'; // Ensure this file has getAllUserCartProducts()
 
 $user_id = $_SESSION['user_id'] ?? null;

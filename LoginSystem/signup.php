@@ -60,12 +60,11 @@ require_once 'includes/view/signup_view.inc.php';
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        $("#show").click(function(){
+        $("#show").click(function() {
             var ptype = document.getElementById("password");
-            if(ptype.type==="password"){
+            if (ptype.type === "password") {
                 ptype.type = "text";
-            }
-            else{
+            } else {
                 ptype.type = "password";
             }
         });

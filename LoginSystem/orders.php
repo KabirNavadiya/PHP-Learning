@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/dbh.inc.php';
+require_once 'dbh.inc.php';
 require_once 'includes/model/order_model.php';
 session_start();
 $user_id = $_SESSION['user_id'];

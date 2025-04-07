@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/dbh.inc.php';
+require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addcategory_model.php';
 require_once 'includes/model/editcategory_model.php';

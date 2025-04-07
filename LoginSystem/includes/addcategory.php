@@ -3,14 +3,11 @@
 session_start();
 require_once 'config_session.inc.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    header('Location: ../admin.php');
-    die();
-}
+require_once 'admin_redirect.php';
 $categoryName = $_POST['categoryName'];
 
 try {
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/addcategory_model.php';
     require_once 'controller/addcategory_contr.php';
 

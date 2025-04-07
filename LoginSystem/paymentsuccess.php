@@ -1,16 +1,13 @@
 <?php
 
-require_once 'includes/dbh.inc.php';
+require_once 'dbh.inc.php';
 require_once 'includes/model/order_model.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
-require_once 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 $secret_key = $_ENV['STRIPE_SECRET_KEY'];
 $mail_pwd = $_ENV['MAIL_PWD'];
 
@@ -71,13 +68,13 @@ try {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'kabirnavadia27@gmail.com'; // Your Gmail address
+            $mail->Username = $_ENV['EMAIL']; // Your Gmail address
             $mail->Password = $mail_pwd; // Generate an App Password for Gmail
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('kabirnavadia27@gmail.com', 'Kabir');
-            $mail->addAddress('kabirnavadia580@gmail.com');
+            $mail->setFrom($_ENV['EMAIL'], 'Kabir');
+            $mail->addAddress($useremail['email']);
 
             $mail->isHTML(true); // Ensure email is sent as HTML
             $mail->Subject = "#Order Summary";
@@ -157,7 +154,7 @@ try {
                     <div class='receipt-header'>
                         <h2>Payment Receipt</h2>
                         <p>Date: " . date("d M Y") . "</p>
-                        <p>Transaction ID : ".$transaction_id."</p>
+                        <p>Transaction ID : " . $transaction_id . "</p>
                     </div>
         
                     <table>
@@ -193,7 +190,6 @@ try {
             $mail->Body = $message;
 
             $mail->send();
-            
         } catch (Exception $e) {
             echo "Mail could not be sent. Error: {$mail->ErrorInfo}";
         }

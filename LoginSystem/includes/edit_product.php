@@ -2,11 +2,7 @@
 
 session_start();
 require_once 'config_session.inc.php';
-
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    header('Location: ../admin.php');
-    die();
-}
+require_once 'admin_redirect.php';
 
 $productId = $_POST['productId'];
 $productName = $_POST['productName'];
@@ -16,7 +12,7 @@ $productDescription = $_POST['productDescription'];
 $productImage = $_FILES['productImage'];
 
 try {
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/editproduct_model.php';
     require_once 'controller/editproduct_contr.php';
 

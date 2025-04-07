@@ -2,15 +2,12 @@
 
 session_start();
 require_once 'config_session.inc.php';
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    header('Location: ../admin.php');
-    die();
-}
+require_once 'admin_redirect.php';
 
 $productId = $_POST['productId'];
 
 try {
-    require_once 'dbh.inc.php';
+    require_once '../dbh.inc.php';
     require_once 'model/deleteproduct_model.php';
 
     $query = "SELECT image FROM products where id = :id;";
@@ -18,7 +15,7 @@ try {
     $stmt->bindParam(":id", $productId);
     $stmt->execute();
     $oldimage = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     deleteProduct($conn, $productId);
     unlink("uploads/" . $oldimage['image']);
     $conn = null;
