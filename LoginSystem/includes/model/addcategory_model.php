@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 function getCategory(object $conn, string $categoryName)
 {
     $query = "SELECT name FROM categories where name = :categoryname;";
@@ -30,7 +29,7 @@ function getCategories(object $conn)
     return $categories;
 }
 
-function getProducts($conn)
+function getProducts(object $conn)
 {
     $query = "SELECT p.id AS id,p.product_name AS product_name,c.name AS category_name,p.price AS price,p.description AS description,p.image AS image FROM products p JOIN categories c ON p.category_id = c.id;";
     $stmt = $conn->prepare($query);

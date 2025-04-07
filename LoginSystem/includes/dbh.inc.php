@@ -1,6 +1,5 @@
 <?php
 
-
 $host = 'localhost';
 $dbname = 'phpDb';
 $dbusername = 'kabir@simform';

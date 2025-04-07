@@ -3,11 +3,7 @@
 declare(strict_types=1);
 function isUsernameWrong(bool|array $results)
 {
-    if (!$results) {
-        return true;
-    } else {
-        return false;
-    }
+    return !$results;
 }
 
 function isDifferent(string $n_pwd, string $c_pwd)
@@ -18,21 +14,18 @@ function isDifferent(string $n_pwd, string $c_pwd)
         return false;
     }
 }
-function isEmpty(string $email  , string $n_pwd,string $c_pwd)
+function isEmpty(string $email, string $n_pwd, string $c_pwd)
 {
-    if (empty($email) || empty($n_pwd) || empty($c_pwd)) {
-        return true;
-    } else {
-        return false;
-    }
+    return (empty($email) || empty($n_pwd) || empty($c_pwd));
 }
 
-function validatePassword($pwd){
+function validatePassword($pwd)
+{
 
     $regex = '/(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[@#\$%^&*()+=\[\]{};:\'\"\\|,.<>\/?])+/';
-    if(strlen($pwd)<8){
+    if (strlen($pwd) < 8) {
         return "Password must be of atleast of 8 chars";
-    }else if(!preg_match($regex,$pwd)){
+    } else if (!preg_match($regex, $pwd)) {
         return '
                 <ul style= "color:red">
                 <p>Password Must : </p>
@@ -42,5 +35,4 @@ function validatePassword($pwd){
                 <li>must contain atleast 1 special character</li>
                 </ul>';
     }
-
 }

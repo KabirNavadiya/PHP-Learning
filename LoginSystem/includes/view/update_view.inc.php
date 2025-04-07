@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 function checkUpdateErrors()
 {
     if (isset($_SESSION["errors_update"])) {

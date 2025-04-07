@@ -7,13 +7,11 @@ body {
     margin: 0;
 }
 
-/* Header */
 header {
     background-color: white;
     width: 100%;
 }
 
-/* Navigation */
 #search-bar {
     border: none;
     outline: none;
@@ -111,23 +109,19 @@ header {
     margin-left: 30px;
 }
 
-/* Flipkart Logo */
 .flipkart-logo {
     width: 160px;
     height: 40px;
 }
 
-/* Dropdown */
 .dropdown-menu {
     padding: 20px;
 }
 
-/* Navigation Icons */
 .nav-i {
     margin-right: 10px;
 }
 
-/* Category Cards */
 .category-text {
     font-weight: 800;
 }
@@ -172,7 +166,6 @@ header {
     min-height: 5rem;
 }
 
-/* Slide Carousel */
 .carousel-container {
     background-color: white;
     display: flex;
@@ -184,13 +177,10 @@ header {
     width: 100vw;
 }
 
-/* Cards Carousel */
-
 .card:hover .card-img-top {
     transform: none !important;
     transition: none !important;
 }
-
 
 .cards {
     width: 18rem;
@@ -241,7 +231,6 @@ header {
     overflow-x: hidden;
 }
 
-/* Footer */
 .footer {
     width: 100%;
     display: flex;
@@ -267,9 +256,6 @@ header {
     display: block;
 }
 
-
-
-/* Responsive Design */
 @media screen and (max-width: 1200px) {
     #ad {
         display: none;

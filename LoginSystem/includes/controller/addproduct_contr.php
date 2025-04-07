@@ -7,7 +7,7 @@ function isInputEmpty(
     string $productCategory,
     string $productPrice,
     string $productDescription,
-    array $productImage 
+    array $productImage
 ) {
     if (empty($productName) || empty($productCategory) || empty($productPrice) || empty($productDescription)) {
         return true;
@@ -22,12 +22,11 @@ function isInputEmpty(
 
 
 
-function doesExist(object $conn,string $productName){
-    if(getProduct($conn,$productName)){
+function doesExist(object $conn, string $productName)
+{
+    if (getProduct($conn, $productName)) {
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
-

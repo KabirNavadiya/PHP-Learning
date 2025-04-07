@@ -22,10 +22,10 @@ foreach ($userCartProducts as $item) {
     $discounted_total_price += $item_total;
     $cart_html .= '
     <tr>
-        <td><img src="'.'includes/uploads/' . $item['image'] . '" class="cart-img" alt="' . $item['name'] . '"></td>
+        <td><img src="' . 'includes/uploads/' . $item['image'] . '" class="cart-img" alt="' . $item['name'] . '"></td>
         <td>' . $item['name'] . '</td>
-        <td>&#8377;' . $item['price']. '</td>
-        <td>&#8377;' . $discountPrice. '</td>
+        <td>&#8377;' . $item['price'] . '</td>
+        <td>&#8377;' . $discountPrice . '</td>
         <td>
             <button class="qty-btn decrease" onclick="updateQuantity(' . $item['id'] . ', \'decrease\')">-</button>
             <span class="quantity" id="qty-' . $item['id'] . '">' . $item['quantity'] . '</span>
@@ -42,6 +42,3 @@ echo json_encode([
     "cart_html" => $cart_html,
     "discounted_total_price" => $discounted_total_price ?? 0,
 ]);
-
-
-

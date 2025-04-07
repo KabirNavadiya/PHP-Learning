@@ -5,7 +5,7 @@ function getUser(object $conn, string $email)
 {
     $query = "SELECT * FROM users where  email = :email ;";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(":email", $email);  
+    $stmt->bindParam(":email", $email);
     $stmt->execute();
     $result =  $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;

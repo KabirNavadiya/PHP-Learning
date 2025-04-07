@@ -2,7 +2,6 @@
 
 // declare(strict_types=1);
 
-
 function getProduct(object $conn, string $productName)
 {
     $query = "SELECT product_name FROM products where product_name = :productname;";
@@ -12,13 +11,13 @@ function getProduct(object $conn, string $productName)
     $result =  $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ?: null;
 }
-function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage, int $discount )
+function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage, int $discount)
 {
 
     $uploadDir = "includes/uploads/";
-    $fileName = date("Y-m-d_H-i-s").'_'.basename($productImage['name']);
+    $fileName = date("Y-m-d_H-i-s") . '_' . basename($productImage['name']);
     $imagePath = $uploadDir . $fileName;
-    
+
     if (!move_uploaded_file($productImage['tmp_name'], __DIR__ . "/../../" . $imagePath)) {
         die("Error uploading image.");
     }
@@ -43,7 +42,7 @@ function getCategories(object $conn)
     return $categories;
 }
 
-function getProducts($conn)
+function getProducts(object $conn)
 {
     $query = "SELECT p.id AS id,p.product_name AS product_name,c.name AS category_name,p.price AS price,p.description AS description,p.image AS image,discount as discount FROM products p JOIN categories c ON p.category_id = c.id;";
     $stmt = $conn->prepare($query);

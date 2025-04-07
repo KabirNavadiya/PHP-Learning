@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -17,8 +16,6 @@ body {
     background-size: cover;
 }
 
-
-/* Form container */
 .login-box {
     display: flex;
     flex-direction: column;
@@ -43,7 +40,6 @@ h1 {
     gap: 15px;
 }
 
-
 .inputs {
     position: relative;
     width: 100%;
@@ -67,7 +63,6 @@ h1 {
     transition: 0.3s ease-in-out;
 }
 
-
 .inputs input:focus {
     transform: scale(1.02);
     border-color: #ac1dee;
@@ -81,8 +76,6 @@ h1 {
     transform: translateY(-50%);
     opacity: 0.5;
 }
-
-
 
 .checkbox {
     display: flex;
@@ -108,13 +101,11 @@ button:hover {
     transform: scale(1.05);
 }
 
-
 .footer {
     margin-top: 10px;
     font-size: 14px;
 }
 
-/* Footer link */
 .footer a {
     color: #ac1dee;
     font-weight: bold;

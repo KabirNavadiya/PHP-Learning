@@ -12,12 +12,11 @@ function getCurrentCategory(object $conn, int $categoryId)
     return $result;
 }
 
-function updateCategory(object $conn,int $categoryId, string $categoryName)
+function updateCategory(object $conn, int $categoryId, string $categoryName)
 {
     $query = "UPDATE categories SET name = :categoryname WHERE id = :categoryid;";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":categoryid", $categoryId, PDO::PARAM_INT);
-    $stmt->bindParam(":categoryname", ucfirst(strtolower($categoryName)));   
+    $stmt->bindParam(":categoryname", ucfirst(strtolower($categoryName)));
     $stmt->execute();
-    
 }

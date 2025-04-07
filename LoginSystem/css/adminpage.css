@@ -1,4 +1,4 @@
-.add{
+.add {
     margin: 20px;
     padding: 10px;
     color: white;
@@ -8,13 +8,13 @@
     width: 200px;
 }
 
-
-.add-buttons{
+.add-buttons {
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
 }
-.addbutton{
+
+.addbutton {
     margin: 10px;
 }

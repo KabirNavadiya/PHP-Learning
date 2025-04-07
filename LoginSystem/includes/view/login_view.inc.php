@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 function checkLoginErrors()
 {
-
     if (isset($_SESSION["errors_login"])) {
         $errors = $_SESSION["errors_login"];
         echo "<br>";
@@ -16,7 +15,6 @@ function checkLoginErrors()
         echo '<p style = "color:green"> Login Success ! </p>';
     }
 }
-
 
 function getUsername()
 {

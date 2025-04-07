@@ -22,4 +22,3 @@ if (!$response) {
 } else {
     header("Location: " . $response['sessionUrl']);
 }
-

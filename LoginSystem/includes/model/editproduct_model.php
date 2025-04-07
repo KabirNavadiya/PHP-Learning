@@ -31,12 +31,11 @@ function updateWithImage(object $conn, int $productid, string $productName, stri
     $stmt->bindParam(":image", $imagePath);
     $stmt->bindParam(":id", $productid);
     $stmt->execute();
-
 }
 
-function updateWithoutImage(object $conn,int $productid, string $productName, string $productCategory, string $productPrice, string $productDescription)
+function updateWithoutImage(object $conn, int $productid, string $productName, string $productCategory, string $productPrice, string $productDescription)
 {
-    
+
     $query = "UPDATE products SET product_name = :productname,category_id = :categoryid, price = :price, description = :description WHERE id = :id;";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":id", $productid, PDO::PARAM_INT);
@@ -44,7 +43,6 @@ function updateWithoutImage(object $conn,int $productid, string $productName, st
     $stmt->bindParam(":categoryid", $productCategory);
     $stmt->bindParam(":price", $productPrice);
     $stmt->bindParam(":description", $productDescription);
-    
+
     $stmt->execute();
-    
 }
