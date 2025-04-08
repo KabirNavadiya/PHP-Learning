@@ -13,11 +13,11 @@ $mail_pwd = $_ENV['MAIL_PWD'];
 
 
 if (!isset($_GET['session_id'])) {
-    header("Location: cart.php");
+    header("Location: /cart");
     exit;
 }
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: /login");
     exit;
 }
 
@@ -165,6 +165,7 @@ try {
                                 <th>Discount</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>";
@@ -176,6 +177,7 @@ try {
                         <td>" . $product["product_discount"] . "%</td>
                         <td>&#8377;" . number_format($product["discount_price"], 2) . "</td>
                         <td>" . $product["product_quantity"] . "</td>
+                        <td>&#8377;" . $product["discount_price"] * $product['product_quantity'] . "</td>
                     </tr>";
             }
 
@@ -194,16 +196,13 @@ try {
             echo "Mail could not be sent. Error: {$mail->ErrorInfo}";
         }
 
-
-
         clearUserCart($conn, $user_id);
-
 
         echo '<script>
         document.addEventListener("DOMContentLoaded", function() {
             showLoader("Payment successful! Redirecting...");
                 setTimeout(function() {
-                    window.location.href = "index.php";
+                    window.location.href = "/";
             }, 2000);
         });
 
@@ -237,9 +236,8 @@ try {
         }
     </script>';
     } else {
-        header("Location: cart.php");
+        header("Location: /cart");
     }
 } catch (Exception $e) {
-    header("Location: cart.php?error=" . urlencode($e->getMessage()));
+    header("Location: /cart?error=" . urlencode($e->getMessage()));
 }
-// exit;

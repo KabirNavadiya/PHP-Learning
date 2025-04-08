@@ -13,21 +13,26 @@ try {
     require_once 'controller/login_contr.inc.php';
 
     $errors = [];
-    if (isEmpty($username, $pwd,)) {
-        $errors["empty_input"] = "fill in all fields";
+    if(empty($username)){
+        $errors["empty_username"] = "Please enter username or email";
+
+    }
+    if(empty($pwd)){
+        $errors["empty_password"] = "Please enter password";
     }
     $result = getUser($conn, $username);
-
-    if (isUsernameWrong($result)) {
-        $errors["login_incorrect"] = "User not found ! ";
-    }
-    if (!isUsernameWrong($result) && isPasswordWrong($pwd, $result["pwd"])) {
-        $errors["login_incorrect"] = "Incorrect credentials !";
+    if(!empty($username) && !empty($pwd)){
+        if (isUsernameWrong($result)) {
+            $errors["login_incorrect"] = "User not found ! ";
+        }
+        if (!isUsernameWrong($result) && isPasswordWrong($pwd, $result["pwd"])) {
+            $errors["login_incorrect"] = "Incorrect credentials !";
+        }
     }
 
     if ($errors) {
         $_SESSION["errors_login"] = $errors;
-        header("Location: ../login.php");
+        header("Location: /login");
         die();
     }
     function generateSessionId($result)
@@ -37,6 +42,7 @@ try {
         session_id($sessionId);
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["user_username"] = htmlspecialchars($result["username"]);
+        $_SESSION["user_role"] = $result['role'];
         $_SESSION["last_regeneration"] = time();
     }
 
@@ -44,13 +50,13 @@ try {
         generateSessionId($result);
         $conn = null;
         $stmt = null;
-        header("Location: ../admin.php");
+        header("Location: /");
         die();
     } else {
         generateSessionId($result);
         $conn = null;
         $stmt = null;
-        header("Location: ../index.php");
+        header("Location: /");
         die();
     }
 } catch (PDOException $e) {

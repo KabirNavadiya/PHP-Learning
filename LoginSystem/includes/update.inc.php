@@ -34,7 +34,7 @@ try {
     }
     $passworderrormsg = validatePassword($n_pwd);
     if ($passworderrormsg) {
-        $errors["invalid password"] = $passworderrormsg;
+        $errors["invalid_password"] = $passworderrormsg;
     }
 
     if (password_verify($n_pwd, $result['pwd'])) {
@@ -43,7 +43,7 @@ try {
 
     if ($errors) {
         $_SESSION["errors_update"] = $errors;
-        header('Location: ../updatepass.php');
+        header('Location: /updatepass');
         die();
     }
     $options = ['cost' => 12];
@@ -52,7 +52,7 @@ try {
     setPass($conn, $email, $h_pwd);
     $conn = null;
     $stmt = null;
-    header('Location: ../login.php');
+    header('Location: /login');
     die();
 } catch (PDOException $e) {
     die(" Query failed : " . $e->getMessage());

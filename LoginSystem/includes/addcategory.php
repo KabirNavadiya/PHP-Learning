@@ -2,9 +2,9 @@
 
 session_start();
 require_once 'config_session.inc.php';
-
 require_once 'admin_redirect.php';
 $categoryName = $_POST['categoryName'];
+
 
 try {
     require_once '../dbh.inc.php';
@@ -12,8 +12,8 @@ try {
     require_once 'controller/addcategory_contr.php';
 
     $errors = [];
-    if (isInputEmpty($categoryName)) {
-        $errors["empty_input"] = "fill in all fields";
+    if (isInputEmpty(categoryName: $categoryName)) {
+        $errors["empty_input"] = "please enter category name";
     }
 
     if (doesExist($conn, $categoryName)) {
@@ -23,7 +23,7 @@ try {
 
     if ($errors) {
         $_SESSION["errors_addcategory"] = $errors;
-        header("Location: ../category.php");
+        header("Location: /category");
         die();
     }
     setCategory($conn, $categoryName);
@@ -31,7 +31,7 @@ try {
     $_SESSION['category_success'] = "✅ Category Added Successfully!";
     $conn = null;
     $stmt = null;
-    header('Location: ../category.php');
+    header('Location: /category');
     die();
 } catch (PDOException $e) {
     die(" Query failed : " . $e->getMessage());

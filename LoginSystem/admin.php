@@ -3,7 +3,14 @@ require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
 require_once 'includes/model/editproduct_model.php';
+require_once 'includes/view/addproduct_view.php';
 
+if(!isset($_SESSION['user_id']) || $_SESSION['user_role']!=="admin"){
+    header("Location: /");
+    die();
+}
+
+$errors = addProductErrors();
 $products = getProducts($conn);
 $categories = getCategories($conn);
 
@@ -30,39 +37,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
     <link rel="stylesheet" href="css/adminpage.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <!-- Datatable CSS-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 
-
-
-
 </head>
 
 <body>
+    <a href="/" class="btn btn-primary">
+        ← Back
+    </a>
     <div class="container-fluid my-4 mx-1">
         <h1 class="text-center">Admin Dashboard</h1>
 
-        <!-- Logout Button -->
-        <div class="text-end">
-            <button class="btn btn-danger" onclick="window.location.href='includes/logout.inc.php';">Logout</button>
-        </div>
-
         <!-- Add Buttons -->
         <div class="text-center my-3 add-buttons">
-            <form action="product.php" class="addbutton">
-                <button class="btn btn-primary">Add Product</button>
-            </form>
-            <form action="category.php" class="addbutton">
-                <button class="btn btn-primary">Add Category</button>
-            </form>
+            <button class="btn btn-primary mx-1" onclick="window.location.href = '/product'">Add Product</button>
+            <button class="btn btn-primary mx-1" onclick="window.location.href = '/category'">Add Category</button>
         </div>
 
         <!-- Edit Product Form (Initially Hidden) -->
         <div id="editContainer" class="card p-4 mx-auto shadow-lg" style="max-width: 500px; display: none;">
             <h3 class="text-center">Edit Product</h3>
-            <form id="editForm" action="includes/edit_product.php" method="POST" enctype="multipart/form-data">
+            <form id="editForm" action="includes/edit_product" method="POST" enctype="multipart/form-data">
                 <input type="hidden" id="eproductId" name="productId">
                 <div class="mb-3">
                     <input type="text" class="form-control" id="eproductName" name="productName" placeholder="Product Name">
@@ -76,13 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
                 </div>
                 <div class="mb-3">
                     <input type="number" class="form-control" id="eprice" name="productPrice" placeholder="Price">
+                    <span class="error" id="invalid_price"><?= $errors['invalid_price'] ?></span>
                 </div>
                 <div class="mb-3">
                     <textarea class="form-control" id="edescription" placeholder="Description" name="productDescription"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label>Current Image:</label><br>
-                    <img id="eproductImagePreview" src="" alt="Product Image" class="img-thumbnail" style="width: 100px;">
                 </div>
                 <div class="mb-3">
                     <input type="file" class="form-control" id="eproductImage" name="productImage" accept="image/*">
@@ -135,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
 
     <!-- toast -->
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="liveToast" class="toast <?php echo isset($_SESSION['edit_success']) || isset($_SESSION['delete_success']) ? 'show' : ''; ?>" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="liveToast" class="toast <?= isset($_SESSION['edit_success']) || isset($_SESSION['delete_success']) ? 'show' : ''; ?>" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Success</strong>
                 <small>Just now</small>

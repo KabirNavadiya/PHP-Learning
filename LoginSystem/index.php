@@ -33,205 +33,16 @@ $categories = getCategories($conn);
 
   <title>Flipkart</title>
 
-  <style>
-    .card-img-top {
-      width: 100%;
-      height: 200px !important;
-      object-fit: contain;
-    }
-
-    .card-img:hover {
-      transform: none !important;
-    }
-
-    .addto-cart-button {
-      width: 60px;
-      height: 30px;
-      border-radius: 5px;
-      border: 1px solid rgb(33, 89, 245);
-      background-color: white;
-      color: rgb(33, 89, 245);
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .addto-cart-button:hover {
-      background-color: rgb(79, 122, 240);
-      color: white;
-    }
-
-    .addto-cart {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .cart {
-      position: relative;
-      /* Ensures absolute positioning inside */
-      display: inline-block;
-    }
-
-    .cart-btn {
-      position: relative;
-      /* Makes sure the badge is positioned inside the button */
-      padding: 10px 15px;
-    }
-
-    .badge {
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translate(50%, -50%);
-      background: #E91E63;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 5px 8px;
-      border-radius: 50%;
-      min-width: 20px;
-      min-height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cards {
-      position: relative;
-      /* Ensures the label is positioned correctly */
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .exclusive-offer-label {
-      position: absolute;
-      top: 30px;
-      left: -20px;
-      background-color: red;
-      color: white;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 5px;
-      text-transform: uppercase;
-      transform: rotate(-45deg);
-      z-index: 10;
-    }
-
-    .discount {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: rgba(39, 94, 245, 0.86);
-      color: white;
-      padding: 5px 5px;
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 5px;
-      text-transform: uppercase;
-      z-index: 10;
-    }
-
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      text-align: center;
-      width: 350px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      animation: slideIn 0.3s ease-in-out;
-    }
-
-    .modal-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .modal-buttons button,
-    .modal-content button {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s ease-in-out;
-    }
-
-    .close-btn {
-      background-color: rgb(255, 85, 85);
-      color: white;
-    }
-
-    .close-btn:hover {
-      background-color: rgb(220, 50, 50);
-    }
-
-    .checkout-btn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .checkout-btn:hover {
-      background-color: #0056b3;
-    }
-
-    p {
-      padding-left: 3px;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(-20px);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-  </style>
 </head>
 
 <body>
-
+  <noscript>Please Enable Javascript !</noscript>
   <!-- navbar -->
   <header>
     <nav class="navbar navbar-expand p-1 container">
       <div class="logo-search">
         <div class="logo">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/">
             <img
               src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-44005d.svg"
               alt="Bootstrap" class="flipkart-logo">
@@ -263,7 +74,7 @@ $categories = getCategories($conn);
         <button class="btn btn-light login-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"';
 
         if (!$isLoggedIn) {
-          echo ' onclick="window.location.href=\'login.php\';"';
+          echo ' onclick="window.location.href=\'/login\';"';
         }
 
         echo '>
@@ -279,15 +90,15 @@ $categories = getCategories($conn);
       <ul class="dropdown-menu">';
 
         if (!$isLoggedIn) {
-          echo '<li class="dropdown-item">New Customer? <span><a href="signup.php" class="sign-up">Sign-up</a></span></li>
+          echo '<li class="dropdown-item">New Customer? <span><a href="/signup" class="sign-up">Sign-up</a></span></li>
           <li><hr class="dropdown-divider"></li>';
         } else {
           echo '<li><a class="dropdown-item" href="#"><i class="bi bi-person-circle nav-i"></i> My Profile</a></li>
-          <li><a class="dropdown-item" href="orders.php"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
+          <li><a class="dropdown-item" href="/orders"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-heart nav-i"></i> Wishlist</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-wallet2 nav-i"></i> Gift Card</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="includes/logout.inc.php"><i class="bi bi-box-arrow-right"></i> Logout</a></li>';
+          <li><a class="dropdown-item text-danger" href="includes/logout.inc"><i class="bi bi-box-arrow-right"></i> Logout</a></li>';
         }
 
         echo '</ul></div>';
@@ -295,7 +106,7 @@ $categories = getCategories($conn);
 
 
         <div class="cart">
-          <button class="btn btn-light cart-btn highlight" type="button" onclick="window.location.href='cart.php';">
+          <button class="btn btn-light cart-btn highlight" type="button" onclick="window.location.href='/cart';">
             <svg class="cart-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
               class="bi bi-cart" viewBox="0 0 16 16">
               <path
@@ -319,7 +130,13 @@ $categories = getCategories($conn);
             <span class="dn"> Become a Seller</span>
           </button>
         </div>
-
+        <?php 
+          if($_SESSION['user_role']==="admin") {
+            echo '<a href="/admin" class="btn btn-light">
+                    Add products
+                  </a>';
+          }
+        ?>
         <div class="dropstart">
           <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -335,6 +152,7 @@ $categories = getCategories($conn);
             <li><a class="dropdown-item" href="#"><i class="bi bi-download nav-i"></i>Downlaod App</a></li>
           </ul>
         </div>
+     
       </div>
     </nav>
   </header>
@@ -494,7 +312,7 @@ $categories = getCategories($conn);
           echo '<div class="cards">';
 
           if ($product['discount'] >= 25) {
-            echo '   <!-- Exclusive Offer Label -->
+            echo '  
             <span class="exclusive-offer-label">Exclusive Offer</span>';
           }
 
@@ -626,7 +444,7 @@ $categories = getCategories($conn);
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    let isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+    let isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
     let cartCount = <?= json_encode($cartCount); ?>;
   </script>
   <script src="js/index.js"></script>

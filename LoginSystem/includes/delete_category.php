@@ -12,7 +12,7 @@ try {
     deleteCategory($conn, $categoryId);
     $conn = null;
     $stmt = null;
-    header('Location: ../category.php');
+    header('Location: /category');
     die();
 } catch (PDOException $e) {
     die(" Query failed : " . $e->getMessage());

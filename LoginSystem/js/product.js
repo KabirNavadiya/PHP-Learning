@@ -22,7 +22,7 @@ function hideEditForm() {
 }
 
 function editProduct(productId) {
-    fetch('../admin.php', {
+    fetch('../admin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -41,7 +41,7 @@ function editProduct(productId) {
             document.getElementById('eproductCategory').value = data.category_id;
             document.getElementById('eprice').value = data.price;
             document.getElementById('edescription').value = data.description;
-            document.getElementById('eproductImagePreview').src = data.image;
+            // document.getElementById('eproductImagePreview').src = data.image;
 
             document.getElementById('editContainer').style.display = "block";
         })
@@ -50,7 +50,7 @@ function editProduct(productId) {
 
 function deleteProduct(productId) {
     if (confirm("Are you sure you want to delete this product?")) {
-        fetch('../includes/delete_product.php', {
+        fetch('../includes/delete_product', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

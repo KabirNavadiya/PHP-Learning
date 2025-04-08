@@ -16,7 +16,7 @@ try {
     $_SESSION['edit_success'] = "✅ Item Updated Successfully!";
     $conn = null;
     $stmt = null;
-    header('Location: ../category.php');
+    header('Location: /category');
     die();
 } catch (PDOException $e) {
     die(" Query failed : " . $e->getMessage());

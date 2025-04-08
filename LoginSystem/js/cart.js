@@ -2,7 +2,7 @@
 function updateQuantity(cartProductId, action) {
 
     $.ajax({
-        url: "../includes/updatecart.php",
+        url: "../includes/updatecart",
         type: "POST",
         data: {
             cartProductId: cartProductId,
@@ -25,7 +25,7 @@ function updateQuantity(cartProductId, action) {
 
 function fetchCart() {
     $.ajax({
-        url: "../includes/fetchcart.php",
+        url: "../includes/fetchcart",
         type: "GET",
         dataType: "json",
         success: function(response) {

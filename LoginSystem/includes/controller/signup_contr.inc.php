@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 
-function isInputEmpty(string $email, string $username, string $password, string $contact, string $dob)
-{
-    return (empty($username) || empty($email) || empty($password) || empty($contact) || empty($dob));
-}
+// function isInputEmpty(string $email, string $username, string $password, string $contact, string $dob)
+// {
+//     return (empty($username) || empty($email) || empty($password) || empty($contact) || empty($dob));
+// }
 function isEmailInvalid($email)
 {
     return !filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -22,12 +22,6 @@ function isEmailRegistered(object $conn, string $email)
 function createUser(object $conn, string $email, string $username, string $password, string $contact, string $dob)
 {
     setUser($conn, $email, $username, $password, $contact, $dob);
-}
-
-
-function validateEmail($email)
-{
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 function validatePassword($pwd)

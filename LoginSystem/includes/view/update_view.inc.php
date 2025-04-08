@@ -1,14 +1,11 @@
 <?php
 
 declare(strict_types=1);
-function checkUpdateErrors()
+function updateErrors()
 {
     if (isset($_SESSION["errors_update"])) {
         $errors = $_SESSION["errors_update"];
-        echo "<br>";
-        foreach ($errors as $err) {
-            echo '<p style = "color:red"> ' . $err . '</p>';
-        }
         unset($_SESSION["errors_update"]);
     }
+    return $errors;
 }

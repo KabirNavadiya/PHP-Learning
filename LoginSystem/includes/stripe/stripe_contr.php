@@ -37,8 +37,8 @@ function createStripeSession($cartItems)
             'payment_method_types' => ['card'],
             'line_items' => $line_items,
             'mode' => 'payment',
-            'success_url' => 'http://myflipkart.com/paymentsuccess.php?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => 'http://myflipkart.com/cart.php',
+            'success_url' => 'http://myflipkart.com/paymentsuccess?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => 'http://myflipkart.com/cart',
         ]);
 
         return ['sessionUrl' => $session->url, 'totalAmount' => $totalAmount];

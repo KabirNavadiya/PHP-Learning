@@ -19,41 +19,60 @@ try {
     require_once 'controller/signup_contr.inc.php';
 
     $errors = [];
-    if (isInputEmpty($email, $username, $pwd, $contact, $dob)) {
-        $errors["empty_input"] = "fill in all fields";
+    // if (isInputEmpty($email, $username, $pwd, $contact, $dob)) {
+    //     $errors["empty_input"] = "fill in all fields";
+    // }
+    if(empty($username)){
+        $errors['empty_username']= "please enter username";
     }
-    if (isEmailInvalid($email)) {
-        $errors["invalid_email"] = "invalid email used!";
+    if(empty($email)){
+        $errors['empty_email']= "please enter email";
     }
-    if (isUserNameTaken($conn, $username)) {
-        $errors["username_taken"] = "try different username !";
+    if(empty($pwd)){
+        $errors['empty_password']= "please enter password";
     }
-    if (isEmailRegistered($conn, $email)) {
-        $errors["email_used"] = "try different email!";
+    if(empty($confirm_pwd)){
+        $errors['empty_confirmpwd']= "please enter password";
     }
-    if ($pwd !== $confirm_pwd) {
-        $errors["unmatched_pwd"] = "Password does'nt match !";
+    if(empty($contact)){
+        $errors['empty_contact']= "please enter contact";
     }
-    if (!validateEmail($email)) {
-        $errors["invalid_email"] = "Invalid Email !";
+    if(empty($dob)){
+        $errors['empty_dob']= "please enter date-of-birth";
     }
-    $passworderrormsg = validatePassword($pwd);
-    if ($passworderrormsg) {
-        $errors["invalid password"] = $passworderrormsg;
-    }
-    $contacherrormsg = validateContact($contact);
-    if ($contacherrormsg) {
-        $errors["invalid_contact"] = $contacherrormsg;
-    }
+    
+    if(!empty($username) && !empty($email) && !empty($pwd) && !empty($confirm_pwd) && !empty($contact) && !empty($dob)){
 
-    $isdate = is_numeric(strtotime($dob)) ? "yes" : "no";
-    if ($isdate === "no") {
-        $errors["invalid_date"] = "invalid date";
+        if (isEmailInvalid($email)) {
+            $errors["invalid_email"] = "invalid email used!";
+        }
+        if (isUserNameTaken($conn, $username)) {
+            $errors["username_taken"] = "try different username !";
+        }
+        if (isEmailRegistered($conn, $email)) {
+            $errors["email_used"] = "try different email!";
+        }
+        if ($pwd !== $confirm_pwd) {
+            $errors["unmatched_pwd"] = "Password does'nt match !";
+        }
+        $passworderrormsg = validatePassword($pwd);
+        if ($passworderrormsg) {
+            $errors["invalid_password"] = $passworderrormsg;
+        }
+        $contacherrormsg = validateContact($contact);
+        if ($contacherrormsg) {
+            $errors["invalid_contact"] = $contacherrormsg;
+        }
+        
+        $isdate = is_numeric(strtotime($dob)) ? "yes" : "no";
+        if ($isdate === "no") {
+            $errors["invalid_date"] = "invalid date";
+        }
     }
-
-    if ($errors) {
-        $_SESSION["errors_signup"] = $errors;
-        header("Location: ../signup.php");
+        
+        if ($errors) {
+            $_SESSION["errors_signup"] = $errors;
+        header("Location: /signup");
         die();
     }
 
@@ -61,7 +80,7 @@ try {
     $_SESSION['signup'] = "success";
     $conn = null;
     $stmt = null;
-    header('Location: ../signup.php');
+    header('Location: /login');
     die();
 } catch (PDOException $e) {
     die(" Query failed : " . $e->getMessage());

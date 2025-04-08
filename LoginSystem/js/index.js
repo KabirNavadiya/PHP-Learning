@@ -8,11 +8,11 @@ function closeModal(modalId) {
 }
 
 function RedirectToLogin() {
-    window.location.href = "../login.php";
+    window.location.href = "/login";
 }
 
 function RedirectTocart() {
-    window.location.href = "../cart.php";
+    window.location.href = "/cart";
 }
 document.addEventListener("DOMContentLoaded", function() {
       
@@ -29,7 +29,7 @@ function addToCart(productId) {
         showModal("loginModal");
     } else {
         $.ajax({
-            url: "../includes/addtocart.php",
+            url: "../includes/addtocart",
             type: "POST",
             data: {
                 productId: productId

@@ -58,7 +58,8 @@ if (isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <a href="index.php" class="btn btn-primary">
+    <noscript>Please Enable Javascript !</noscript>
+    <a href="index" class="btn btn-primary">
         ← Back
     </a>
     <div class="cart-container">

@@ -25,7 +25,7 @@ function hideCategoryForm() {
 
 function editCategory(categoryid) {
     document.getElementById('addcontainer').style.display = "none";
-    fetch('../category.php', {
+    fetch('../category', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -48,7 +48,7 @@ function editCategory(categoryid) {
 
 function deleteCategory(categoryid) {
     if (confirm("Are you sure you want to delete this product?")) {
-        fetch('../includes/delete_category.php', {
+        fetch('../includes/delete_category', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

@@ -2,6 +2,7 @@
 require_once '../dbh.inc.php';
 require_once 'config_session.inc.php';
 require_once 'model/order_model.php';
+require_once 'user_redirect.php';
 
 if (!isset($_POST['orderId'])) {
     echo json_encode([

@@ -1,7 +1,7 @@
 $(document).on("click", ".view-btn", function() {
     var orderId = $(this).data("order-id");
     $.ajax({
-        url: "../includes/order_details.php",
+        url: "../includes/order_details",
         type: "POST",
         data: {
             orderId: orderId

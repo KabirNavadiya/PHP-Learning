@@ -3,6 +3,7 @@ require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addcategory_model.php';
 require_once 'includes/model/editcategory_model.php';
+require_once 'includes/view/addcategory_view.php';
 
 $categories = getCategories($conn);
 
@@ -13,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
     echo json_encode($category ?: ['error' => 'Category not found']);
     exit;
 }
+
+$errors = addCategoryErrors();
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category Management</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/product.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
@@ -35,23 +38,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
 </head>
 
 <body>
-    <a href="admin.php" class="btn btn-primary">
+    <noscript>Please Enable Javascript !</noscript>
+    <a href="/admin" class="btn btn-primary">
         ← Back
     </a>
     <div class="container-fluid my-4 mx-1">
         <h1 style="display: flex; align-items: center; justify-content: center; margin: auto;">Add Category</h1>
 
-
         <div class="containerc " id="addcontainer">
-            <form id="productForm" class="productForm" action="includes/addcategory.php" method="POST">
+            <form id="productForm" class="productForm" action="includes/addcategory" method="POST">
                 <input type="text" class="input-field" id="categoryName" name="categoryName" placeholder="Category Name">
+                <span class="error" id="empty_input"><?= $errors['empty_input'] ?></span>
+                <span class="error" id="category_exists"><?= $errors['category_exists'] ?></span>
                 <button class="add-product" id="submitButton" type="submit" value="submit-btn">Add Category</button>
+
             </form>
         </div>
 
         <div id="editContainer" class="card p-4 mx-auto shadow-lg" style="max-width: 500px; display: none;">
             <h3 class="text-center">Edit Category</h3>
-            <form id="editForm" action="includes/edit_category.php" method="POST">
+            <form id="editForm" action="includes/edit_category" method="POST">
                 <input type="hidden" id="ecategoryid" name="categoryId">
                 <div class="mb-3">
                     <input type="text" class="form-control" id="ecategoryname" name="categoryName" placeholder="Category Name">
@@ -91,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
 
         <!-- toast -->
         <div class="toast-container position-fixed top-0 end-0 p-3">
-            <div id="liveToast" class="toast <?php echo isset($_SESSION['category_success']) ? 'show' : ''; ?>" role="alert" aria-live="assertive" aria-atomic="true">
+            <div id="liveToast" class="toast <?= isset($_SESSION['category_success']) ? 'show' : ''; ?>" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <strong class="me-auto">Success</strong>
                     <small>Just now</small>

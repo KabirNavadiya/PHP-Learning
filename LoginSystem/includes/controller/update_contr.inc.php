@@ -23,12 +23,12 @@ function validatePassword($pwd)
         return "Password must be of atleast of 8 chars";
     } else if (!preg_match($regex, $pwd)) {
         return '
-                <ul style= "color:red">
+                <ul>
                 <p>Password Must : </p>
-                <li>must contain atleast 1 lowercase</li>
-                <li>must contain atleast 1 uppercase</li>
-                <li>must contain atleast 1 digit</li>
-                <li>must contain atleast 1 special character</li>
+                <li> contain atleast 1 lowercase</li>
+                <li> contain atleast 1 uppercase</li>
+                <li> contain atleast 1 digit</li>
+                <li> contain atleast 1 special character</li>
                 </ul>';
     }
 }
