@@ -19,9 +19,6 @@ try {
     require_once 'controller/signup_contr.inc.php';
 
     $errors = [];
-    // if (isInputEmpty($email, $username, $pwd, $contact, $dob)) {
-    //     $errors["empty_input"] = "fill in all fields";
-    // }
     if(empty($username)){
         $errors['empty_username']= "please enter username";
     }

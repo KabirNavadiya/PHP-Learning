@@ -2,11 +2,6 @@
 
 require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
-require_once 'includes/model/addtocart_model.php';
-
-if (isset($_SESSION['user_id'])) {
-    $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
-}
 
 ?>
 
@@ -21,78 +16,47 @@ if (isset($_SESSION['user_id'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/cart.css">
-    <style>
-        .qty-btn {
-            width: 30px;
-            height: 30px;
-            border: none;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.61);
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .qty-btn:hover {
-            background-color: rgb(0, 0, 0);
-        }
-
-        .quantity {
-            font-size: 16px;
-            padding: 0 10px;
-            display: inline-block;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .cart-img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-    </style>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 
 <body>
     <noscript>Please Enable Javascript !</noscript>
-    <a href="index" class="btn btn-primary">
-        ← Back
-    </a>
-    <div class="cart-container">
-        <h1>Shopping Cart</h1>
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Name</th>
-                    <th>Original Price</th>
-                    <th>Discounted Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="cart-table-body">
 
-            </tbody>
-        </table>
+    <a href="/" class="btn btn-primary">← Back</a>
 
-        <div class="cart-footer">
-            <h2></h2>
-            <form action="includes/stripe/stripe_checkout.php" method="POST">
-                <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
-            </form>
+    <div class="cart-wrapper">
+        <div class="cart-container">
+            <h1>Shopping Cart</h1>
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Item Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                </tbody>
+            </table>
+            <div id="add-items">
+                <h1>Your Cart Is Empty !</h1>
+                <button class="btn btn-primary" onclick="window.location.href='/'">Add items</button>
+            </div>
         </div>
+
+        <!-- <div id="price-summary">
+
+        </div> -->
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/cart.js"></script>
-
-
 </body>
+
 
 </html>

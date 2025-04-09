@@ -70,40 +70,47 @@ $categories = getCategories($conn);
         $isLoggedIn = isset($_SESSION['user_id']);
         $username = $isLoggedIn ? htmlspecialchars($_SESSION["user_username"]) : null;
 
+        echo '<div class="dropdown-container">';
+
+        if (!$isLoggedIn) {
+          echo '<div id="login-tag">Login</div>';
+        }
+
         echo '<div class="dropdown">
-        <button class="btn btn-light login-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"';
+              <button class="btn btn-light login-btn" type="button"';
 
         if (!$isLoggedIn) {
           echo ' onclick="window.location.href=\'/login\';"';
+        } else {
+          echo ' data-bs-toggle="dropdown" aria-expanded="false"';
         }
 
         echo '>
-        <svg class="person-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-          class="bi bi-person-circle" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-          <path fill-rule="evenodd"
-            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-        </svg>
-        <span class="dn">' . ($isLoggedIn ? $username : "Login") . '</span>
-      </button>
+              <svg class="person-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+              </svg>
+              <span class="dn">' . ($isLoggedIn ? $username : "Login") . '</span>
+            </button>';
 
-      <ul class="dropdown-menu">';
+        echo '<ul class="dropdown-menu">';
 
         if (!$isLoggedIn) {
           echo '<li class="dropdown-item">New Customer? <span><a href="/signup" class="sign-up">Sign-up</a></span></li>
-          <li><hr class="dropdown-divider"></li>';
+                <li><hr class="dropdown-divider"></li>';
         } else {
           echo '<li><a class="dropdown-item" href="#"><i class="bi bi-person-circle nav-i"></i> My Profile</a></li>
-          <li><a class="dropdown-item" href="/orders"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
-          <li><a class="dropdown-item" href="#"><i class="bi bi-heart nav-i"></i> Wishlist</a></li>
-          <li><a class="dropdown-item" href="#"><i class="bi bi-wallet2 nav-i"></i> Gift Card</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="includes/logout.inc"><i class="bi bi-box-arrow-right"></i> Logout</a></li>';
+                <li><a class="dropdown-item" href="/orders"><i class="bi bi-box-seam nav-i"></i> Orders</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-heart nav-i"></i> Wishlist</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-wallet2 nav-i"></i> Gift Card</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="includes/logout.inc"><i class="bi bi-box-arrow-right"></i> Logout</a></li>';
         }
 
-        echo '</ul></div>';
+        echo '</ul></div></div>';
         ?>
-
 
         <div class="cart">
           <button class="btn btn-light cart-btn highlight" type="button" onclick="window.location.href='/cart';">
@@ -130,12 +137,12 @@ $categories = getCategories($conn);
             <span class="dn"> Become a Seller</span>
           </button>
         </div>
-        <?php 
-          if($_SESSION['user_role']==="admin") {
-            echo '<a href="/admin" class="btn btn-light">
+        <?php
+        if ($_SESSION['user_role'] === "admin") {
+          echo '<a href="/admin" class="btn btn-light">
                     Add products
                   </a>';
-          }
+        }
         ?>
         <div class="dropstart">
           <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
@@ -152,7 +159,7 @@ $categories = getCategories($conn);
             <li><a class="dropdown-item" href="#"><i class="bi bi-download nav-i"></i>Downlaod App</a></li>
           </ul>
         </div>
-     
+
       </div>
     </nav>
   </header>

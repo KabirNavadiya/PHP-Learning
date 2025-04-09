@@ -56,7 +56,8 @@ header {
     transition: 0.3s ease-in-out;
 }
 
-.login-btn:hover {
+.login-btn:hover + #login-tag {
+    display: none;
     background-color: blue;
     color: white;
 }
@@ -384,6 +385,41 @@ header {
 
 .checkout-btn:hover {
     background-color: #0056b3;
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+#login-tag {
+    background-color: blue;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    border-radius: 5px;
+    position: absolute;
+    top: 110%; 
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+#login-tag::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid blue;
+}
+
+.dropdown-container:hover #login-tag {
+    display: none;
 }
 
 p {

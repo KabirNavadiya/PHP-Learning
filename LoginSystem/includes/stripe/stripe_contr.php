@@ -18,6 +18,7 @@ function createStripeSession($cartItems)
 
     foreach ($cartItems as $item) {
         $discounted_price = $item['price'] - ($item['price'] * $item['discount']) / 100;
+        echo $discounted_price;
         if ($discounted_price <= 0) {
             return ["error" => "Invalid product price"];
         }
