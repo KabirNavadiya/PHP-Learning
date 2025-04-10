@@ -10,7 +10,7 @@ trait Logger
         BankAccount::$TotalTransactions++;
     }
     
-    public function Loguseradd($user,$balance,$bank)
+    public function LogUseradd($user,$balance,$bank)
     {
         $myfile = fopen("BankSystem/logs.log", "a") or die("Unable to open file!");
         fwrite($myfile, "User : {$user} , created their new {$bank} with balance {$balance} \n");
