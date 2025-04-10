@@ -47,11 +47,6 @@ require_once 'includes/config_session.inc.php';
                 <button class="btn btn-primary" onclick="window.location.href='/'">Add items</button>
             </div>
         </div>
-
-        <!-- <div id="price-summary">
-
-        </div> -->
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

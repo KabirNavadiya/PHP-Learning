@@ -4,7 +4,7 @@ require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
 require_once 'includes/model/editproduct_model.php';
 require_once 'includes/view/addproduct_view.php';
-
+require_once 'includes/view/editproduct_view.php';
 if(!isset($_SESSION['user_id']) || $_SESSION['user_role']!=="admin"){
     header("Location: /");
     die();
@@ -14,7 +14,7 @@ $errors = addProductErrors();
 $products = getProducts($conn);
 $categories = getCategories($conn);
 
-
+$editerrors =  editProductErrors();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
     $productId = $_POST['productId'];
     $product = getCurrentProduct($conn, $productId);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
         </div>
 
         <!-- Edit Product Form (Initially Hidden) -->
-        <div id="editContainer" class="card p-4 mx-auto shadow-lg" style="max-width: 500px; display: none;">
+        <div id="editContainer" class="card p-4 mx-auto shadow-lg" style="max-width: 500px;">
             <h3 class="text-center">Edit Product</h3>
             <form id="editForm" action="includes/edit_product" method="POST" enctype="multipart/form-data">
                 <input type="hidden" id="eproductId" name="productId">
@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
                 </div>
                 <div class="mb-3">
                     <select id="eproductCategory" name="productCategory" class="form-select">
+                    <option value="" selected disabled>Select Category</option>
                         <?php foreach ($categories as $category): ?>
                             <option value="<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></option>
                         <?php endforeach; ?>
@@ -80,10 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
                 </div>
                 <div class="mb-3">
                     <input type="file" class="form-control" id="eproductImage" name="productImage" accept="image/*">
+                    <span class="error" id="large_file"><?= $editerrors['large_file'] ?></span>
+                    <span class="error" id="image_error"><?= $editerrors['image_error'] ?></span>
                 </div>
                 <div class="text-center">
+                    <span class="error" id="empty_productid"><?= $editerrors['empty_productid'] ?></span><br>
                     <button type="submit" class="btn btn-success">Update</button>
-                    <button type="button" class="btn btn-secondary" onclick="hideEditForm()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideEditForm()">Clear</button>
                 </div>
             </form>
         </div>

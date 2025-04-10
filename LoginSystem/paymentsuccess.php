@@ -4,7 +4,7 @@ require_once 'dbh.inc.php';
 require_once 'includes/model/order_model.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
-
+require_once 'includes/user_redirect.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

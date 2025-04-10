@@ -18,7 +18,12 @@ $(document).ready(function() {
 });
 
 function hideEditForm() {
-    document.getElementById('editContainer').style.display = "none";
+    
+    document.getElementById('eproductId').value = "";
+    document.getElementById('eproductName').value = "";
+    document.getElementById('eproductCategory').value = "";
+    document.getElementById('eprice').value = "";
+    document.getElementById('edescription').value = "";
 }
 
 function editProduct(productId) {
@@ -41,9 +46,7 @@ function editProduct(productId) {
             document.getElementById('eproductCategory').value = data.category_id;
             document.getElementById('eprice').value = data.price;
             document.getElementById('edescription').value = data.description;
-            // document.getElementById('eproductImagePreview').src = data.image;
 
-            document.getElementById('editContainer').style.display = "block";
         })
         .catch(error => console.error('Error fetching product:', error));
 }

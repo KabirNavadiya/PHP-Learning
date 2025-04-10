@@ -5,8 +5,12 @@ require_once 'includes/view/addproduct_view.php';
 require_once 'includes/model/addproduct_model.php';
 require_once 'includes/view/addproduct_view.php';
 
+require_once 'includes/admin_redirect.php';
 $categories = getCategories($conn);
 $errors = addProductErrors();
+
+
+
 ?>
 
 
@@ -63,6 +67,8 @@ $errors = addProductErrors();
       <div class="inputs">
         <input type="file" id="productImage" name="productImage" accept="image/*">
         <span class="error" id="empty_productimage"><?= $errors['empty_productimage'] ?></span>
+        <span class="error" id="image_error"><?= $errors['image_error'] ?></span>
+        <span class="error" id="large_file"><?= $errors['large_file'] ?></span>
       </div>
         
       <div class="inputs">

@@ -4,6 +4,7 @@ require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addcategory_model.php';
 require_once 'includes/model/editcategory_model.php';
 require_once 'includes/view/addcategory_view.php';
+require_once 'includes/admin_redirect.php';
 
 $categories = getCategories($conn);
 

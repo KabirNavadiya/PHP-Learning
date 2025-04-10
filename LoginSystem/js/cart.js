@@ -31,6 +31,7 @@ function fetchCart() {
         success: function(response) {
             if (!response.error) {                
                 $("#cart-table-body").html(response.cart_html); 
+                $("#price-summary").remove(); 
                 if (response.hasItems) {
                     let pricesummary = $('<div>',{id:'price-summary'});
                     $('.cart-wrapper').append(pricesummary);
