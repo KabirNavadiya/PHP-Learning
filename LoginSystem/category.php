@@ -1,4 +1,5 @@
 <?php
+
 require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addcategory_model.php';
@@ -6,7 +7,7 @@ require_once 'includes/model/editcategory_model.php';
 require_once 'includes/view/addcategory_view.php';
 require_once 'includes/admin_redirect.php';
 
-$categories = getCategories($conn);
+$categories = getAllCategories($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
     $categoryId = $_POST['categoryId'];
@@ -15,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
     echo json_encode($category ?: ['error' => 'Category not found']);
     exit;
 }
-
 $errors = addCategoryErrors();
 ?>
 
@@ -52,7 +52,6 @@ $errors = addCategoryErrors();
                 <span class="error" id="empty_input"><?= $errors['empty_input'] ?></span>
                 <span class="error" id="category_exists"><?= $errors['category_exists'] ?></span>
                 <button class="add-product" id="submitButton" type="submit" value="submit-btn">Add Category</button>
-
             </form>
         </div>
 
@@ -67,7 +66,6 @@ $errors = addCategoryErrors();
                 <button type="button" class="btn btn-secondary" onclick="hideCategoryForm()">Cancel</button>
             </form>
         </div>
-
 
         <h2 class="text-center mt-4">Category List</h2>
         <div class="table-responsive">
@@ -93,8 +91,6 @@ $errors = addCategoryErrors();
                 </tbody>
             </table>
         </div>
-
-
 
         <!-- toast -->
         <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -127,7 +123,6 @@ $errors = addCategoryErrors();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="js/category.js"></script>
-
 
 </body>
 

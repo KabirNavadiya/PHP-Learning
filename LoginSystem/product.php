@@ -3,16 +3,12 @@ require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/view/addproduct_view.php';
 require_once 'includes/model/addproduct_model.php';
+require_once 'includes/model/addcategory_model.php';
 require_once 'includes/view/addproduct_view.php';
-
 require_once 'includes/admin_redirect.php';
-$categories = getCategories($conn);
+$categories = getAllCategories($conn);
 $errors = addProductErrors();
-
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +37,6 @@ $errors = addProductErrors();
         <input type="text" class="input-field" id="productName" name="productName" placeholder="Product Name">
         <span class="error" id="empty_productname"><?= $errors['empty_productname'] ?></span>
       </div>
-
       <div class="inputs">
         <select id="productCategory" name="productCategory">
 
@@ -52,31 +47,26 @@ $errors = addProductErrors();
         </select>
         <span class="error" id="empty_productcategory"><?= $errors['empty_productcategory'] ?></span>
       </div>
-
       <div class="inputs">
         <input type="number" class="input-field" id="price" name="productPrice" placeholder="Price">
         <span class="error" id="empty_productprice"><?= $errors['empty_productprice'] ?></span>
         <span class="error" id="invalid_price"><?= $errors['invalid_price'] ?></span>
       </div>
-
       <div class="inputs">
         <input type="text" class="input-field" id="description" name="productDescription" placeholder="Description">
         <span class="error" id="empty_productdescription"><?= $errors['empty_productdescription'] ?></span>
       </div>
-
       <div class="inputs">
         <input type="file" id="productImage" name="productImage" accept="image/*">
         <span class="error" id="empty_productimage"><?= $errors['empty_productimage'] ?></span>
         <span class="error" id="image_error"><?= $errors['image_error'] ?></span>
         <span class="error" id="large_file"><?= $errors['large_file'] ?></span>
       </div>
-        
       <div class="inputs">
         <input type="number" class="input-field" id="discount" name="discount" placeholder="Discount (%)">
         <span class="error" id="invalid_discount"><?= $errors['invalid_discount'] ?></span>
         <span class="error" id="discount_range"><?= $errors['discount_range'] ?></span>
       </div>
-        
       <button class="add-product" id="submitButton" type="submit" value="submit-btn">Add Product</button>
       <span class="error" id="product_exists"><?= $errors['product_exists'] ?></span>
     </form>
@@ -99,6 +89,7 @@ $errors = addProductErrors();
       </div>
     </div>
   </div>
+
 </body>
 
 </html>

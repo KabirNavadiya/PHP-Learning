@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-
 function getUsername(object $conn, string $username)
 {
     $query = "SELECT username FROM users where username = :username or email = :username;";

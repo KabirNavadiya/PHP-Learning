@@ -1,23 +1,20 @@
 <?php
 
-session_start();
 require_once 'config_session.inc.php';
 require_once 'admin_redirect.php';
+require_once '../dbh.inc.php';
+require_once 'model/addcategory_model.php';
+require_once 'controller/addcategory_contr.php';
+session_start();
+
 $categoryName = $_POST['categoryName'];
 
-
 try {
-    require_once '../dbh.inc.php';
-    require_once 'model/addcategory_model.php';
-    require_once 'controller/addcategory_contr.php';
-
     $errors = [];
     if (isInputEmpty(categoryName: $categoryName)) {
         $errors["empty_input"] = "please enter category name";
     }
-
     if (doesExist($conn, $categoryName)) {
-
         $errors["category_exists"] = "Product already exist !";
     }
 

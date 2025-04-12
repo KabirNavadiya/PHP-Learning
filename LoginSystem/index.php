@@ -2,19 +2,18 @@
 require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
+require_once 'includes/model/addcategory_model.php';
 require_once 'includes/model/addtocart_model.php';
 
 if (isset($_SESSION['user_id'])) {
   require_once 'includes/model/addtocart_model.php';
-  $userCartProducts = getAllUserCartProducts($conn, $_SESSION['user_id']);
+  $userCartProducts = fetchUserCart($conn, $_SESSION['user_id']);
   $cartCount = count($userCartProducts);
 } else {
   $cartCount = 0;
 }
-
-$products = getProducts($conn);
-$categories = getCategories($conn);
-
+$products = getAllProducts($conn);
+$categories = getAllCategories($conn);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +36,6 @@ $categories = getCategories($conn);
 
 <body>
   <noscript>Please Enable Javascript !</noscript>
-  <!-- navbar -->
   <header>
     <nav class="navbar navbar-expand p-1 container">
       <div class="logo-search">
@@ -159,13 +157,10 @@ $categories = getCategories($conn);
             <li><a class="dropdown-item" href="#"><i class="bi bi-download nav-i"></i>Downlaod App</a></li>
           </ul>
         </div>
-
       </div>
     </nav>
   </header>
 
-
-  <!-- shoping cards -->
   <div class="category-container  my-2">
     <div class="container-fluid category-top">
       <div class="d-flex  category-images">
@@ -244,13 +239,10 @@ $categories = getCategories($conn);
           </div>
         </div>
 
-
       </div>
     </div>
   </div>
 
-
-  <!-- carousel -->
   <div class="carousel-container my-2 pb-4">
     <div class="advertisement">
       <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
@@ -330,8 +322,6 @@ $categories = getCategories($conn);
           echo '<img src="' . "includes/uploads/" . $product['image'] . '" class="card-img-top card-img" alt="...">
                       <div class="card-body">
                           <p class="card-title text-center">' . $product['product_name'] . '</p>
-
-
                           ';
           if ($product['discount']) {
             echo '<p class="card-text text-center">
@@ -447,8 +437,6 @@ $categories = getCategories($conn);
     </div>
   </footer>
 
-
-  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     let isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;

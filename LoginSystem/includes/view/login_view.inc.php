@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 function loginErrors()
 {
     if (isset($_SESSION["errors_login"])) {
@@ -10,7 +9,6 @@ function loginErrors()
     }
     return $errors;
 }
-
 function getUsername()
 {
     if (isset($_SESSION["user_id"])) {

@@ -1,4 +1,5 @@
 <?php
+
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 
@@ -39,7 +40,6 @@ function regenerateSessionId()
 }
 function regenerateSessionIdLoggedIn()
 {
-
     session_regenerate_id(true);
     $userId = $_SESSION["user_id"];
     $newSessionId = session_create_id();

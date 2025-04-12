@@ -22,9 +22,9 @@ require_once 'includes/config_session.inc.php';
 
 <body>
     <noscript>Please Enable Javascript !</noscript>
-
-    <a href="/" class="btn btn-primary">← Back</a>
-
+    <a href="/" class="btn btn-primary">
+        ← Back
+    </a>
     <div class="cart-wrapper">
         <div class="cart-container">
             <h1>Shopping Cart</h1>

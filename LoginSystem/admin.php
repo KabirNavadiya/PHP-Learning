@@ -1,20 +1,19 @@
 <?php
+
 require_once 'dbh.inc.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addproduct_model.php';
+require_once 'includes/model/addcategory_model.php';
 require_once 'includes/model/editproduct_model.php';
 require_once 'includes/view/addproduct_view.php';
 require_once 'includes/view/editproduct_view.php';
-if(!isset($_SESSION['user_id']) || $_SESSION['user_role']!=="admin"){
-    header("Location: /");
-    die();
-}
+require_once 'includes/admin_redirect.php';
 
+$products = getAllProducts($conn);
+$categories = getAllCategories($conn);
 $errors = addProductErrors();
-$products = getProducts($conn);
-$categories = getCategories($conn);
-
 $editerrors =  editProductErrors();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
     $productId = $_POST['productId'];
     $product = getCurrentProduct($conn, $productId);
@@ -50,13 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
     <div class="container-fluid my-4 mx-1">
         <h1 class="text-center">Admin Dashboard</h1>
 
-        <!-- Add Buttons -->
         <div class="text-center my-3 add-buttons">
             <button class="btn btn-primary mx-1" onclick="window.location.href = '/product'">Add Product</button>
             <button class="btn btn-primary mx-1" onclick="window.location.href = '/category'">Add Category</button>
         </div>
 
-        <!-- Edit Product Form (Initially Hidden) -->
         <div id="editContainer" class="card p-4 mx-auto shadow-lg" style="max-width: 500px;">
             <h3 class="text-center">Edit Product</h3>
             <form id="editForm" action="includes/edit_product" method="POST" enctype="multipart/form-data">
@@ -66,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
                 </div>
                 <div class="mb-3">
                     <select id="eproductCategory" name="productCategory" class="form-select">
-                    <option value="" selected disabled>Select Category</option>
+                        <option value="" selected disabled>Select Category</option>
                         <?php foreach ($categories as $category): ?>
                             <option value="<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></option>
                         <?php endforeach; ?>
@@ -92,8 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
             </form>
         </div>
 
-
-        <!-- Product List -->
         <h2 class="text-center mt-4">Product List</h2>
         <div class="table-responsive">
             <table id="productTable" class="table table-striped table-bordered text-center  w-100">
@@ -127,8 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
             </table>
         </div>
 
-
-
     </div>
 
     <!-- toast -->
@@ -158,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
 
         <script src="js/product.js"></script>
 

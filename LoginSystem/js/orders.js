@@ -1,4 +1,4 @@
-$(document).on("click", ".view-btn", function() {
+$(document).on("click", ".view-btn", function () {
     var orderId = $(this).data("order-id");
     $.ajax({
         url: "../includes/order_details",
@@ -7,14 +7,14 @@ $(document).on("click", ".view-btn", function() {
             orderId: orderId
         },
         dataType: "json",
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
                 displayOrderDetails(response.order_details, orderId);
             } else {
                 alert("❌ Error: " + response.message);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("AJAX Error:", status, error);
         }
     });

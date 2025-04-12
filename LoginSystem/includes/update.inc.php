@@ -1,44 +1,34 @@
 <?php
 
-session_start();
 require_once 'user_redirect.php';
+require_once 'config_session.inc.php';
+require_once '../dbh.inc.php';
+require_once 'model/update_model.inc.php';
+require_once 'controller/update_contr.inc.php';
+session_start();
 
 $email = $_POST['email'];
 $n_pwd = $_POST['new-password'];
 $c_pwd = $_POST['confirm-password'];
 
 try {
-    require_once 'config_session.inc.php';
-    require_once '../dbh.inc.php';
-    require_once 'model/update_model.inc.php';
-    require_once 'controller/update_contr.inc.php';
-
     $errors = [];
     if (isEmpty($email, $n_pwd, $c_pwd)) {
         $errors["empty_input"] = "fill in all fields";
-    }
-    if (isDifferent($n_pwd, $c_pwd)) {
+    } else if (isDifferent($n_pwd, $c_pwd)) {
         $errors["different_password"] = "Passwords do not match!";
-    }
-    $result = getUser($conn, $email);
-
-    if (!$result) {
-        $errors["no_user"] = "No User Found with this email";
-    }
-    if (isUsernameWrong($result)) {
-        $errors["username_incorrect"] = "User not found ! ";
-    }
-
-    if ($n_pwd !== $c_pwd) {
-        $errors["pwd_mismatch"] = "Password does not match";
-    }
-    $passworderrormsg = validatePassword($n_pwd);
-    if ($passworderrormsg) {
-        $errors["invalid_password"] = $passworderrormsg;
-    }
-
-    if (password_verify($n_pwd, $result['pwd'])) {
-        $errors["same_password"] = "Same as Old!";
+    } else {
+        $result = getUser($conn, $email);
+        if (!$result || isUsernameWrong($result)) {
+            $errors["no_user"] = "No user found with this email.";
+        } elseif (password_verify($n_pwd, $result['pwd'])) {
+            $errors["same_password"] = "New password cannot be the same as the old password.";
+        } else {
+            $passworderrormsg = validatePassword($n_pwd);
+            if ($passworderrormsg) {
+                $errors["invalid_password"] = $passworderrormsg;
+            }
+        }
     }
 
     if ($errors) {
@@ -49,7 +39,7 @@ try {
     $options = ['cost' => 12];
     $h_pwd = password_hash($n_pwd, PASSWORD_BCRYPT, $options);
 
-    setPass($conn, $email, $h_pwd);
+    setNewPassword($conn, $email, $h_pwd);
     $conn = null;
     $stmt = null;
     header('Location: /login');

@@ -1,68 +1,69 @@
 body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
 }
 
 .containerc {
-    max-width: 600px;
-    margin: 50px auto;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+  max-width: 600px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 h1 {
-    color: #343a40;
-    text-align: center;
+  color: #343a40;
+  text-align: center;
 }
 
 .btn {
-    margin: 5px;
+  margin: 5px;
 }
 
 .productForm {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .input-field,
 #productCategory {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
 .add-product {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .add-product:hover {
-    background: #0056b3;
+  background: #0056b3;
 }
 
 .toast-container {
-    z-index: 1050;
+  z-index: 1050;
 }
 
 .toast {
-    background: #d4edda;
-    color: #155724;
-    border-color: #c3e6cb;
+  background: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
 }
 
 .toast-header {
-    background: #c3e6cb;
-    color: #155724;
+  background: #c3e6cb;
+  color: #155724;
 }
-.error{
-    color: red;
+
+.error {
+  color: red;
 }

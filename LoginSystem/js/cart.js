@@ -10,14 +10,14 @@ function updateQuantity(cartProductId, action) {
         },
         dataType: "json",
 
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
                 fetchCart();
             } else {
                 alert("❌ Error: " + response.message);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("AJAX Error:", status, error);
         }
     });
@@ -28,30 +28,30 @@ function fetchCart() {
         url: "../includes/fetchcart",
         type: "GET",
         dataType: "json",
-        success: function(response) {
-            if (!response.error) {                
-                $("#cart-table-body").html(response.cart_html); 
-                $("#price-summary").remove(); 
+        success: function (response) {
+            if (!response.error) {
+                $("#cart-table-body").html(response.cart_html);
+                $("#price-summary").remove();
                 if (response.hasItems) {
-                    let pricesummary = $('<div>',{id:'price-summary'});
+                    let pricesummary = $('<div>', { id: 'price-summary' });
                     $('.cart-wrapper').append(pricesummary);
                     $("#price-summary").html(response.price_summary).show();
                     $("#add-items").hide();
                 }
-                else{
+                else {
                     $("#price-summary").hide();
                     $("#add-items").show();
-                } 
-                $("#total").html("&#8377;"+response.total);
-                $("#discount").html("- &#8377;"+response.totaldiscount);
-                $("#subtotal").html("&#8377;"+response.subtotal);
+                }
+                $("#total").html("&#8377;" + response.total);
+                $("#discount").html("- &#8377;" + response.totaldiscount);
+                $("#subtotal").html("&#8377;" + response.subtotal);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("AJAX Error:", status, error);
         }
     });
 }
-$(document).ready(function() {
+$(document).ready(function () {
     fetchCart();
 });

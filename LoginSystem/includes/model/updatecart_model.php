@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 function increaseUserProductQuantity(object $conn, int $cartProductId, int $user_id)
 {
     $query = "UPDATE cart SET quantity = quantity + 1 where user_id = :userid and id = :cartProductId ; ";
@@ -27,7 +26,6 @@ function getProductQuantity(object $conn, int $cartProductId,)
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
-
 function deletFromCart(object $conn, int $cartProductId)
 {
     $query = "DELETE FROM cart where id = :cartproductid";

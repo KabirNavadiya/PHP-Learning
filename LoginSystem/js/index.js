@@ -14,16 +14,16 @@ function RedirectToLogin() {
 function RedirectTocart() {
     window.location.href = "/cart";
 }
-document.addEventListener("DOMContentLoaded", function() {
-      
+document.addEventListener("DOMContentLoaded", function () {
+
     var dotElement = document.getElementById("dot");
 
     if (cartCount > 0) {
-      dotElement.style.display = "block";
+        dotElement.style.display = "block";
     } else {
-      dotElement.style.display = "none";
+        dotElement.style.display = "none";
     }
-  });
+});
 function addToCart(productId) {
     if (!isLoggedIn) {
         showModal("loginModal");

@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 function getCurrentCategory(object $conn, int $categoryId)
 {
     $query = "SELECT * FROM categories where id = :id;";
@@ -11,7 +10,6 @@ function getCurrentCategory(object $conn, int $categoryId)
     $result =  $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
-
 function updateCategory(object $conn, int $categoryId, string $categoryName)
 {
     $query = "UPDATE categories SET name = :categoryname WHERE id = :categoryid;";

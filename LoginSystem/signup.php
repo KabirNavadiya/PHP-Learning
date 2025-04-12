@@ -1,13 +1,9 @@
 <?php
-
 require_once 'includes/config_session.inc.php';
 require_once 'includes/view/signup_view.inc.php';
+require_once 'includes/user_redirect.php';
 $errors = signupErrors();
-if (isset($_SESSION['user_id'])) {
-    header("Location: /");
-}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,15 +47,12 @@ if (isset($_SESSION['user_id'])) {
                 <span class="error" id="empty_contact"><?= $errors['empty_contact'] ?></span><br>
                 <span class="error" id="invalid_contact"><?= $errors['invalid_contact'] ?></span>
             </div>
-
             <label for="dob"> Date of Birth :</label>
             <div class="inputs">
                 <input type="date" id="dob" name="dob" placeholder="" min="2000-01-01" max="2024-12-31">
                 <span class="error" id="empty_dob"><?= $errors['empty_dob'] ?></span><br>
                 <span class="error" id="invalid_date"><?= $errors['invalid_date'] ?></span>
             </div>
-
-
             <div class="checkbox">
                 <input type="checkbox" name="remember" id="remember" required>
                 <label for="remember"> I accept Terms & Conditions</label>
@@ -69,7 +62,6 @@ if (isset($_SESSION['user_id'])) {
                 Already Registered ? <a href="/login" style="text-decoration: none;"> Sign-In</a>
             </div>
         </form>
-
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>

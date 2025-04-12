@@ -1,8 +1,11 @@
 <?php
 
-session_start();
 require_once 'config_session.inc.php';
 require_once 'admin_redirect.php';
+require_once '../dbh.inc.php';
+require_once 'model/addproduct_model.php';
+require_once 'controller/addproduct_contr.php';
+session_start();
 
 
 $productName = $_POST['productName'];
@@ -14,15 +17,11 @@ $productImage = $_FILES['productImage'];
 
 $extAllowed = ['jpg', 'jpeg', 'png', 'webp'];
 $imageFileType = strtolower(pathinfo($productImage['name'], PATHINFO_EXTENSION));
-$mimeAllowed = ['image/jpeg', 'image/png', 'image/webp','image/jpg'];
+$mimeAllowed = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
 $mimeType = mime_content_type($productImage['tmp_name']);
 
 
 try {
-    require_once '../dbh.inc.php';
-    require_once 'model/addproduct_model.php';
-    require_once 'controller/addproduct_contr.php';
-
     $errors = [];
     if (empty($productName)) {
         $errors['empty_productname'] = "please enter product name";
@@ -36,16 +35,14 @@ try {
     if (empty($productPrice)) {
         $errors['empty_productprice'] = "please enter product price";
     }
-
     if (!isset($productImage['error']) || $productImage['error'] === UPLOAD_ERR_NO_FILE) {
         $errors['empty_productimage'] = "please enter product image";
     }
-    if($productImage['size'] > 500 * 1024){
+    if ($productImage['size'] > 500 * 1024) {
         $errors['large_file'] = "maximum upload size 500kb";
     }
 
-
-    if (!empty($productName) && !empty($productCategory) && !empty($productDescription) && !empty($productPrice) && !empty($productImage)) {
+    if (!$errors) {
 
         if (!is_numeric($productPrice) || $productPrice < 0) {
             $errors["invalid_price"] = "Enter a positive numeric value";

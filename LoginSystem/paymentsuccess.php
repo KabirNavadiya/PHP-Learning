@@ -1,23 +1,18 @@
 <?php
-
 require_once 'dbh.inc.php';
 require_once 'includes/model/order_model.php';
 require_once 'includes/config_session.inc.php';
 require_once 'includes/model/addtocart_model.php';
 require_once 'includes/user_redirect.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $secret_key = $_ENV['STRIPE_SECRET_KEY'];
 $mail_pwd = $_ENV['MAIL_PWD'];
 
-
 if (!isset($_GET['session_id'])) {
     header("Location: /cart");
-    exit;
-}
-if (!isset($_SESSION['user_id'])) {
-    header("Location: /login");
     exit;
 }
 
@@ -34,7 +29,6 @@ function getUserEmail($conn, $userid)
 \Stripe\Stripe::setApiKey($secret_key);
 try {
     $session = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
-
     $userid = $_SESSION['user_id'];
     $useremail = getUserEmail($conn, $userid);
     if ($session->payment_status === "paid") {
@@ -68,18 +62,17 @@ try {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = $_ENV['EMAIL']; // Your Gmail address
-            $mail->Password = $mail_pwd; // Generate an App Password for Gmail
+            $mail->Username = $_ENV['EMAIL'];
+            $mail->Password = $mail_pwd;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
             $mail->setFrom($_ENV['EMAIL'], 'Kabir');
             $mail->addAddress($useremail['email']);
 
-            $mail->isHTML(true); // Ensure email is sent as HTML
+            $mail->isHTML(true);
             $mail->Subject = "#Order Summary";
 
-            // Initialize message string properly
             $message = "<html lang='en'>
             <head>
                 <meta charset='UTF-8'>
@@ -92,6 +85,7 @@ try {
                         padding: 20px;
                         background-color: #f4f4f4;
                     }
+
                     .receipt-container {
                         max-width: 600px;
                         background: white;
@@ -100,21 +94,25 @@ try {
                         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
                         margin: auto;
                     }
+
                     .receipt-header {
                         text-align: center;
                         margin-bottom: 20px;
                         color: #333;
                     }
+
                     .receipt-header h2 {
                         margin: 0;
                         font-size: 22px;
                         color: #007bff;
                     }
+
                     .receipt-header p {
                         margin: 5px 0;
                         font-size: 14px;
                         color: #555;
                     }
+
                     table {
                         width: 100%;
                         border-collapse: collapse;
@@ -123,27 +121,32 @@ try {
                         border-radius: 5px;
                         overflow: hidden;
                     }
+
                     th, td {
                         padding: 12px;
                         border-bottom: 1px solid #ddd;
                         text-align: left;
                         font-size: 14px;
                     }
+
                     th {
                         background: #007bff;
                         color: white;
                         text-transform: uppercase;
                         font-size: 13px;
                     }
+
                     tbody tr:nth-child(even) {
                         background: #f8f8f8;
                     }
+
                     .total {
                         font-size: 16px;
                         font-weight: bold;
                         text-align: right;
                         color: #333;
                     }
+
                     .total strong {
                         color: #28a745;
                     }
@@ -190,7 +193,6 @@ try {
             </html>";
 
             $mail->Body = $message;
-
             $mail->send();
         } catch (Exception $e) {
             echo "Mail could not be sent. Error: {$mail->ErrorInfo}";
@@ -222,13 +224,13 @@ try {
                     </div>
                 <style>
                 @-webkit-keyframes spin {
-                0% { -webkit-transform: rotate(0deg); }
-                100% { -webkit-transform: rotate(360deg); }
+                    0% { -webkit-transform: rotate(0deg); }
+                    100% { -webkit-transform: rotate(360deg); }
                 }
 
                 @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
                 }
             </style>
             `;

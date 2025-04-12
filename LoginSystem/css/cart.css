@@ -1,12 +1,10 @@
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
 }
 
-/* Wrapper to hold both sides */
 .cart-wrapper {
     display: flex;
     justify-content: space-between;
@@ -16,7 +14,6 @@
     flex-wrap: wrap;
 }
 
-/* Cart Table (Left Side) */
 .cart-container {
     flex: 2;
     padding: 20px;
@@ -63,7 +60,6 @@ h1 {
     border-radius: 4px;
 }
 
-/* Buttons */
 .update-btn,
 .remove-btn,
 .checkout-btn {
@@ -123,7 +119,6 @@ h1 {
     padding-top: 10px;
 }
 
-/* Checkout Button in Summary */
 .checkout-btn {
     width: 100%;
     background: #ff9800;
@@ -137,25 +132,29 @@ h1 {
 .checkout-btn:hover {
     background: #e68900;
 }
-.cart-container{
+
+.cart-container {
     display: flex;
-    flex-direction:column ;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-#add-items{
+
+#add-items {
     margin: 20px;
     display: flex;
-    flex-direction:column ;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-#add-items button{
+
+#add-items button {
     width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .qty-btn {
     width: 30px;
     height: 30px;
@@ -187,16 +186,14 @@ h1 {
     border-radius: 5px;
 }
 
-#discount{
+#discount {
     color: #28a745;
 }
 
-/* Error Styling */
 .error {
     color: red;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 768px) {
     .cart-wrapper {
         flex-direction: column;

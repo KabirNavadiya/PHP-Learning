@@ -5,19 +5,16 @@ function isUsernameWrong(bool|array $results)
 {
     return !$results;
 }
-
 function isDifferent(string $n_pwd, string $c_pwd)
 {
-    return $n_pwd !== $c_pwd ? true : false;
+    return $n_pwd !== $c_pwd;
 }
 function isEmpty(string $email, string $n_pwd, string $c_pwd)
 {
     return (empty($email) || empty($n_pwd) || empty($c_pwd));
 }
-
-function validatePassword($pwd)
+function validatePassword(string $pwd)
 {
-
     $regex = '/(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[@#\$%^&*()+=\[\]{};:\'\"\\|,.<>\/?])+/';
     if (strlen($pwd) < 8) {
         return "Password must be of atleast of 8 chars";

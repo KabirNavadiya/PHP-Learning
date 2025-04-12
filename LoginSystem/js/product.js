@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#productTable').DataTable({
         responsive: true,
         "processing": true,
@@ -18,7 +18,7 @@ $(document).ready(function() {
 });
 
 function hideEditForm() {
-    
+
     document.getElementById('eproductId').value = "";
     document.getElementById('eproductName').value = "";
     document.getElementById('eproductCategory').value = "";
@@ -28,12 +28,12 @@ function hideEditForm() {
 
 function editProduct(productId) {
     fetch('../admin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'productId=' + encodeURIComponent(productId)
-        })
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'productId=' + encodeURIComponent(productId)
+    })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -54,12 +54,12 @@ function editProduct(productId) {
 function deleteProduct(productId) {
     if (confirm("Are you sure you want to delete this product?")) {
         fetch('../includes/delete_product', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'productId=' + encodeURIComponent(productId)
-            })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'productId=' + encodeURIComponent(productId)
+        })
             .then(response => window.location.reload())
             .catch(error => console.error('Error:', error));
     }

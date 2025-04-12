@@ -10,8 +10,7 @@ function getUser(object $conn, string $email)
     $result =  $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
-
-function setPass(object $conn, string $email, string $h_pwd)
+function setNewPassword(object $conn, string $email, string $h_pwd)
 {
     $query = "UPDATE users SET pwd = :newpass where email = :email ;";
     $stmt = $conn->prepare($query);

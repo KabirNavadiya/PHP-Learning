@@ -1,8 +1,8 @@
 <?php
 require_once 'includes/config_session.inc.php';
 require_once 'includes/view/update_view.inc.php';
-$errors = updateErrors();
 require_once 'includes/user_redirect.php';
+$errors = updateErrors();
 ?>
 
 <!DOCTYPE html>

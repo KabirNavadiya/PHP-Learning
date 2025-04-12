@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 function deleteCategory(object $conn, int $categoryId)
 {
     $query = "DELETE from categories WHERE id = :id";

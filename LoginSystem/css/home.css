@@ -56,7 +56,7 @@ header {
     transition: 0.3s ease-in-out;
 }
 
-.login-btn:hover + #login-tag {
+.login-btn:hover+#login-tag {
     display: none;
     background-color: blue;
     color: white;
@@ -286,7 +286,7 @@ header {
     top: 0;
     right: 0;
     transform: translate(50%, -50%);
-    background: #E91E63;
+    background: #e91e63;
     color: white;
     font-size: 12px;
     font-weight: bold;
@@ -399,7 +399,7 @@ header {
     text-align: center;
     border-radius: 5px;
     position: absolute;
-    top: 110%; 
+    top: 110%;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
@@ -430,6 +430,7 @@ p {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -439,6 +440,7 @@ p {
     from {
         transform: translateY(-20px);
     }
+
     to {
         transform: translateY(0);
     }
@@ -446,10 +448,12 @@ p {
 
 /* Responsive Media Queries */
 @media screen and (max-width: 1200px) {
+
     #ad,
     .dn {
         display: none;
     }
+
     #boe {
         width: 100%;
     }

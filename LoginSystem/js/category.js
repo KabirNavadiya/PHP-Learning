@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#categoryTable').DataTable({
         responsive: true,
         "processing": true,
@@ -26,12 +26,12 @@ function hideCategoryForm() {
 function editCategory(categoryid) {
     document.getElementById('addcontainer').style.display = "none";
     fetch('../category', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'categoryId=' + encodeURIComponent(categoryid)
-        })
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'categoryId=' + encodeURIComponent(categoryid)
+    })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -49,12 +49,12 @@ function editCategory(categoryid) {
 function deleteCategory(categoryid) {
     if (confirm("Are you sure you want to delete this product?")) {
         fetch('../includes/delete_category', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'categoryId=' + encodeURIComponent(categoryid)
-            })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'categoryId=' + encodeURIComponent(categoryid)
+        })
             .then(response => window.location.reload())
             .catch(error => console.error('Error:', error));
     }

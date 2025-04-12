@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 function signupErrors()
 {
     if (isset($_SESSION["errors_signup"])) {

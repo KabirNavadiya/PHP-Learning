@@ -1,11 +1,8 @@
 <?php
 require_once 'includes/config_session.inc.php';
 require_once 'includes/view/login_view.inc.php';
-if (isset($_SESSION['user_id'])) {
-    header("Location: /");
-}
+require_once 'includes/user_redirect.php';
 $errors = loginErrors();
-
 ?>
 
 <!DOCTYPE html>
@@ -32,20 +29,16 @@ $errors = loginErrors();
                 <i id="show" class="bi bi-eye"></i>
                 <span class="error" id="empty_password"><?= $errors['empty_password'] ?></span>
             </div>
-
-            <a href="updatepass.php">Forgot Password ?</a>
-
+            <a href="/updatepass">Forgot Password ?</a>
             <div class="checkbox">
                 <input type="checkbox" name="remember" id="remember" required>
                 <label for="remember"> Remember me</label>
             </div>
-
             <button> Login</button>
             <span class="error" id="login_incorrect"><?= $errors['login_incorrect'] ?></span>
             <div class="footer">
                 Not a user ? <a href="/signup" class="transition-link" style="text-decoration: none;"> Sign Up</a>
             </div>
-
         </form>
 
     </div>

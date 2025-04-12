@@ -1,32 +1,24 @@
 <?php
 
 declare(strict_types=1);
-
-
-// function isInputEmpty(string $email, string $username, string $password, string $contact, string $dob)
-// {
-//     return (empty($username) || empty($email) || empty($password) || empty($contact) || empty($dob));
-// }
-function isEmailInvalid($email)
+function isEmailInvalid(string $email)
 {
     return !filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 function isUserNameTaken(object $conn, string $username)
 {
-    return getUsername($conn, $username) ? true : false;
+    return getUsername($conn, $username);
 }
 function isEmailRegistered(object $conn, string $email)
 {
-    return getUserEmail($conn, $email) ? true : false;
+    return getUserEmail($conn, $email);
 }
 function createUser(object $conn, string $email, string $username, string $password, string $contact, string $dob)
 {
     setUser($conn, $email, $username, $password, $contact, $dob);
 }
-
-function validatePassword($pwd)
+function validatePassword(string $pwd)
 {
-
     $regex = '/(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[@#\$%^&*()+=\[\]{};:\'\"\\|,.<>\/?])+/';
     if (strlen($pwd) < 8) {
         return "Password must be of atleast of 8 chars";
@@ -41,9 +33,9 @@ function validatePassword($pwd)
                 </ul>';
     }
 }
-function validateContact($contact)
+function validateContact(string $contact)
 {
-    $regex = '/(?=.*[^a-z])(?=.*[^A-Z])(?=.*[^@#\$%^&*()+=\[\]{};:\'\"\\|,.<>\/?])^[6-9]\d/';
+    $regex = '/^[6-9]\d{9}$/';
     if (strlen($contact) < 10) {
         return "Enter valid contact";
     } else if (!preg_match($regex, $contact)) {

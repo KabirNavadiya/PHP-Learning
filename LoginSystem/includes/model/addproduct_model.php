@@ -1,7 +1,5 @@
 <?php
 
-// declare(strict_types=1);
-
 function getProduct(object $conn, string $productName)
 {
     $query = "SELECT product_name FROM products where product_name = :productname;";
@@ -13,7 +11,6 @@ function getProduct(object $conn, string $productName)
 }
 function setProduct(object $conn, string $productName, string $productCategory, string $productPrice, string $productDescription, array $productImage, int $discount)
 {
-
     $uploadDir = "includes/uploads/";
     $fileName = date("Y-m-d_H-i-s") . '_' . basename($productImage['name']);
     $imagePath = $uploadDir . $fileName;
@@ -31,18 +28,7 @@ function setProduct(object $conn, string $productName, string $productCategory, 
     $stmt->bindParam(":discount", $discount);
     $stmt->execute();
 }
-
-
-function getCategories(object $conn)
-{
-    $query = "SELECT * FROM categories";
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-    $categories = $stmt->fetchAll();
-    return $categories;
-}
-
-function getProducts(object $conn)
+function getAllProducts(object $conn)
 {
     $query = "SELECT p.id AS id,p.product_name AS product_name,c.name AS category_name,p.price AS price,p.description AS description,p.image AS image,discount as discount FROM products p JOIN categories c ON p.category_id = c.id;";
     $stmt = $conn->prepare($query);
