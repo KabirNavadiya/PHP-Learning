@@ -3,8 +3,7 @@
 
 class CheckingAccount extends BankAccount
 {
-
-    public float $maxWithdrawl = 500;
+    public const maxWithdrawl = 500;
     public function Deposit(float $amount)
     {
         $this->balance += $amount;
@@ -12,8 +11,8 @@ class CheckingAccount extends BankAccount
     }
     public function Withdraw(float $amount)
     {
-        if ($amount > $this->maxWithdrawl) {
-            echo "You can withdraw only {$this->maxWithdrawl} at a time\n";
+        if ($amount > self :: maxWithdrawl) {
+            echo 'You can withdraw only {'.self::maxWithdrawl.'} at a time\n';
             parent::LogError($amount,__FUNCTION__."ing",__CLASS__);
         } else {
             if ($this->balance >= $this->minbalance + $amount) {
